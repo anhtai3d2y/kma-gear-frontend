@@ -14,6 +14,7 @@ class Login extends Component {
             email: '',
             password: '',
             isShowPassword: false,
+            errMessage: '',
         }
     }
 
@@ -30,7 +31,29 @@ class Login extends Component {
     }
 
     handleLogin = async () => {
-        await handleLogin(this.state.email, this.state.password)
+        this.setState({
+            errMessage: ''
+        })
+        try {
+            let data = await handleLogin(this.state.email, this.state.password)
+            if (data && data.errCode !== 0) {
+                this.setState({
+                    errMessage: data.message
+                })
+            }
+            if (data && data.errCode === 0) {
+                this.props.userLoginSuccess(data.user)
+                console.log('login successed')
+            }
+        } catch (error) {
+            if (error.response) {
+                if (error.response.data) {
+                    this.setState({
+                        errMessage: error.response.data.message
+                    })
+                }
+            }
+        }
     }
 
     handleShowHidePassword = (e) => {
@@ -60,9 +83,12 @@ class Login extends Component {
                                     onChange={(e) => this.handleOnChangePassword(e)}
                                 />
                                 <span onClick={() => { this.handleShowHidePassword() }}>
-                                    <i class={this.state.isShowPassword ? 'fas fa-eye' : 'fas fa-eye-slash'}></i>
+                                    <i className={this.state.isShowPassword ? 'fas fa-eye' : 'fas fa-eye-slash'}></i>
                                 </span>
                             </div>
+                        </div>
+                        <div className="col-12" style={{ color: 'red' }}>
+                            {this.state.errMessage}
                         </div>
                         <div className="col-12 pd-4">
                             <button className="btn btn-primary btn-login" type="submit"
@@ -91,8 +117,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         navigate: (path) => dispatch(push(path)),
-        adminLoginSuccess: (adminInfo) => dispatch(actions.adminLoginSuccess(adminInfo)),
-        adminLoginFail: () => dispatch(actions.adminLoginFail()),
+        userLoginSuccess: (userInfo) => dispatch(actions.userLoginSuccess(userInfo)),
+        userLoginFail: () => dispatch(actions.userLoginFail()),
     };
 };
 

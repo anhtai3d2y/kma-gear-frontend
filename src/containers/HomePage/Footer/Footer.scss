@@ -1,0 +1,59 @@
+.footer {
+    margin-top: 100px;
+    .footer-top {
+        background: rgba(0, 0, 0, 0.85);
+        .footer-links {
+            display: grid;
+            grid-template-columns: 25% 25% 25% 25%;
+            .footer-links-group {
+                margin-top: 54px;
+                margin-bottom: 45px;
+                a {
+                    text-decoration: none;
+                    color: #fff;
+                }
+                .f-links-social {
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                }
+            }
+        }
+        .footer-store-info {
+            font-size: 16px;
+            line-height: 30px;
+            color: #fff;
+            padding-bottom: 50px;
+            position: relative;
+            .dmca-badge {
+                position: absolute;
+                top: 0;
+                right: 0;
+            }
+        }
+    }
+    .footer-bottom {
+        background: #fff;
+        padding: 15px 0;
+        .container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+    }
+    .f-title {
+        font-weight: 700;
+        font-size: 16px;
+        line-height: 24px;
+        display: flex;
+        color: #fff;
+        margin-bottom: 20px;
+    }
+}
+.container {
+    width: 1110px;
+    margin: auto;
+}
+.img {
+    vertical-align: middle;
+}

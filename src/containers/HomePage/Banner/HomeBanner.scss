@@ -1,0 +1,14 @@
+.banner {
+    .banner-home-top {
+        display: block;
+        text-align: center;
+        position: -webkit-sticky;
+        position: sticky;
+        top: 0;
+        z-index: 9999;
+        font-size: 0;
+        img {
+            max-width: 100%;
+        }
+    }
+}

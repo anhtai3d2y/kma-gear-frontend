@@ -1,0 +1,69 @@
+.btn-edit {
+    width: 50px;
+    border: none;
+    outline: none;
+    background: transparent;
+    color: rgb(57, 101, 223);
+    font-size: 20px;
+    &:hover {
+        color: rgb(94, 124, 207) !important;
+        background-color: transparent !important;
+    }
+}
+.btn-delete {
+    width: 50px;
+    border: none;
+    outline: none;
+    background: transparent;
+    color: rgb(223, 57, 79);
+    font-size: 20px;
+    &:hover {
+        color: rgb(207, 94, 113) !important;
+        background-color: transparent !important;
+    }
+}
+.my-custom-scrollbar {
+    position: relative;
+    height: 850px;
+    overflow: auto;
+}
+.table-wrapper-scroll-y {
+    display: block;
+}
+
+.modal-user-container {
+    .modal-content {
+        .modal-header {
+            button {
+                background: transparent !important;
+                border: none;
+                color: white;
+                font-size: 32px;
+            }
+        }
+    }
+    .modal-user-body {
+        gap: 15px;
+        .input-container {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            input {
+                border-radius: 3px;
+                height: 30px;
+                border: 1px solid gray;
+                outline: none;
+                padding: 0 10px;
+                margin: 4px 0;
+            }
+        }
+    }
+    .body-flex {
+        gap: 15px;
+        display: flex;
+        .input-flex {
+            width: 50%;
+            margin: 4px 0;
+        }
+    }
+}
