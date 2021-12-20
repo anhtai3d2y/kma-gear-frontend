@@ -12,12 +12,15 @@
         color: $common-text-color;
         line-height: 40px;
         height: 40px;
-        padding: 0 10px;
+        padding: 0 20px;
         &:hover {
             background-color: darken($colormain, 5);
         }
         i {
             font-size: $base-size + 1px;
+        }
+        .welcome-user {
+            margin-right: 8px;
         }
     }
 }

@@ -6,7 +6,7 @@ import { getAllUsers, createNewUserService, deleteUserService, editUserService }
 import ModalUser from './ModalUser';
 import ModalEditUser from './ModalEditUser';
 import { emitter } from "../../utils/emitter";
-
+import { ToastContainer, toast } from 'react-toastify';
 
 class UserManage extends Component {
 
@@ -57,13 +57,14 @@ class UserManage extends Component {
         try {
             let response = await createNewUserService(data)
             if (response && response.errCode !== 0) {
-                alert(response.errMessage)
+                toast.error('Email đã tồn tại, hãy thử một email khác!')
+                // alert(response.errMessage)
             } else {
                 await this.getAllUsersFromReact()
                 this.setState({
                     isOpenModalUser: false
                 })
-
+                toast('Thêm người dùng thành công!')
                 emitter.emit('EVENT_CLEAR_MODAL_DATA')
                 // if you want to send data
                 // emitter.emit('EVENT_CLEAR_MODAL_DATA', { 'id': 'your id' })

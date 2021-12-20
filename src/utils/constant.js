@@ -1,12 +1,12 @@
 export const path = {
     HOME: '/',
     HOMEPAGE: '/home',
-    LOGIN: '/login',
+    ADMIN: '/admin',
     LOG_OUT: '/logout',
     SYSTEM: '/system'
 };
 
-export const languages = {
+export const LANGUAGES = {
     VI: 'vi',
     EN: 'en'
 };

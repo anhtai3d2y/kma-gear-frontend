@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import './Footer.scss'
+import { FormattedMessage } from "react-intl";
+
 
 class Footer extends Component {
 
@@ -12,7 +14,7 @@ class Footer extends Component {
                     <div className="container">
                         <div className="footer-links">
                             <div className="footer-links-group">
-                                <span className="f-title">Thông tin chung</span>
+                                <span className="f-title"><FormattedMessage id="footer.generalinfo" /></span>
                                 <p><a href="">Giới thiệu KMA Gear</a></p>
                                 <p><a href="">Tuyển dụng</a></p>
                                 <p><a href="/tin-tuc">Tin tức</a></p>
@@ -78,7 +80,8 @@ class Footer extends Component {
 
 const mapStateToProps = state => {
     return {
-        isLoggedIn: state.user.isLoggedIn
+        isLoggedIn: state.user.isLoggedIn,
+        language: state.app.language,
     };
 };
 

@@ -16,6 +16,11 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
+            .header-logo {
+                img {
+                    max-height: 70px;
+                }
+            }
         }
         .search-box {
             border: 1px solid #005ec4;
@@ -123,6 +128,26 @@
                 }
                 img {
                     vertical-align: middle;
+                }
+                .choose-language {
+                    display: flex;
+                    span {
+                        padding: 16px;
+                        cursor: pointer;
+                        font-size: 16px;
+                        &:hover {
+                        }
+                    }
+                    .language-vi {
+                        &.active {
+                            color: #ff0800;
+                        }
+                    }
+                    .language-en {
+                        &.active {
+                            color: #29324e;
+                        }
+                    }
                 }
             }
         }

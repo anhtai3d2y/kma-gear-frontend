@@ -3,6 +3,8 @@ import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 import { emitter } from "../../utils/emitter";
+import { ToastContainer, toast } from 'react-toastify';
+
 
 
 class ModalUser extends Component {
@@ -54,7 +56,7 @@ class ModalUser extends Component {
         for (let i = 0; i < arrInput.length; i++) {
             if (!this.state[arrInput[i]]) {
                 isValid = false
-                alert('Missing parameters: ' + arrInput[i])
+                toast.error(`Bạn đang để trống ô ${arrInput[i]}`)
                 break
             }
         }
