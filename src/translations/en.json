@@ -11,13 +11,14 @@
         "admin": {
             "header": "KMA Gear system >",
             "admin-administrator": {
-                "header": "admin manage >",
-                "user-manage": "User manage",
-                "product-manage": "Product manage",
+                "header": "Quản lý hệ thống >",
+                "user-manage": "Quản lý khách hàng",
+                "product-manage": "Quản lý sản phẩm",
                 "product-type-manage": "Quản lý loại sản phẩm",
                 "category-manage": "Quản lý danh mục",
                 "bill-manage": "Quản lý đơn hàng",
-                "brand-manage": "Quản lý nhãn hàng"
+                "brand-manage": "Quản lý nhãn hàng",
+                "banner-manage": "Quản lý biển quảng cáo"
             },
             "admin-parameter": {
                 "header": "admin-parameter"

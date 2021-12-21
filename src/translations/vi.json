@@ -18,7 +18,8 @@
                 "product-type-manage": "Quản lý loại sản phẩm",
                 "category-manage": "Quản lý danh mục",
                 "bill-manage": "Quản lý đơn hàng",
-                "brand-manage": "Quản lý nhãn hàng"
+                "brand-manage": "Quản lý nhãn hàng",
+                "banner-manage": "Quản lý biển quảng cáo"
             },
             "admin-parameter": {
                 "header": "Tham số hệ thống"

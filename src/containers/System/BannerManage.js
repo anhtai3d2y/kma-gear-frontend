@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
-class CategoryManage extends Component {
+class BrandManage extends Component {
 
     constructor(props) {
         super(props);
@@ -15,7 +15,7 @@ class CategoryManage extends Component {
 
     render() {
         return (
-            <div className="text-center" >Manage category</div>
+            <div className="text-center" >Manage banners</div>
         )
     }
 
@@ -31,4 +31,4 @@ const mapDispatchToProps = dispatch => {
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(CategoryManage);
+export default connect(mapStateToProps, mapDispatchToProps)(BrandManage);

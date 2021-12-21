@@ -11,7 +11,6 @@ import Home from '../routes/Home';
 import Login from './Auth/Login';
 import HomePage from './HomePage/HomePage.js';
 import System from '../routes/System';
-import { CustomToastCloseButton } from '../components/CustomToast';
 
 class App extends Component {
 
@@ -62,7 +61,7 @@ class App extends Component {
                             position="bottom-right"
                             autoClose={5000}
                             hideProgressBar={false}
-                            newestOnTop={false}
+                            newestOnTop
                             closeOnClick
                             rtl={false}
                             pauseOnFocusLoss

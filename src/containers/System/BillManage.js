@@ -3,8 +3,10 @@ import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 class BillManage extends Component {
 
-    state = {
-
+    constructor(props) {
+        super(props);
+        this.state = {
+        }
     }
 
     componentDidMount() {

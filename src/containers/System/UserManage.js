@@ -79,8 +79,10 @@ class UserManage extends Component {
             let response = await deleteUserService(user.id)
             if (response && response.errCode === 0) {
                 await this.getAllUsersFromReact()
+                toast(`Xóa thành công ${user.fullName}`)
             } else {
                 alert(response.errMessage)
+                toast.error('Xóa thất bại')
             }
         } catch (error) {
             console.log(error)
@@ -131,7 +133,7 @@ class UserManage extends Component {
                         editUser={this.editUser}
                     />}
                 <div className="title text-center">
-                    Manage user with Tai
+                    Quản lý khách hàng
                 </div>
                 <div className="mx-1">
                     <button className="btn btn-primary px-3"

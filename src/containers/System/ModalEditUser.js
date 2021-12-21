@@ -3,6 +3,7 @@ import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 import _ from "lodash";
+import { toast } from 'react-toastify';
 
 
 class ModalEditUser extends Component {
@@ -49,7 +50,7 @@ class ModalEditUser extends Component {
         for (let i = 0; i < arrInput.length; i++) {
             if (!this.state[arrInput[i]]) {
                 isValid = false
-                alert('Missing parameters: ' + arrInput[i])
+                toast.error('Bạn đang bỏ trống ô: ' + arrInput[i])
                 break
             }
         }
@@ -61,6 +62,7 @@ class ModalEditUser extends Component {
         if (isValid) {
             //call API edit user
             this.props.editUser(this.state)
+            toast(`Cập nhật thông tin ${this.state.fullName} thành công !`)
         }
     }
 
