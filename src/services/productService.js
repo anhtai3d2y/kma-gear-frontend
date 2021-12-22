@@ -8,6 +8,10 @@ const createNewProductService = (data) => {
     return axios.post('/api/create-new-product', data)
 }
 
+const editProductService = (data) => {
+    return axios.put('/api/edit-product', data)
+}
+
 const deleteProductService = (productId) => {
     return axios.delete('/api/delete-product', {
         data: {
@@ -16,8 +20,5 @@ const deleteProductService = (productId) => {
     })
 }
 
-const editProductService = (inputData) => {
-    return axios.put('/api/edit-product', inputData)
-}
 
 export { getAllProductsService, createNewProductService, deleteProductService, editProductService }

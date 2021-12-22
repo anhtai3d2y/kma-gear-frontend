@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
+import { CRUDActions } from "../../utils";
+import './ProductManage.scss';
+import TableManageProduct from "./TableManageProduct";
+
 // import { getAllTypeproductsService } from "../../services/typeproductService";
 // import { getAllBrandsService } from "../../services/typeproductService";
 
@@ -17,6 +21,7 @@ class ProductManage extends Component {
             typeProductArr: [],
             brandArr: [],
 
+            id: '',
             name: '',
             image: '',
             typeproduct: '',
@@ -24,6 +29,8 @@ class ProductManage extends Component {
             amount: 0,
             price: 0,
             discount: 0,
+
+            action: '',
         }
     }
 
@@ -47,10 +54,82 @@ class ProductManage extends Component {
                 brand: arrBrands && arrBrands.length > 0 ? arrBrands[0].id : ''
             })
         }
+
+        if (prevProps.products !== this.props.products) {
+            let arrTypes = this.props.typesRedux
+            let arrBrands = this.props.brandsRedux
+
+            this.setState({
+                name: '',
+                image: '',
+                typeproduct: arrTypes && arrTypes.length > 0 ? arrTypes[0].id : '',
+                brand: arrBrands && arrBrands.length > 0 ? arrBrands[0].id : '',
+                amount: 0,
+                price: 0,
+                discount: 0,
+
+                action: CRUDActions.CREATE,
+            })
+        }
     }
 
-    handleSaveProduct = () => {
-        toast('save product')
+    handleSaveProduct = async () => {
+        let isValid = this.checkValidateInput()
+        if (isValid) {
+            let { action } = this.state
+
+            if (action === CRUDActions.CREATE) {
+                //create product
+                let newProduct = {
+                    name: this.state.name,
+                    image: this.state.image,
+                    typeId: Number(this.state.typeproduct),
+                    brandId: Number(this.state.brand),
+                    amount: Number(this.state.amount),
+                    price: Number(this.state.price),
+                    discount: Number(this.state.discount),
+                }
+                await this.props.createNewProduct(newProduct)
+                toast(`Thêm sản phẩm ${newProduct.name} thành công`)
+            }
+            if (action === CRUDActions.EDIT) {
+                //edit product
+                await this.props.editProductRedux({
+                    id: this.state.id,
+                    name: this.state.name,
+                    image: this.state.image,
+                    typeId: Number(this.state.typeproduct),
+                    brandId: Number(this.state.brand),
+                    amount: Number(this.state.amount),
+                    price: Number(this.state.price),
+                    discount: Number(this.state.discount),
+                })
+            }
+            await this.props.fetchProductsRedux()
+        }
+    }
+
+    checkValidateInput = () => {
+        let isValid = true
+        let arrCheck = ['name', 'image', 'amount', 'price', 'discount']
+        let arrMessage = ['Tên sản phẩm', 'Hình ảnh', 'Số lượng', 'Giá', 'Chiết khấu']
+        for (let i = 0; i < arrCheck.length; i++) {
+            if (!this.state[arrCheck[i]]) {
+                if (arrCheck[i] !== 'discount') {
+                    isValid = false
+                    toast.error(`Bạn đang để trống ${arrMessage[i]}`)
+                    return isValid
+                } else {
+                    if (this.state[arrCheck[i]] === '') {
+                        isValid = false
+                        toast.error(`Bạn đang để trống ${arrMessage[i]}`)
+                        return isValid
+                    }
+                }
+            }
+        }
+        // toast('Lưu sản phẩm thành công')
+        return isValid
     }
 
     onChangeInput = (event, id) => {
@@ -62,6 +141,21 @@ class ProductManage extends Component {
         })
     }
 
+    handleEditProductFromParent = (product) => {
+        this.setState({
+
+            id: product.id,
+            name: product.name,
+            image: product.image,
+            typeproduct: product.typeId,
+            brand: product.brandId,
+            amount: product.amount,
+            price: product.price,
+            discount: product.discount,
+
+            action: CRUDActions.EDIT
+        })
+    }
 
     render() {
         let types = this.state.typeProductArr
@@ -71,13 +165,13 @@ class ProductManage extends Component {
 
         let { name, image, typeproduct, brand, amount, price, discount } = this.state
 
-
         return (
             <div className="product-manage-container" >
                 <div className="title">
                     Quản lý sản phẩm
                 </div>
                 <div className="product-manage-body">
+
                     <div className="container">
                         <div className="row">
                             <div className="col-12 mb-3">
@@ -96,11 +190,15 @@ class ProductManage extends Component {
                                     value={image}
                                     onChange={(event) => { this.onChangeInput(event, 'image') }}
                                 />
+                                <div className="product-image mt-4 mb-4">
+                                    <img src={image} />
+                                </div>
                             </div>
                             <div className="col-6">
                                 <label>Loại sản phẩm</label>
                                 <select id="" class="form-control"
                                     onChange={(event) => { this.onChangeInput(event, 'typeproduct') }}
+                                    value={typeproduct}
                                 >
                                     {types && types.length > 0 &&
                                         types.map((type, index) => {
@@ -115,6 +213,7 @@ class ProductManage extends Component {
                                 <label>Thương hiệu</label>
                                 <select id="" class="form-control"
                                     onChange={(event) => { this.onChangeInput(event, 'brand') }}
+                                    value={brand}
                                 >
                                     {brands && brands.length > 0 &&
                                         brands.map((brand, index) => {
@@ -146,13 +245,17 @@ class ProductManage extends Component {
                                     onChange={(event) => { this.onChangeInput(event, 'discount') }}
                                 />
                             </div>
-                            <div className="col-12 mt-3">
-                                <button type="button" class="btn btn-primary"
+                            <div className="col-12 my-3">
+                                <button type="button" class={this.state.action === CRUDActions.EDIT ? "btn btn-primary" : "btn btn-success"}
                                     onClick={() => { this.handleSaveProduct() }}
-                                >Lưu</button>
+                                >{this.state.action === CRUDActions.EDIT ? "Lưu" : "Thêm"}</button>
                             </div>
                         </div>
                     </div>
+                    <TableManageProduct
+                        handleEditProductFromParent={this.handleEditProductFromParent}
+                        action={this.state.action}
+                    />
                 </div>
             </div>
         )
@@ -166,13 +269,19 @@ const mapStateToProps = state => {
         isLoadingType: state.typeproduct.isLoadingType,
         brandsRedux: state.brand.brands,
         isLoadingBrand: state.brand.isLoadingBrand,
+        products: state.product.products
+
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
         getTypeproductStart: () => dispatch(actions.fetchTypeproductStart()),
-        getBrandStart: () => dispatch(actions.fetchBrandStart())
+        getBrandStart: () => dispatch(actions.fetchBrandStart()),
+        createNewProduct: (data) => dispatch(actions.createNewProduct(data)),
+        fetchProductsRedux: () => dispatch(actions.fetchAllProductsStart()),
+        editProductRedux: (data) => dispatch(actions.editProduct(data))
+
         // processLogout: () => dispatch(actions.processLogout()),
         // changeLanguageAppRedux: (language) => dispatch(changeLanguageApp(language))
     };
