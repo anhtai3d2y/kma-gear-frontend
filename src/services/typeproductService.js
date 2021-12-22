@@ -1,7 +1,7 @@
 import axios from "../axios";
 
 const getAllTypeproductsService = (inputId) => {
-    return axios.get(`/api/get-all-Typeproducts?id=${inputId}`)
+    return axios.get(`/api/get-all-typeproducts?id=${inputId}`)
 }
 
 const createNewTypeproductService = (data) => {
