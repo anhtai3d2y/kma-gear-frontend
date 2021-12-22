@@ -2,7 +2,8 @@ import actionTypes from '../actions/actionTypes';
 
 const initialState = {
     isLoadingProducts: false,
-    products: []
+    products: [],
+    topProducts: []
 }
 
 const productReducer = (state = initialState, action) => {
@@ -18,6 +19,19 @@ const productReducer = (state = initialState, action) => {
             state.isLoadingProducts = false
             console.log('fetch failed', action)
             state.products = []
+            return {
+                ...state,
+            }
+        case actionTypes.FETCH_TOP_PRODUCTS_HOME_SUCCESS:
+            state.topProducts = action.products
+            return {
+                ...state,
+            }
+        case actionTypes.FETCH_TOP_PRODUCTS_HOME_FAILED:
+            // let state = { ...state }
+            state.isLoadingProducts = false
+            console.log('fetch failed', action)
+            state.topProducts = []
             return {
                 ...state,
             }

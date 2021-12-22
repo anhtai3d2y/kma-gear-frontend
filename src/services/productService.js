@@ -4,6 +4,10 @@ const getAllProductsService = (inputId) => {
     return axios.get(`/api/get-all-products?id=${inputId}`)
 }
 
+const getTopProductsHomeService = (limit) => {
+    return axios.get(`/api/get-top-products-home?limit=${limit}`)
+}
+
 const createNewProductService = (data) => {
     return axios.post('/api/create-new-product', data)
 }
@@ -21,4 +25,4 @@ const deleteProductService = (productId) => {
 }
 
 
-export { getAllProductsService, createNewProductService, deleteProductService, editProductService }
+export { getAllProductsService, createNewProductService, deleteProductService, editProductService, getTopProductsHomeService }

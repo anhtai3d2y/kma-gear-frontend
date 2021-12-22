@@ -38,12 +38,12 @@ class HomeHeader extends Component {
                                     <input type="text" name="search" autocomplete="off" placeholder="Nhập sản phẩm cần tìm ..." />
                                 </div>
                                 <div className="search-box-select">
-                                    <input type="hidden" name="category_id" value="0" />
-                                    <div className="search-box-select-title">
+                                    {/* <input type="hidden" name="category_id" value="0" /> */}
+                                    {/* <div className="search-box-select-title">
                                         <FormattedMessage id="homeheader.allcategory" />
-                                    </div>
-                                    <div className="search-box-select-content">
-                                    </div>
+                                    </div> */}
+                                    {/* <div className="search-box-select-content">
+                                    </div> */}
                                     <img src="https://www.tncstore.vn/catalog/view/theme/default/image/search-icon.svg" alt="" className="search-box-icon" />
                                 </div>
                             </div>

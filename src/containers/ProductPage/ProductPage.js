@@ -1,12 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import HomeBanner from './Banner/HomeBanner'
-import HomeHeader from './Header/HomeHeader'
-import HomeMainBannerSlide from './Section/HomeMainBannerSlide'
-import HomeSubBannerSlide from './Section/HomeSubBannerSlide'
-import OutstandingProduct from './Section/OutstandingProduct'
-import ErrorNotFound from './Section/ErrorNotFound'
-import Footer from './Footer/Footer'
+import HomeBanner from '../HomePage/Banner/HomeBanner.js'
+import HomeHeader from '../HomePage/Header/HomeHeader.js'
+import Footer from '../HomePage/Footer/Footer.js'
 
 
 class HomePage extends Component {
@@ -17,10 +13,6 @@ class HomePage extends Component {
             <div>
                 <HomeBanner />
                 <HomeHeader />
-                <HomeMainBannerSlide />
-                <HomeSubBannerSlide />
-                <ErrorNotFound />
-                <OutstandingProduct />
                 <Footer />
             </div>
         );

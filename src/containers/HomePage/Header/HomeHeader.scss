@@ -31,7 +31,7 @@
             position: relative;
             box-sizing: border-box;
             div {
-                width: 50%;
+                width: 90%;
                 display: flex;
                 align-items: center;
             }
@@ -43,13 +43,15 @@
                     width: 100%;
                     box-sizing: border-box;
                     outline: none;
+                    height: 100%;
+                    font-size: 16px;
                 }
             }
             .search-box-select {
                 display: flex;
                 align-items: center;
                 position: relative;
-                width: 255px;
+                width: 61px;
                 .search-box-select-title {
                     position: relative;
                     font-size: 16px;

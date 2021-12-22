@@ -1,5 +1,5 @@
 import actionTypes from './actionTypes';
-import { createNewProductService, getAllProductsService, deleteProductService, editProductService } from "../../services/productService";
+import { createNewProductService, getAllProductsService, deleteProductService, editProductService, getTopProductsHomeService } from "../../services/productService";
 import { toast } from 'react-toastify';
 
 export const createNewProduct = (data) => {
@@ -77,6 +77,32 @@ export const fetchAllProductsSuccess = (data) => ({
 })
 export const fetchAllProductsFailed = () => ({
     type: actionTypes.FETCH_ALL_PRODUCTS_FAILED
+})
+
+export const fetchTopProductsHomeStart = () => {
+    return async (dispatch, getState) => {
+        try {
+            let res = await getTopProductsHomeService(10)
+            if (res && res.errCode === 0) {
+                dispatch(fetchTopProductsHomeSuccess(res.products))
+            } else {
+                toast.error('Lấy sản phẩm thất bại!1')
+                dispatch(fetchTopProductsHomeFailed())
+            }
+        } catch (error) {
+            toast.error('Lấy sản phẩm thất bại!2')
+            dispatch(fetchTopProductsHomeFailed())
+            console.log(error)
+        }
+    }
+}
+
+export const fetchTopProductsHomeSuccess = (data) => ({
+    type: actionTypes.FETCH_TOP_PRODUCTS_HOME_SUCCESS,
+    products: data
+})
+export const fetchTopProductsHomeFailed = () => ({
+    type: actionTypes.FETCH_TOP_PRODUCTS_HOME_FAILED
 })
 
 export const deleteProduct = (productId) => {
