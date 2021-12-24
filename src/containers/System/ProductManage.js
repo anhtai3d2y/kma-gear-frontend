@@ -5,12 +5,21 @@ import { CRUDActions } from "../../utils";
 import './ProductManage.scss';
 import TableManageProduct from "./TableManageProduct";
 
-// import { getAllTypeproductsService } from "../../services/typeproductService";
-// import { getAllBrandsService } from "../../services/typeproductService";
+// import { getAllProducttypesService } from "../../services/producttypeService";
+// import { getAllBrandsService } from "../../services/producttypeService";
 
 import { ToastContainer, toast } from 'react-toastify';
 
 import *  as actions from "../../store/actions";
+import MarkdownIt from 'markdown-it';
+import MdEditor from 'react-markdown-editor-lite';
+import 'react-markdown-editor-lite/lib/index.css';
+
+const mdParser = new MarkdownIt(/* Markdown-it options */);
+
+function handleEditorChange({ html, text }) {
+    console.log('handleEditorChange', html, text);
+}
 
 
 class ProductManage extends Component {
@@ -24,7 +33,7 @@ class ProductManage extends Component {
             id: '',
             name: '',
             image: '',
-            typeproduct: '',
+            producttype: '',
             brand: '',
             amount: 0,
             price: 0,
@@ -35,7 +44,7 @@ class ProductManage extends Component {
     }
 
     async componentDidMount() {
-        this.props.getTypeproductStart()
+        this.props.getProducttypeStart()
         this.props.getBrandStart()
     }
 
@@ -44,7 +53,7 @@ class ProductManage extends Component {
             let arrTypes = this.props.typesRedux
             this.setState({
                 typeProductArr: arrTypes,
-                typeproduct: arrTypes && arrTypes.length > 0 ? arrTypes[0].id : ''
+                producttype: arrTypes && arrTypes.length > 0 ? arrTypes[0].id : ''
             })
         }
         if (prevProps.brandsRedux !== this.props.brandsRedux) {
@@ -62,7 +71,7 @@ class ProductManage extends Component {
             this.setState({
                 name: '',
                 image: '',
-                typeproduct: arrTypes && arrTypes.length > 0 ? arrTypes[0].id : '',
+                producttype: arrTypes && arrTypes.length > 0 ? arrTypes[0].id : '',
                 brand: arrBrands && arrBrands.length > 0 ? arrBrands[0].id : '',
                 amount: 0,
                 price: 0,
@@ -83,7 +92,7 @@ class ProductManage extends Component {
                 let newProduct = {
                     name: this.state.name,
                     image: this.state.image,
-                    typeId: Number(this.state.typeproduct),
+                    typeId: Number(this.state.producttype),
                     brandId: Number(this.state.brand),
                     amount: Number(this.state.amount),
                     price: Number(this.state.price),
@@ -98,7 +107,7 @@ class ProductManage extends Component {
                     id: this.state.id,
                     name: this.state.name,
                     image: this.state.image,
-                    typeId: Number(this.state.typeproduct),
+                    typeId: Number(this.state.producttype),
                     brandId: Number(this.state.brand),
                     amount: Number(this.state.amount),
                     price: Number(this.state.price),
@@ -147,7 +156,7 @@ class ProductManage extends Component {
             id: product.id,
             name: product.name,
             image: product.image,
-            typeproduct: product.typeId,
+            producttype: product.typeId,
             brand: product.brandId,
             amount: product.amount,
             price: product.price,
@@ -163,7 +172,7 @@ class ProductManage extends Component {
         // isLoadingType dùng khi cần hiển thị màn hình loading
         // let isLoadingType = this.props.isLoadingType
 
-        let { name, image, typeproduct, brand, amount, price, discount } = this.state
+        let { name, image, producttype, brand, amount, price, discount } = this.state
 
         return (
             <div className="product-manage-container" >
@@ -178,14 +187,14 @@ class ProductManage extends Component {
                                 <b>Thêm sản phẩm</b>
                             </div>
                             <div className="col-12">
-                                <label>Tên sản phẩm</label>
+                                <label className="mt-1">Tên sản phẩm</label>
                                 <input className="form-control" type="text"
                                     value={name}
                                     onChange={(event) => { this.onChangeInput(event, 'name') }}
                                 />
                             </div>
                             <div className="col-12">
-                                <label>Hình ảnh</label>
+                                <label className="mt-1">Hình ảnh</label>
                                 <input className="form-control" type="text"
                                     value={image}
                                     onChange={(event) => { this.onChangeInput(event, 'image') }}
@@ -195,10 +204,10 @@ class ProductManage extends Component {
                                 </div>
                             </div>
                             <div className="col-6">
-                                <label>Loại sản phẩm</label>
+                                <label className="mt-1">Loại sản phẩm</label>
                                 <select id="" class="form-control"
-                                    onChange={(event) => { this.onChangeInput(event, 'typeproduct') }}
-                                    value={typeproduct}
+                                    onChange={(event) => { this.onChangeInput(event, 'producttype') }}
+                                    value={producttype}
                                 >
                                     {types && types.length > 0 &&
                                         types.map((type, index) => {
@@ -210,7 +219,7 @@ class ProductManage extends Component {
                                 </select>
                             </div>
                             <div className="col-6">
-                                <label>Thương hiệu</label>
+                                <label className="mt-1">Thương hiệu</label>
                                 <select id="" class="form-control"
                                     onChange={(event) => { this.onChangeInput(event, 'brand') }}
                                     value={brand}
@@ -225,25 +234,29 @@ class ProductManage extends Component {
                                 </select>
                             </div>
                             <div className="col-4">
-                                <label>Số lượng</label>
+                                <label className="mt-1">Số lượng</label>
                                 <input className="form-control" type="text"
                                     value={amount}
                                     onChange={(event) => { this.onChangeInput(event, 'amount') }}
                                 />
                             </div>
                             <div className="col-4">
-                                <label>Giá</label>
+                                <label className="mt-1">Giá</label>
                                 <input className="form-control" type="text"
                                     value={price}
                                     onChange={(event) => { this.onChangeInput(event, 'price') }}
                                 />
                             </div>
                             <div className="col-4">
-                                <label>Chiết khấu</label>
+                                <label className="mt-1">Chiết khấu</label>
                                 <input className="form-control" type="text"
                                     value={discount}
                                     onChange={(event) => { this.onChangeInput(event, 'discount') }}
                                 />
+                            </div>
+                            <div className="col-12">
+                                <label className="mt-1">Mô tả sản phẩm</label>
+                                <MdEditor style={{ height: '300px' }} renderHTML={text => mdParser.render(text)} onChange={handleEditorChange} />
                             </div>
                             <div className="col-12 my-3">
                                 <button type="button" class={this.state.action === CRUDActions.EDIT ? "btn btn-primary" : "btn btn-success"}
@@ -265,8 +278,8 @@ class ProductManage extends Component {
 
 const mapStateToProps = state => {
     return {
-        typesRedux: state.typeproduct.types,
-        isLoadingType: state.typeproduct.isLoadingType,
+        typesRedux: state.producttype.types,
+        isLoadingType: state.producttype.isLoadingType,
         brandsRedux: state.brand.brands,
         isLoadingBrand: state.brand.isLoadingBrand,
         products: state.product.products
@@ -276,7 +289,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        getTypeproductStart: () => dispatch(actions.fetchTypeproductStart()),
+        getProducttypeStart: () => dispatch(actions.fetchProducttypeStart()),
         getBrandStart: () => dispatch(actions.fetchBrandStart()),
         createNewProduct: (data) => dispatch(actions.createNewProduct(data)),
         fetchProductsRedux: () => dispatch(actions.fetchAllProductsStart()),

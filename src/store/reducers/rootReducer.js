@@ -3,7 +3,7 @@ import { connectRouter } from 'connected-react-router';
 
 import appReducer from "./appReducer";
 import userReducer from "./userReducer";
-import typeproductReducer from "./typeproductReducer";
+import producttypeReducer from "./producttypeReducer";
 import brandReducer from "./brandReducer";
 import productReducer from "./productReducer";
 
@@ -33,7 +33,7 @@ export default (history) => combineReducers({
     router: connectRouter(history),
     user: persistReducer(userPersistConfig, userReducer),
     app: persistReducer(appPersistConfig, appReducer),
-    typeproduct: typeproductReducer,
+    producttype: producttypeReducer,
     brand: brandReducer,
     product: productReducer
 })

@@ -5,22 +5,22 @@ const initialState = {
     types: []
 }
 
-const typeproductReducer = (state = initialState, action) => {
+const producttypeReducer = (state = initialState, action) => {
     switch (action.type) {
-        case actionTypes.FETCH_TYPEPRODUCT_START:
+        case actionTypes.FETCH_PRODUCTTYPE_START:
             // let copyState = { ...state }
             state.isLoadingType = true
             return {
                 ...state,
             }
-        case actionTypes.FETCH_TYPEPRODUCT_SUCCESS:
+        case actionTypes.FETCH_PRODUCTTYPE_SUCCESS:
             let copyState = { ...state }
             copyState.types = action.data
 
             return {
                 ...copyState,
             }
-        case actionTypes.FETCH_TYPEPRODUCT_FAILED:
+        case actionTypes.FETCH_PRODUCTTYPE_FAILED:
             // let state = { ...state }
             state.isLoadingType = false
             state.types = []
@@ -32,4 +32,4 @@ const typeproductReducer = (state = initialState, action) => {
     }
 }
 
-export default typeproductReducer;
+export default producttypeReducer;
