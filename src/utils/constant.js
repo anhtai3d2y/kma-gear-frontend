@@ -4,7 +4,7 @@ export const path = {
     ADMIN: '/admin',
     LOG_OUT: '/logout',
     SYSTEM: '/system',
-    PRODUCT: '/product',
+    PRODUCT: '/product/:id',
 };
 
 export const LANGUAGES = {

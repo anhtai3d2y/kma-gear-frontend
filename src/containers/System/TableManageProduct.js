@@ -38,6 +38,7 @@ class TableManageProduct extends Component {
 
     render() {
         let arrProducts = this.state.products
+        console.log(arrProducts)
         return (
             < div className="product-container" >
                 <table className="table table-hover table table-bordered table-striped mb-0">

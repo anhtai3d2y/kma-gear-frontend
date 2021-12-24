@@ -17,11 +17,6 @@ import 'react-markdown-editor-lite/lib/index.css';
 
 const mdParser = new MarkdownIt(/* Markdown-it options */);
 
-function handleEditorChange({ html, text }) {
-    console.log('handleEditorChange', html, text);
-}
-
-
 class ProductManage extends Component {
 
     constructor(props) {
@@ -33,6 +28,8 @@ class ProductManage extends Component {
             id: '',
             name: '',
             image: '',
+            descriptionHTML: '',
+            descriptionMarkdown: '',
             producttype: '',
             brand: '',
             amount: 0,
@@ -92,6 +89,8 @@ class ProductManage extends Component {
                 let newProduct = {
                     name: this.state.name,
                     image: this.state.image,
+                    descriptionHTML: this.state.descriptionHTML,
+                    descriptionMarkdown: this.state.descriptionMarkdown,
                     typeId: Number(this.state.producttype),
                     brandId: Number(this.state.brand),
                     amount: Number(this.state.amount),
@@ -107,6 +106,8 @@ class ProductManage extends Component {
                     id: this.state.id,
                     name: this.state.name,
                     image: this.state.image,
+                    descriptionHTML: this.state.descriptionHTML,
+                    descriptionMarkdown: this.state.descriptionMarkdown,
                     typeId: Number(this.state.producttype),
                     brandId: Number(this.state.brand),
                     amount: Number(this.state.amount),
@@ -116,6 +117,13 @@ class ProductManage extends Component {
             }
             await this.props.fetchProductsRedux()
         }
+    }
+
+    handleEditorChange = ({ html, text }) => {
+        this.setState({
+            descriptionHTML: html,
+            descriptionMarkdown: text,
+        })
     }
 
     checkValidateInput = () => {
@@ -156,6 +164,8 @@ class ProductManage extends Component {
             id: product.id,
             name: product.name,
             image: product.image,
+            descriptionHTML: product.descriptionHTML,
+            descriptionMarkdown: product.descriptionMarkdown,
             producttype: product.typeId,
             brand: product.brandId,
             amount: product.amount,
@@ -173,6 +183,7 @@ class ProductManage extends Component {
         // let isLoadingType = this.props.isLoadingType
 
         let { name, image, producttype, brand, amount, price, discount } = this.state
+        console.log(this.state)
 
         return (
             <div className="product-manage-container" >
@@ -256,7 +267,12 @@ class ProductManage extends Component {
                             </div>
                             <div className="col-12">
                                 <label className="mt-1">Mô tả sản phẩm</label>
-                                <MdEditor style={{ height: '300px' }} renderHTML={text => mdParser.render(text)} onChange={handleEditorChange} />
+                                <MdEditor
+                                    style={{ height: '300px' }}
+                                    value={this.state.descriptionMarkdown}
+                                    renderHTML={text => mdParser.render(text)}
+                                    onChange={this.handleEditorChange}
+                                />
                             </div>
                             <div className="col-12 my-3">
                                 <button type="button" class={this.state.action === CRUDActions.EDIT ? "btn btn-primary" : "btn btn-success"}

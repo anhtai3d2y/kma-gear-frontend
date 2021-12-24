@@ -71,7 +71,6 @@ class OutstandingProduct extends Component {
                                     )
                                 })
                             }
-
                         </Swiper>
                     </div>
                 </div>

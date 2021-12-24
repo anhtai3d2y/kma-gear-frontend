@@ -5,14 +5,15 @@ import HomeHeader from '../HomePage/Header/HomeHeader.js'
 import Footer from '../HomePage/Footer/Footer.js'
 
 
-class HomePage extends Component {
+class ProductPage extends Component {
 
     render() {
-
+        let productId = this.props.match.params.id
         return (
             <div>
                 <HomeBanner />
                 <HomeHeader />
+                {productId}
                 <Footer />
             </div>
         );
@@ -22,7 +23,6 @@ class HomePage extends Component {
 
 const mapStateToProps = state => {
     return {
-        isLoggedIn: state.user.isLoggedIn
     };
 };
 
@@ -31,4 +31,4 @@ const mapDispatchToProps = dispatch => {
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(HomePage);
+export default connect(mapStateToProps, mapDispatchToProps)(ProductPage);
