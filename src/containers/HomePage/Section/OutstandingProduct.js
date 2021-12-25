@@ -7,6 +7,7 @@ import { Swiper } from "swiper/react/swiper";
 import { SwiperSlide } from "swiper/react/swiper-slide";
 
 import ProductCard from '../../ProductPage/Section/ProductCard.js'
+import BlockHeaderTitle from './BlockHeaderTitle.js'
 
 import *  as actions from "../../../store/actions";
 
@@ -46,9 +47,7 @@ class OutstandingProduct extends Component {
         let arrProducts = this.state.arrProducts
         return (
             <div className="container">
-                <div className="block-header">
-                    <span class="block-header-title">SẢN PHẨM BÁN CHẠY</span>
-                </div>
+                <BlockHeaderTitle title="SẢN PHẨM BÁN CHẠY" />
                 <div className="outstanding-product">
                     <div className="outstanding-product-content">
                         <Swiper

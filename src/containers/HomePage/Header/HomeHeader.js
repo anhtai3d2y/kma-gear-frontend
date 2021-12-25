@@ -49,6 +49,10 @@ class HomeHeader extends Component {
                             </div>
                         </form>
 
+                        <div className="header-login">
+                            <i class="far fa-user header-login-icon"></i>
+                            <span className="header-login-title">Đăng nhập</span>
+                        </div>
                         <div className="header-cart">
                             <img src="https://www.tncstore.vn/catalog/view/theme/default/image/cart-icon.svg" alt="" className="head-cart-icon" />
                             <span className="head-cart-amount">2</span>

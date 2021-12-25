@@ -83,7 +83,6 @@ export const fetchTopProductsHomeStart = () => {
     return async (dispatch, getState) => {
         try {
             let res = await getTopProductsHomeService(10)
-            console.log('get top product ok: ', res)
 
             if (res && res.errCode === 0) {
 

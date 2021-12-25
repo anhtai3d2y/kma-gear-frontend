@@ -11,7 +11,7 @@ class TableManageProduct extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            products: []
+            products: [],
         }
     }
 
@@ -38,7 +38,8 @@ class TableManageProduct extends Component {
 
     render() {
         let arrProducts = this.state.products
-        console.log(arrProducts)
+        let types = this.props.types
+        let brands = this.props.brands
         return (
             < div className="product-container" >
                 <table className="table table-hover table table-bordered table-striped mb-0">
@@ -67,8 +68,20 @@ class TableManageProduct extends Component {
                                                 <img src={product.image} />
                                             </div>
                                         </td>
-                                        <td>{product.typeId}</td>
-                                        <td>{product.brandId}</td>
+                                        <td>
+                                            {
+                                                types.map((type, index) => {
+                                                    return (type.id === product.typeId) ? (type.typeName) : (<div></div>)
+                                                })
+                                            }
+                                        </td>
+                                        <td>
+                                            {
+                                                brands.map((brand, index) => {
+                                                    return (brand.id === product.brandId) ? (brand.name) : (<div></div>)
+                                                })
+                                            }
+                                        </td>
                                         <td>{product.amount}</td>
                                         <td>{product.price}</td>
                                         <td>{product.discount}</td>
@@ -95,14 +108,18 @@ class TableManageProduct extends Component {
 
 const mapStateToProps = state => {
     return {
-        products: state.product.products
+        products: state.product.products,
+        typesRedux: state.producttype.types,
+        isLoadingType: state.producttype.isLoadingType,
+        brandsRedux: state.brand.brands,
+        isLoadingBrand: state.brand.isLoadingBrand,
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
         fetchProductsRedux: () => dispatch(actions.fetchAllProductsStart()),
-        deleteProductRedux: (id) => dispatch(actions.deleteProduct(id))
+        deleteProductRedux: (id) => dispatch(actions.deleteProduct(id)),
     };
 };
 

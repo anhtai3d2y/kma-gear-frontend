@@ -36,7 +36,11 @@ class ProductManage extends Component {
             price: 0,
             discount: 0,
 
+            loadingImage: false,
+
             action: '',
+
+            isShowForm: false
         }
     }
 
@@ -68,6 +72,8 @@ class ProductManage extends Component {
             this.setState({
                 name: '',
                 image: '',
+                descriptionHTML: '',
+                descriptionMarkdown: '',
                 producttype: arrTypes && arrTypes.length > 0 ? arrTypes[0].id : '',
                 brand: arrBrands && arrBrands.length > 0 ? arrBrands[0].id : '',
                 amount: 0,
@@ -75,6 +81,8 @@ class ProductManage extends Component {
                 discount: 0,
 
                 action: CRUDActions.CREATE,
+
+                isShowForm: false
             })
         }
     }
@@ -119,6 +127,28 @@ class ProductManage extends Component {
         }
     }
 
+    uploadImage = async (event) => {
+        let files = event.target.files
+        let data = new FormData()
+        data.append('file', files[0])
+        data.append('upload_preset', 'kma_gear')
+        this.setState({
+            loadingImage: true
+        })
+        let res = await fetch(
+            'https://api.cloudinary.com/v1_1/dbammxapd/image/upload',
+            {
+                method: 'POST',
+                body: data
+            }
+        )
+        let file = await res.json()
+        this.setState({
+            image: file.secure_url,
+            loadingImage: false
+        })
+    }
+
     handleEditorChange = ({ html, text }) => {
         this.setState({
             descriptionHTML: html,
@@ -149,6 +179,12 @@ class ProductManage extends Component {
         return isValid
     }
 
+    handleShowForm = () => {
+        this.setState({
+            isShowForm: !this.state.isShowForm
+        })
+    }
+
     onChangeInput = (event, id) => {
         let copyState = { ...this.state }
         copyState[id] = event.target.value
@@ -172,7 +208,9 @@ class ProductManage extends Component {
             price: product.price,
             discount: product.discount,
 
-            action: CRUDActions.EDIT
+            action: CRUDActions.EDIT,
+
+            isShowForm: true
         })
     }
 
@@ -183,8 +221,6 @@ class ProductManage extends Component {
         // let isLoadingType = this.props.isLoadingType
 
         let { name, image, producttype, brand, amount, price, discount } = this.state
-        console.log(this.state)
-
         return (
             <div className="product-manage-container" >
                 <div className="title">
@@ -194,96 +230,116 @@ class ProductManage extends Component {
 
                     <div className="container">
                         <div className="row">
-                            <div className="col-12 mb-3">
-                                <b>Thêm sản phẩm</b>
-                            </div>
-                            <div className="col-12">
-                                <label className="mt-1">Tên sản phẩm</label>
-                                <input className="form-control" type="text"
-                                    value={name}
-                                    onChange={(event) => { this.onChangeInput(event, 'name') }}
-                                />
-                            </div>
-                            <div className="col-12">
-                                <label className="mt-1">Hình ảnh</label>
-                                <input className="form-control" type="text"
-                                    value={image}
-                                    onChange={(event) => { this.onChangeInput(event, 'image') }}
-                                />
-                                <div className="product-image mt-4 mb-4">
-                                    <img src={image} />
-                                </div>
-                            </div>
-                            <div className="col-6">
-                                <label className="mt-1">Loại sản phẩm</label>
-                                <select id="" class="form-control"
-                                    onChange={(event) => { this.onChangeInput(event, 'producttype') }}
-                                    value={producttype}
-                                >
-                                    {types && types.length > 0 &&
-                                        types.map((type, index) => {
-                                            return (
-                                                <option key={type.id} value={type.id}>{type.typeName}</option>
-                                            )
-                                        })
-                                    }
-                                </select>
-                            </div>
-                            <div className="col-6">
-                                <label className="mt-1">Thương hiệu</label>
-                                <select id="" class="form-control"
-                                    onChange={(event) => { this.onChangeInput(event, 'brand') }}
-                                    value={brand}
-                                >
-                                    {brands && brands.length > 0 &&
-                                        brands.map((brand, index) => {
-                                            return (
-                                                <option key={brand.id} value={brand.id}>{brand.name}</option>
-                                            )
-                                        })
-                                    }
-                                </select>
-                            </div>
-                            <div className="col-4">
-                                <label className="mt-1">Số lượng</label>
-                                <input className="form-control" type="text"
-                                    value={amount}
-                                    onChange={(event) => { this.onChangeInput(event, 'amount') }}
-                                />
-                            </div>
-                            <div className="col-4">
-                                <label className="mt-1">Giá</label>
-                                <input className="form-control" type="text"
-                                    value={price}
-                                    onChange={(event) => { this.onChangeInput(event, 'price') }}
-                                />
-                            </div>
-                            <div className="col-4">
-                                <label className="mt-1">Chiết khấu</label>
-                                <input className="form-control" type="text"
-                                    value={discount}
-                                    onChange={(event) => { this.onChangeInput(event, 'discount') }}
-                                />
-                            </div>
-                            <div className="col-12">
-                                <label className="mt-1">Mô tả sản phẩm</label>
-                                <MdEditor
-                                    style={{ height: '300px' }}
-                                    value={this.state.descriptionMarkdown}
-                                    renderHTML={text => mdParser.render(text)}
-                                    onChange={this.handleEditorChange}
-                                />
-                            </div>
-                            <div className="col-12 my-3">
-                                <button type="button" class={this.state.action === CRUDActions.EDIT ? "btn btn-primary" : "btn btn-success"}
-                                    onClick={() => { this.handleSaveProduct() }}
-                                >{this.state.action === CRUDActions.EDIT ? "Lưu" : "Thêm"}</button>
+                            <div className="col-12 mb-3 btn-show-form"
+                                onClick={() => this.handleShowForm()}
+                            >
+                                <b>Thêm sản phẩm {this.state.isShowForm ? (<i class="fas fa-caret-up"></i>) : (<i class="fas fa-caret-down"></i>)}</b>
                             </div>
                         </div>
+                        {this.state.isShowForm ? (
+                            <div>
+                                <div className="row">
+                                    <div className="col-12">
+                                        <label className="mt-1">Tên sản phẩm</label>
+                                        <input className="form-control" type="text"
+                                            value={name}
+                                            onChange={(event) => { this.onChangeInput(event, 'name') }}
+                                        />
+                                    </div>
+                                    <div className="col-12">
+                                        <label className="mt-1">Hình ảnh</label>
+                                        <input className="form-control" type="text"
+                                            value={image}
+                                            onChange={(event) => { this.onChangeInput(event, 'image') }}
+                                        />
+                                        <input type="file"
+                                            name="file"
+                                            placeholder="Chọn hình ảnh cho sản phẩm"
+                                            onChange={(event) => this.uploadImage(event)}
+                                        />
+                                        {this.loadingImage ? (
+                                            <label>Đang tải hình ảnh</label>
+                                        ) : (<div className="product-image mt-4 mb-4">
+                                            <img src={image} />
+                                        </div>)}
+
+                                    </div>
+                                    <div className="col-6">
+                                        <label className="mt-1">Loại sản phẩm</label>
+                                        <select id="" class="form-control"
+                                            onChange={(event) => { this.onChangeInput(event, 'producttype') }}
+                                            value={producttype}
+                                        >
+                                            {types && types.length > 0 &&
+                                                types.map((type, index) => {
+                                                    return (
+                                                        <option key={type.id} value={type.id}>{type.typeName}</option>
+                                                    )
+                                                })
+                                            }
+                                        </select>
+                                    </div>
+                                    <div className="col-6">
+                                        <label className="mt-1">Thương hiệu</label>
+                                        <select id="" class="form-control"
+                                            onChange={(event) => { this.onChangeInput(event, 'brand') }}
+                                            value={brand}
+                                        >
+                                            {brands && brands.length > 0 &&
+                                                brands.map((brand, index) => {
+                                                    return (
+                                                        <option key={brand.id} value={brand.id}>{brand.name}</option>
+                                                    )
+                                                })
+                                            }
+                                        </select>
+                                    </div>
+                                    <div className="col-4">
+                                        <label className="mt-1">Số lượng</label>
+                                        <input className="form-control" type="text"
+                                            value={amount}
+                                            onChange={(event) => { this.onChangeInput(event, 'amount') }}
+                                        />
+                                    </div>
+                                    <div className="col-4">
+                                        <label className="mt-1">Giá</label>
+                                        <input className="form-control" type="text"
+                                            value={price}
+                                            onChange={(event) => { this.onChangeInput(event, 'price') }}
+                                        />
+                                    </div>
+                                    <div className="col-4">
+                                        <label className="mt-1">Chiết khấu</label>
+                                        <input className="form-control" type="text"
+                                            value={discount}
+                                            onChange={(event) => { this.onChangeInput(event, 'discount') }}
+                                        />
+                                    </div>
+                                    <div className="col-12">
+                                        <label className="mt-1">Mô tả sản phẩm</label>
+                                        <MdEditor
+                                            style={{ height: '300px' }}
+                                            value={this.state.descriptionMarkdown}
+                                            renderHTML={text => mdParser.render(text)}
+                                            onChange={this.handleEditorChange}
+                                        />
+                                    </div>
+                                    <div className="col-12 my-3">
+                                        <button type="button" class={this.state.action === CRUDActions.EDIT ? "btn btn-primary" : "btn btn-success"}
+                                            onClick={() => { this.handleSaveProduct() }}
+                                        >{this.state.action === CRUDActions.EDIT ? "Lưu" : "Thêm"}</button>
+                                    </div>
+                                </div>
+                            </div>
+                        ) : (
+                            <div></div>
+                        )}
                     </div>
                     <TableManageProduct
                         handleEditProductFromParent={this.handleEditProductFromParent}
                         action={this.state.action}
+                        types={types}
+                        brands={brands}
                     />
                 </div>
             </div>
