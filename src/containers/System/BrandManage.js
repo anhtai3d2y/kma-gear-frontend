@@ -3,7 +3,7 @@ import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { CRUDActions } from "../../utils";
 import './BrandManage.scss';
-import TableManageCategory from "./TableManageCategory";
+import TableManageBrand from "./TableManageBrand";
 
 import { ToastContainer, toast } from 'react-toastify';
 
@@ -30,14 +30,14 @@ class BrandManage extends Component {
     }
 
     async componentDidMount() {
-        this.props.fetchCategorysRedux()
-        this.handleScroll()
+        this.props.fetchBrandsRedux()
+        // this.handleScroll()
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
         this.handleScroll()
 
-        if (prevProps.categorysRedux !== this.props.categorysRedux) {
+        if (prevProps.brandsRedux !== this.props.brandsRedux) {
             this.setState({
                 name: '',
                 image: '',
@@ -58,7 +58,7 @@ class BrandManage extends Component {
         }
     }
 
-    handleSaveCategory = async () => {
+    handleSaveBrand = async () => {
         let isValid = this.checkValidateInput()
         if (isValid) {
             let { action } = this.state
@@ -66,22 +66,22 @@ class BrandManage extends Component {
             if (action === CRUDActions.CREATE) {
                 //create category
                 console.log('create')
-                let newCategory = {
+                let newBrand = {
                     name: this.state.name,
                     image: this.state.image,
                 }
-                await this.props.createNewCategory(newCategory)
-                toast(`Thêm danh mục ${newCategory.name} thành công`)
+                await this.props.createNewBrand(newBrand)
+                toast(`Thêm nhãn hàng ${newBrand.name} thành công`)
             }
             if (action === CRUDActions.EDIT) {
                 //edit category
-                await this.props.editCategory({
+                await this.props.editBrand({
                     id: this.state.id,
                     name: this.state.name,
                     image: this.state.image,
                 })
             }
-            await this.props.fetchCategorysRedux()
+            await this.props.fetchBrandsRedux()
         }
     }
 
@@ -137,7 +137,7 @@ class BrandManage extends Component {
         })
     }
 
-    handleEditCategoryFromParent = (category) => {
+    handleEditBrandFromParent = (category) => {
         this.setState({
 
             id: category.id,
@@ -155,25 +155,25 @@ class BrandManage extends Component {
 
         let { name, image } = this.state
         return (
-            <div className="category-manage-container" >
+            <div className="brand-manage-container" >
                 <div className="title">
-                    Quản lý danh mục
+                    Quản lý nhãn hàng
                 </div>
-                <div className="category-manage-body " ref={this.scrollTop}>
+                <div className="brand-manage-body " ref={this.scrollTop}>
 
                     <div className="container">
                         <div className="row">
                             <div className="col-12 mb-3 btn-show-form"
                                 onClick={() => this.handleShowForm()}
                             >
-                                <b>Thêm danh mục {this.state.isShowForm ? (<i class="fas fa-caret-up"></i>) : (<i class="fas fa-caret-down"></i>)}</b>
+                                <b>Thêm nhãn hàng {this.state.isShowForm ? (<i class="fas fa-caret-up"></i>) : (<i class="fas fa-caret-down"></i>)}</b>
                             </div>
                         </div>
                         {this.state.isShowForm ? (
                             <div>
                                 <div className="row">
                                     <div className="col-12">
-                                        <label className="mt-1">Tên danh mục </label>
+                                        <label className="mt-1">Tên nhãn hàng </label>
                                         <input className="form-control" type="text"
                                             value={name}
                                             onChange={(event) => { this.onChangeInput(event, 'name') }}
@@ -187,19 +187,19 @@ class BrandManage extends Component {
                                         />
                                         <input type="file"
                                             name="file"
-                                            placeholder="Chọn hình ảnh cho danh mục"
+                                            placeholder="Chọn hình ảnh cho nhãn hàng"
                                             onChange={(event) => this.uploadImage(event)}
                                         />
                                         {this.loadingImage ? (
                                             <label>Đang tải hình ảnh</label>
-                                        ) : (<div className="category-image mt-4 mb-4">
+                                        ) : (<div className="brand-image mt-4 mb-4">
                                             <img src={image} />
                                         </div>)}
 
                                     </div>
                                     <div className="col-12 my-3">
                                         <button type="button" class={this.state.action === CRUDActions.EDIT ? "btn btn-primary" : "btn btn-success"}
-                                            onClick={() => { this.handleSaveCategory() }}
+                                            onClick={() => { this.handleSaveBrand() }}
                                         >{this.state.action === CRUDActions.EDIT ? "Lưu" : "Thêm"}</button>
                                     </div>
                                 </div>
@@ -208,8 +208,8 @@ class BrandManage extends Component {
                             <div></div>
                         )}
                     </div>
-                    <TableManageCategory
-                        handleEditCategoryFromParent={this.handleEditCategoryFromParent}
+                    <TableManageBrand
+                        handleEditBrandFromParent={this.handleEditBrandFromParent}
                         action={this.state.action}
                     />
                 </div>
@@ -221,15 +221,15 @@ class BrandManage extends Component {
 
 const mapStateToProps = state => {
     return {
-        categorysRedux: state.category.categorys
+        brandsRedux: state.brand.brands
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
-        fetchCategorysRedux: () => dispatch(actions.fetchCategoryStart()),
-        createNewCategory: (data) => dispatch(actions.createNewCategory(data)),
-        editCategory: (data) => dispatch(actions.editCategory(data)),
+        fetchBrandsRedux: () => dispatch(actions.fetchBrandStart()),
+        createNewBrand: (data) => dispatch(actions.createNewBrand(data)),
+        editBrand: (data) => dispatch(actions.editBrand(data)),
     };
 };
 

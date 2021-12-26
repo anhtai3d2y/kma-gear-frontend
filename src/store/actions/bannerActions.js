@@ -44,11 +44,11 @@ export const createNewBanner = (data) => {
             if (res && res.errCode === 0) {
                 dispatch(saveBannerSuccess())
             } else {
-                toast.error('Thêm nhãn hàng thất bại!')
+                toast.error('Thêm biển quảng cáo thất bại!')
                 dispatch(saveBannerFailed())
             }
         } catch (error) {
-            toast.error('Thêm nhãn hàng thất bại!')
+            toast.error('Thêm biển quảng cáo thất bại!')
             dispatch(saveBannerFailed())
             console.log(error)
         }
@@ -67,14 +67,14 @@ export const editBanner = (data) => {
         try {
             let res = await editBannerService(data)
             if (res && res.errCode === 0) {
-                toast('Cập nhật nhãn hàng thành công!')
+                toast('Cập nhật biển quảng cáo thành công!')
                 dispatch(editBannerSuccess())
             } else {
-                toast.error('Cập nhật nhãn hàng thất bại!')
+                toast.error('Cập nhật biển quảng cáo thất bại!')
                 dispatch(editBannerFailed())
             }
         } catch (error) {
-            toast.error('Cập nhật nhãn hàng thất bại!')
+            toast.error('Cập nhật biển quảng cáo thất bại!')
             dispatch(editBannerFailed())
             console.log(error)
         }
@@ -94,13 +94,13 @@ export const deleteBanner = (bannerId) => {
             let res = await deleteBannerService(bannerId)
             if (res && res.errCode === 0) {
                 dispatch(deleteBannerSuccess())
-                toast('Xóa nhãn hàng thành công')
+                toast('Xóa biển quảng cáo thành công')
             } else {
-                toast.error('Xóa nhãn hàng thất bại!')
+                toast.error('Xóa biển quảng cáo thất bại!')
                 dispatch(deleteBannerFailed())
             }
         } catch (error) {
-            toast.error('Xóa nhãn hàng thất bại!')
+            toast.error('Xóa biển quảng cáo thất bại!')
             dispatch(deleteBannerFailed())
             console.log(error)
         }

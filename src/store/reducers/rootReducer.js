@@ -5,6 +5,7 @@ import appReducer from "./appReducer";
 import userReducer from "./userReducer";
 import producttypeReducer from "./producttypeReducer";
 import brandReducer from "./brandReducer";
+import bannerReducer from "./bannerReducer";
 import productReducer from "./productReducer";
 import categoryReducer from "./categoryReducer";
 
@@ -36,6 +37,7 @@ export default (history) => combineReducers({
     app: persistReducer(appPersistConfig, appReducer),
     producttype: producttypeReducer,
     brand: brandReducer,
+    banner: bannerReducer,
     product: productReducer,
     category: categoryReducer
 })
