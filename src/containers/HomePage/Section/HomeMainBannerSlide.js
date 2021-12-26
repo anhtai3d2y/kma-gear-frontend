@@ -40,32 +40,32 @@ class HomeMainBannerSlide extends Component {
                     >
                         <SwiperSlide>
                             <a href="https://www.tncstore.vn/khuyen-mai-noel-2021">
-                                <img src="https://www.tncstore.vn/image/catalog/banner/2021/Thang_12/260995656_1067662734023699_5487542389668896529_n.png" />
+                                <img src="https://res.cloudinary.com/dbammxapd/image/upload/v1640508778/kma_gear/j74rlnxue7jnjfkzyj6f.png" />
                             </a>
                         </SwiperSlide>
                         <SwiperSlide>
                             <a href="https://www.tncstore.vn/khuyen-mai-gaming-gear">
-                                <img src="https://www.tncstore.vn/image/catalog/banner/2021/thang%2011/Banner%201650x660%20-%203.png" />
+                                <img src="https://res.cloudinary.com/dbammxapd/image/upload/v1640508824/kma_gear/2_yjiysg.png" />
                             </a>
                         </SwiperSlide>
                         <SwiperSlide>
                             <a href="https://www.tncstore.vn/gaming-pc.html">
-                                <img src="https://www.tncstore.vn/image/catalog/banner/2021/Thang_12/Banner_Web_noel_2021.png" />
+                                <img src="https://res.cloudinary.com/dbammxapd/image/upload/v1640508829/kma_gear/3_ndobek.png" />
                             </a>
                         </SwiperSlide>
                         <SwiperSlide>
                             <a href="https://www.tncstore.vn/gaming-pc.html">
-                                <img src="https://www.tncstore.vn/image/catalog/banner/2021/thang%2011/Banner%201650x660%20-%202.png" />
+                                <img src="https://res.cloudinary.com/dbammxapd/image/upload/v1640508829/kma_gear/4_z2ltwt.png" />
                             </a>
                         </SwiperSlide>
                         <SwiperSlide>
                             <a href="https://www.tncstore.vn/gaming-pc.html">
-                                <img src="https://www.tncstore.vn/image/catalog/banner/2021/thang%2011/Banner%201650x660%20-%204.png" />
+                                <img src="https://res.cloudinary.com/dbammxapd/image/upload/v1640508829/kma_gear/5_euedpl.png" />
                             </a>
                         </SwiperSlide>
                         <SwiperSlide>
                             <a href="https://www.tncstore.vn/gaming-pc.html">
-                                <img src="https://www.tncstore.vn/image/catalog/banner/2021/Thang_12/Banner_Web_noel_2021.png" />
+                                <img src="https://res.cloudinary.com/dbammxapd/image/upload/v1640508828/kma_gear/6_qapoo9.png" />
                             </a>
                         </SwiperSlide>
                     </Swiper>

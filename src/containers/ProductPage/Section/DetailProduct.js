@@ -24,14 +24,14 @@ class ProductPage extends Component {
         if (index === selected) {
             setTimeout(() => {
                 this.scrollTop.current.scrollIntoView({ behavior: 'smooth' })
-            }, 500)
+            }, 100)
         }
     }
 
     render() {
         console.log('detail product did mount')
         return (
-            <div className="detail-product" ref={this.scrollTop}>
+            <div className="detail-product mt-4" ref={this.scrollTop}>
                 <div className="container">
                     <div className="product-detail-top">
                         <div className="product-detail-top-left">
@@ -158,7 +158,7 @@ class ProductPage extends Component {
                     <div className="product-detail-bottom">
                         <div className="content-bottom">
                             <BlockHeaderTitle headerTitle="THÔNG TIN SẢN PHẨM" />
-                            <div>Description content here</div>
+                            <div>Description content here {this.props.productId}</div>
                         </div>
                     </div>
                 </div>

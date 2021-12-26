@@ -19,6 +19,7 @@ class BannerManage extends Component {
             id: '',
             link: '',
             image: '',
+            type: '',
 
             loadingImage: false,
 
@@ -41,6 +42,7 @@ class BannerManage extends Component {
             this.setState({
                 link: '',
                 image: '',
+                type: 0,
 
                 action: CRUDActions.CREATE,
 
@@ -69,6 +71,7 @@ class BannerManage extends Component {
                 let newBanner = {
                     link: this.state.link,
                     image: this.state.image,
+                    type: this.state.type,
                 }
                 await this.props.createNewBanner(newBanner)
                 toast(`Thêm biển quảng cáo thành công`)
@@ -79,6 +82,7 @@ class BannerManage extends Component {
                     id: this.state.id,
                     link: this.state.link,
                     image: this.state.image,
+                    type: this.state.type,
                 })
             }
             await this.props.fetchBannersRedux()
@@ -109,8 +113,8 @@ class BannerManage extends Component {
 
     checkValidateInput = () => {
         let isValid = true
-        let arrCheck = ['link', 'image']
-        let arrMessage = ['Tên danh mục', 'Hình ảnh']
+        let arrCheck = ['link', 'image', 'type']
+        let arrMessage = ['Tên danh mục', 'Hình ảnh', 'Loại biên']
         for (let i = 0; i < arrCheck.length; i++) {
             if (!this.state[arrCheck[i]]) {
                 isValid = false
@@ -153,7 +157,7 @@ class BannerManage extends Component {
     render() {
 
 
-        let { link, image } = this.state
+        let { link, image, type } = this.state
         return (
             <div className="banner-manage-container" >
                 <div className="title">
@@ -195,7 +199,16 @@ class BannerManage extends Component {
                                         ) : (<div className="banner-image mt-4 mb-4">
                                             <img src={image} />
                                         </div>)}
-
+                                    </div>
+                                    <div className="col-12">
+                                        <label className="mt-1">Loại</label>
+                                        <select id="" class="form-control"
+                                            onChange={(event) => { this.onChangeInput(event, 'type') }}
+                                            value={type}
+                                        >
+                                            <option key={0} value={0}>Biển lớn</option>
+                                            <option key={1} value={1}>Biển nhỏ</option>
+                                        </select>
                                     </div>
                                     <div className="col-12 my-3">
                                         <button type="button" class={this.state.action === CRUDActions.EDIT ? "btn btn-primary" : "btn btn-success"}

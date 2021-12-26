@@ -46,6 +46,7 @@ class TableManageBanner extends Component {
                             <th scope="col">ID</th>
                             <th scope="col">Link</th>
                             <th scope="col">Hình ảnh</th>
+                            <th scope="col">Loại</th>
                             <th scope="col" colspan="2">Hành động</th>
                         </tr>
                     </thead>
@@ -61,6 +62,7 @@ class TableManageBanner extends Component {
                                                 <img src={banner.image} />
                                             </div>
                                         </td>
+                                        <td>{banner.type ? 'Biển nhỏ' : 'Biển lớn'}</td>
                                         <td>
                                             <button className="btn-edit"
                                                 onClick={() => this.handleEditBanner(banner)}
