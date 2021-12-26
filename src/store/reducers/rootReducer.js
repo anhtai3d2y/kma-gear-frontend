@@ -7,6 +7,7 @@ import producttypeReducer from "./producttypeReducer";
 import brandReducer from "./brandReducer";
 import bannerReducer from "./bannerReducer";
 import productReducer from "./productReducer";
+import billReducer from "./billReducer";
 import categoryReducer from "./categoryReducer";
 
 
@@ -39,5 +40,6 @@ export default (history) => combineReducers({
     brand: brandReducer,
     banner: bannerReducer,
     product: productReducer,
-    category: categoryReducer
+    category: categoryReducer,
+    bill: billReducer
 })

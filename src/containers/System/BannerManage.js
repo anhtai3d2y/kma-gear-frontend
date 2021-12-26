@@ -19,7 +19,7 @@ class BannerManage extends Component {
             id: '',
             link: '',
             image: '',
-            type: '',
+            type: 1,
 
             loadingImage: false,
 
@@ -113,8 +113,8 @@ class BannerManage extends Component {
 
     checkValidateInput = () => {
         let isValid = true
-        let arrCheck = ['link', 'image', 'type']
-        let arrMessage = ['Tên danh mục', 'Hình ảnh', 'Loại biên']
+        let arrCheck = ['link', 'image']
+        let arrMessage = ['Tên danh mục', 'Hình ảnh']
         for (let i = 0; i < arrCheck.length; i++) {
             if (!this.state[arrCheck[i]]) {
                 isValid = false
@@ -141,12 +141,13 @@ class BannerManage extends Component {
         })
     }
 
-    handleEditBannerFromParent = (category) => {
+    handleEditBannerFromParent = (banner) => {
         this.setState({
 
-            id: category.id,
-            link: category.link,
-            image: category.image,
+            id: banner.id,
+            link: banner.link,
+            image: banner.image,
+            type: banner.type,
 
             action: CRUDActions.EDIT,
 
@@ -170,7 +171,7 @@ class BannerManage extends Component {
                             <div className="col-12 mb-3 btn-show-form"
                                 onClick={() => this.handleShowForm()}
                             >
-                                <b>Thêm biển quảng cáo {this.state.isShowForm ? (<i class="fas fa-caret-up"></i>) : (<i class="fas fa-caret-down"></i>)}</b>
+                                <b>{this.state.action === CRUDActions.EDIT ? "Sửa biển quảng cáo" : "Thêm biển quảng cáo"} {this.state.isShowForm ? (<i class="fas fa-caret-up"></i>) : (<i class="fas fa-caret-down"></i>)}</b>
                             </div>
                         </div>
                         {this.state.isShowForm ? (

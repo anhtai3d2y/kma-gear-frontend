@@ -245,7 +245,7 @@ class ProductManage extends Component {
                             <div className="col-12 mb-3 btn-show-form"
                                 onClick={() => this.handleShowForm()}
                             >
-                                <b>Thêm sản phẩm {this.state.isShowForm ? (<i class="fas fa-caret-up"></i>) : (<i class="fas fa-caret-down"></i>)}</b>
+                                <b>{this.state.action === CRUDActions.EDIT ? "Sửa sản phẩm" : "Thêm sản phẩm"} {this.state.isShowForm ? (<i class="fas fa-caret-up"></i>) : (<i class="fas fa-caret-down"></i>)}</b>
                             </div>
                         </div>
                         {this.state.isShowForm ? (

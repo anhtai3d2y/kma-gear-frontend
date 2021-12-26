@@ -13,6 +13,7 @@ class ProductPage extends Component {
 
     componentDidMount() {
         this.handleScroll()
+        document.title = "Bàn phím......"
     }
 
     componentDidUpdate() {

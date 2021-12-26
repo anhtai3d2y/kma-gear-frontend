@@ -1,0 +1,20 @@
+.bill-manage-container {
+    .bill-manage-body {
+        .container {
+            .btn-show-form {
+                cursor: pointer;
+                color: #339af0;
+                &:hover {
+                    opacity: 0.8;
+                }
+            }
+            .bill-image {
+                text-align: center;
+
+                img {
+                    max-width: 200px;
+                }
+            }
+        }
+    }
+}
