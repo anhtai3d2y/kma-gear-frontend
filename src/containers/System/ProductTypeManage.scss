@@ -1,0 +1,13 @@
+.producttype-manage-container {
+    .producttype-manage-body {
+        .container {
+            .btn-show-form {
+                cursor: pointer;
+                color: #339af0;
+                &:hover {
+                    opacity: 0.8;
+                }
+            }
+        }
+    }
+}

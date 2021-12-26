@@ -47,7 +47,7 @@ class OutstandingProduct extends Component {
         let arrProducts = this.state.arrProducts
         return (
             <div className="container">
-                <BlockHeaderTitle title="SẢN PHẨM BÁN CHẠY" />
+                <BlockHeaderTitle headerTitle="SẢN PHẨM BÁN CHẠY" />
                 <div className="outstanding-product">
                     <div className="outstanding-product-content">
                         <Swiper

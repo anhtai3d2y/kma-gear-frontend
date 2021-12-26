@@ -11,7 +11,7 @@ class ErrorNotFound extends Component {
             <div className="error-not-found">
                 <div className="container">
                     <div className="content-error">
-                        <img src="https://i.ibb.co/vksfNPq/pngegg.png" alt="" />
+                        <img src="https://res.cloudinary.com/dbammxapd/image/upload/v1640407616/kma_gear/404-not-found_azw7xh.png" alt="" />
                         <h4>THÔI TOANG RỒI</h4>
                         <h5>Nội dung bạn đang tìm có vẻ như không tồn tại, hoặc đã được chuyển đi nơi khác,
                             bạn có thể tham khảo một số sản phẩm mới của chúng tôi ở phía dưới.</h5>

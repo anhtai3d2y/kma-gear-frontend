@@ -10,10 +10,9 @@ SwiperCore.use([Pagination, Navigation, Autoplay]);
 class OutstandingProduct extends Component {
     render() {
         let title = this.props.headerTitle
-        console.log('title:', title)
         return (
-            <div className="block-header">
-                <span class="block-header-title">SẢN PHẨM BÁN CHẠY</span>
+            <div className="block-header mt-4">
+                <span class="block-header-title">{title}</span>
             </div>
         );
     }

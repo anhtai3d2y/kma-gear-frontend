@@ -4,12 +4,18 @@ import './HomeHeader.scss'
 import { FormattedMessage } from "react-intl";
 import { LANGUAGES } from "../../../utils";
 import { changeLanguageApp } from "../../../store/actions";
+import { withRouter } from 'react-router';
+
 
 
 class HomeHeader extends Component {
 
     changeLanguage = (language) => {
         this.props.changeLanguageAppRedux(language)
+    }
+
+    handleGoHomePage = () => {
+        this.props.history.push(`/home`)
     }
 
     render() {
@@ -26,9 +32,9 @@ class HomeHeader extends Component {
                 <div className="header-main">
                     <div className="container">
                         <div className="header-logo">
-                            <a href="/">
-                                <img src="https://i.ibb.co/GRhfnR9/kma-gear-logo.png" alt />
-                            </a>
+                            <div style={{ cursor: "pointer" }} onClick={() => { this.handleGoHomePage() }}>
+                                <img src="https://res.cloudinary.com/dbammxapd/image/upload/v1640407614/kma_gear/kma-gear-logo_jqoxgm.png" alt />
+                            </div>
                         </div>
 
                         <form id="form-search" action="" method="">
@@ -115,4 +121,4 @@ const mapDispatchToProps = dispatch => {
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(HomeHeader);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(HomeHeader));

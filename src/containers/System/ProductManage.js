@@ -42,14 +42,17 @@ class ProductManage extends Component {
 
             isShowForm: false
         }
+        this.scrollTop = React.createRef()
     }
 
     async componentDidMount() {
         this.props.getProducttypeStart()
         this.props.getBrandStart()
+        this.handleScroll()
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
+        this.handleScroll()
         if (prevProps.typesRedux !== this.props.typesRedux) {
             let arrTypes = this.props.typesRedux
             this.setState({
@@ -84,6 +87,15 @@ class ProductManage extends Component {
 
                 isShowForm: false
             })
+        }
+    }
+
+    handleScroll = () => {
+        const { index, selected } = this.props
+        if (index === selected) {
+            setTimeout(() => {
+                this.scrollTop.current.scrollIntoView({ behavior: 'smooth' })
+            }, 500)
         }
     }
 
@@ -226,7 +238,7 @@ class ProductManage extends Component {
                 <div className="title">
                     Quản lý sản phẩm
                 </div>
-                <div className="product-manage-body">
+                <div className="product-manage-body " ref={this.scrollTop}>
 
                     <div className="container">
                         <div className="row">

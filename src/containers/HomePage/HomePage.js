@@ -11,6 +11,7 @@ import Footer from './Footer/Footer'
 
 class HomePage extends Component {
 
+
     render() {
 
         return (
@@ -20,7 +21,9 @@ class HomePage extends Component {
                 <HomeMainBannerSlide />
                 <HomeSubBannerSlide />
                 <ErrorNotFound />
-                <OutstandingProduct />
+                <div className="container">
+                    <OutstandingProduct />
+                </div>
                 <Footer />
             </div>
         );

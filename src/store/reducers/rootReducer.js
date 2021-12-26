@@ -6,6 +6,7 @@ import userReducer from "./userReducer";
 import producttypeReducer from "./producttypeReducer";
 import brandReducer from "./brandReducer";
 import productReducer from "./productReducer";
+import categoryReducer from "./categoryReducer";
 
 
 import autoMergeLevel2 from 'redux-persist/lib/stateReconciler/autoMergeLevel2';
@@ -35,5 +36,6 @@ export default (history) => combineReducers({
     app: persistReducer(appPersistConfig, appReducer),
     producttype: producttypeReducer,
     brand: brandReducer,
-    product: productReducer
+    product: productReducer,
+    category: categoryReducer
 })
