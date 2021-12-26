@@ -3,7 +3,7 @@ import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { CRUDActions } from "../../utils";
 import './CategoryManage.scss';
-// import TableManageProduct from "./TableManageProduct";
+import TableManageCategory from "./TableManageCategory";
 
 import { ToastContainer, toast } from 'react-toastify';
 
@@ -22,7 +22,7 @@ class CategoryManage extends Component {
 
             loadingImage: false,
 
-            action: '',
+            action: CRUDActions.CREATE,
 
             isShowForm: false
         }
@@ -30,48 +30,23 @@ class CategoryManage extends Component {
     }
 
     async componentDidMount() {
-        // this.props.getProducttypeStart()
-        // this.props.getBrandStart()
-        // this.handleScroll()
+        this.props.fetchCategorysRedux()
+        this.handleScroll()
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        // this.handleScroll()
-        // if (prevProps.typesRedux !== this.props.typesRedux) {
-        //     let arrTypes = this.props.typesRedux
-        //     this.setState({
-        //         typeProductArr: arrTypes,
-        //         producttype: arrTypes && arrTypes.length > 0 ? arrTypes[0].id : ''
-        //     })
-        // }
-        // if (prevProps.brandsRedux !== this.props.brandsRedux) {
-        //     let arrBrands = this.props.brandsRedux
-        //     this.setState({
-        //         brandArr: arrBrands,
-        //         brand: arrBrands && arrBrands.length > 0 ? arrBrands[0].id : ''
-        //     })
-        // }
+        this.handleScroll()
 
-        // if (prevProps.products !== this.props.products) {
-        //     let arrTypes = this.props.typesRedux
-        //     let arrBrands = this.props.brandsRedux
+        if (prevProps.categorysRedux !== this.props.categorysRedux) {
+            this.setState({
+                name: '',
+                image: '',
 
-        //     this.setState({
-        //         name: '',
-        //         image: '',
-        //         descriptionHTML: '',
-        //         descriptionMarkdown: '',
-        //         producttype: arrTypes && arrTypes.length > 0 ? arrTypes[0].id : '',
-        //         brand: arrBrands && arrBrands.length > 0 ? arrBrands[0].id : '',
-        //         amount: 0,
-        //         price: 0,
-        //         discount: 0,
+                action: CRUDActions.CREATE,
 
-        //         action: CRUDActions.CREATE,
-
-        //         isShowForm: false
-        //     })
-        // }
+                isShowForm: false
+            })
+        }
     }
 
     handleScroll = () => {
@@ -83,44 +58,31 @@ class CategoryManage extends Component {
         }
     }
 
-    handleSaveProduct = async () => {
-        // let isValid = this.checkValidateInput()
-        // if (isValid) {
-        //     let { action } = this.state
+    handleSaveCategory = async () => {
+        let isValid = this.checkValidateInput()
+        if (isValid) {
+            let { action } = this.state
 
-        //     if (action === CRUDActions.CREATE) {
-        //         //create product
-        //         let newProduct = {
-        //             name: this.state.name,
-        //             image: this.state.image,
-        //             descriptionHTML: this.state.descriptionHTML,
-        //             descriptionMarkdown: this.state.descriptionMarkdown,
-        //             typeId: Number(this.state.producttype),
-        //             brandId: Number(this.state.brand),
-        //             amount: Number(this.state.amount),
-        //             price: Number(this.state.price),
-        //             discount: Number(this.state.discount),
-        //         }
-        //         await this.props.createNewProduct(newProduct)
-        //         toast(`Thêm sản phẩm ${newProduct.name} thành công`)
-        //     }
-        //     if (action === CRUDActions.EDIT) {
-        //         //edit product
-        //         await this.props.editProductRedux({
-        //             id: this.state.id,
-        //             name: this.state.name,
-        //             image: this.state.image,
-        //             descriptionHTML: this.state.descriptionHTML,
-        //             descriptionMarkdown: this.state.descriptionMarkdown,
-        //             typeId: Number(this.state.producttype),
-        //             brandId: Number(this.state.brand),
-        //             amount: Number(this.state.amount),
-        //             price: Number(this.state.price),
-        //             discount: Number(this.state.discount),
-        //         })
-        //     }
-        //     await this.props.fetchProductsRedux()
-        // }
+            if (action === CRUDActions.CREATE) {
+                //create category
+                console.log('create')
+                let newCategory = {
+                    name: this.state.name,
+                    image: this.state.image,
+                }
+                await this.props.createNewCategory(newCategory)
+                toast(`Thêm danh mục ${newCategory.name} thành công`)
+            }
+            if (action === CRUDActions.EDIT) {
+                //edit category
+                await this.props.editCategory({
+                    id: this.state.id,
+                    name: this.state.name,
+                    image: this.state.image,
+                })
+            }
+            await this.props.fetchCategorysRedux()
+        }
     }
 
     uploadImage = async (event) => {
@@ -146,26 +108,18 @@ class CategoryManage extends Component {
     }
 
     checkValidateInput = () => {
-        // let isValid = true
-        // let arrCheck = ['name', 'image', 'amount', 'price', 'discount']
-        // let arrMessage = ['Tên sản phẩm', 'Hình ảnh', 'Số lượng', 'Giá', 'Chiết khấu']
-        // for (let i = 0; i < arrCheck.length; i++) {
-        //     if (!this.state[arrCheck[i]]) {
-        //         if (arrCheck[i] !== 'discount') {
-        //             isValid = false
-        //             toast.error(`Bạn đang để trống ${arrMessage[i]}`)
-        //             return isValid
-        //         } else {
-        //             if (this.state[arrCheck[i]] === '') {
-        //                 isValid = false
-        //                 toast.error(`Bạn đang để trống ${arrMessage[i]}`)
-        //                 return isValid
-        //             }
-        //         }
-        //     }
-        // }
-        // // toast('Lưu sản phẩm thành công')
-        // return isValid
+        let isValid = true
+        let arrCheck = ['name', 'image']
+        let arrMessage = ['Tên danh mục', 'Hình ảnh']
+        for (let i = 0; i < arrCheck.length; i++) {
+            if (!this.state[arrCheck[i]]) {
+                isValid = false
+                toast.error(`Bạn đang để trống ${arrMessage[i]}`)
+                return isValid
+            }
+        }
+        // toast('Lưu sản phẩm thành công')
+        return isValid
     }
 
     handleShowForm = () => {
@@ -183,30 +137,23 @@ class CategoryManage extends Component {
         })
     }
 
-    handleEditProductFromParent = (product) => {
-        // this.setState({
+    handleEditCategoryFromParent = (category) => {
+        this.setState({
 
-        //     id: product.id,
-        //     name: product.name,
-        //     image: product.image,
-        //     descriptionHTML: product.descriptionHTML,
-        //     descriptionMarkdown: product.descriptionMarkdown,
-        //     producttype: product.typeId,
-        //     brand: product.brandId,
-        //     amount: product.amount,
-        //     price: product.price,
-        //     discount: product.discount,
+            id: category.id,
+            name: category.name,
+            image: category.image,
 
-        //     action: CRUDActions.EDIT,
+            action: CRUDActions.EDIT,
 
-        //     isShowForm: true
-        // })
+            isShowForm: true
+        })
     }
 
     render() {
 
 
-        let { name, image, producttype, brand, amount, price, discount } = this.state
+        let { name, image } = this.state
         return (
             <div className="category-manage-container" >
                 <div className="title">
@@ -214,19 +161,19 @@ class CategoryManage extends Component {
                 </div>
                 <div className="category-manage-body " ref={this.scrollTop}>
 
-                    {/* <div className="container">
+                    <div className="container">
                         <div className="row">
                             <div className="col-12 mb-3 btn-show-form"
                                 onClick={() => this.handleShowForm()}
                             >
-                                <b>Thêm sản phẩm {this.state.isShowForm ? (<i class="fas fa-caret-up"></i>) : (<i class="fas fa-caret-down"></i>)}</b>
+                                <b>Thêm danh mục {this.state.isShowForm ? (<i class="fas fa-caret-up"></i>) : (<i class="fas fa-caret-down"></i>)}</b>
                             </div>
                         </div>
                         {this.state.isShowForm ? (
                             <div>
                                 <div className="row">
                                     <div className="col-12">
-                                        <label className="mt-1">Tên sản phẩm</label>
+                                        <label className="mt-1">Tên danh mục </label>
                                         <input className="form-control" type="text"
                                             value={name}
                                             onChange={(event) => { this.onChangeInput(event, 'name') }}
@@ -240,7 +187,7 @@ class CategoryManage extends Component {
                                         />
                                         <input type="file"
                                             name="file"
-                                            placeholder="Chọn hình ảnh cho sản phẩm"
+                                            placeholder="Chọn hình ảnh cho danh mục"
                                             onChange={(event) => this.uploadImage(event)}
                                         />
                                         {this.loadingImage ? (
@@ -250,69 +197,9 @@ class CategoryManage extends Component {
                                         </div>)}
 
                                     </div>
-                                    <div className="col-6">
-                                        <label className="mt-1">Loại sản phẩm</label>
-                                        <select id="" class="form-control"
-                                            onChange={(event) => { this.onChangeInput(event, 'categorytype') }}
-                                            value={categorytype}
-                                        >
-                                            {types && types.length > 0 &&
-                                                types.map((type, index) => {
-                                                    return (
-                                                        <option key={type.id} value={type.id}>{type.typeName}</option>
-                                                    )
-                                                })
-                                            }
-                                        </select>
-                                    </div>
-                                    <div className="col-6">
-                                        <label className="mt-1">Thương hiệu</label>
-                                        <select id="" class="form-control"
-                                            onChange={(event) => { this.onChangeInput(event, 'brand') }}
-                                            value={brand}
-                                        >
-                                            {brands && brands.length > 0 &&
-                                                brands.map((brand, index) => {
-                                                    return (
-                                                        <option key={brand.id} value={brand.id}>{brand.name}</option>
-                                                    )
-                                                })
-                                            }
-                                        </select>
-                                    </div>
-                                    <div className="col-4">
-                                        <label className="mt-1">Số lượng</label>
-                                        <input className="form-control" type="text"
-                                            value={amount}
-                                            onChange={(event) => { this.onChangeInput(event, 'amount') }}
-                                        />
-                                    </div>
-                                    <div className="col-4">
-                                        <label className="mt-1">Giá</label>
-                                        <input className="form-control" type="text"
-                                            value={price}
-                                            onChange={(event) => { this.onChangeInput(event, 'price') }}
-                                        />
-                                    </div>
-                                    <div className="col-4">
-                                        <label className="mt-1">Chiết khấu</label>
-                                        <input className="form-control" type="text"
-                                            value={discount}
-                                            onChange={(event) => { this.onChangeInput(event, 'discount') }}
-                                        />
-                                    </div>
-                                    <div className="col-12">
-                                        <label className="mt-1">Mô tả sản phẩm</label>
-                                        <MdEditor
-                                            style={{ height: '300px' }}
-                                            value={this.state.descriptionMarkdown}
-                                            renderHTML={text => mdParser.render(text)}
-                                            onChange={this.handleEditorChange}
-                                        />
-                                    </div>
                                     <div className="col-12 my-3">
                                         <button type="button" class={this.state.action === CRUDActions.EDIT ? "btn btn-primary" : "btn btn-success"}
-                                            onClick={() => { this.handleSaveProduct() }}
+                                            onClick={() => { this.handleSaveCategory() }}
                                         >{this.state.action === CRUDActions.EDIT ? "Lưu" : "Thêm"}</button>
                                     </div>
                                 </div>
@@ -320,13 +207,11 @@ class CategoryManage extends Component {
                         ) : (
                             <div></div>
                         )}
-                    </div> */}
-                    {/* <TableManageProduct
-                        handleEditProductFromParent={this.handleEditProductFromParent}
+                    </div>
+                    <TableManageCategory
+                        handleEditCategoryFromParent={this.handleEditCategoryFromParent}
                         action={this.state.action}
-                        types={types}
-                        brands={brands}
-                    /> */}
+                    />
                 </div>
             </div>
         )
@@ -336,23 +221,15 @@ class CategoryManage extends Component {
 
 const mapStateToProps = state => {
     return {
-        // typesRedux: state.producttype.types,
-        // isLoadingType: state.producttype.isLoadingType,
-        // brandsRedux: state.brand.brands,
-        // isLoadingBrand: state.brand.isLoadingBrand,
-        // products: state.product.products
+        categorysRedux: state.category.categorys
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
-        // fetchProductsRedux: () => dispatch(actions.fetchAllProductsStart()),
-
-        // getProducttypeStart: () => dispatch(actions.fetchProducttypeStart()),
-        // getBrandStart: () => dispatch(actions.fetchBrandStart()),
-        // createNewProduct: (data) => dispatch(actions.createNewProduct(data)),
-        // fetchProductsRedux: () => dispatch(actions.fetchAllProductsStart()),
-        // editProductRedux: (data) => dispatch(actions.editProduct(data))
+        fetchCategorysRedux: () => dispatch(actions.fetchCategoryStart()),
+        createNewCategory: (data) => dispatch(actions.createNewCategory(data)),
+        editCategory: (data) => dispatch(actions.editCategory(data)),
     };
 };
 

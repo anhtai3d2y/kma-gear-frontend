@@ -1,0 +1,20 @@
+.brand-manage-container {
+    .brand-manage-body {
+        .container {
+            .btn-show-form {
+                cursor: pointer;
+                color: #339af0;
+                &:hover {
+                    opacity: 0.8;
+                }
+            }
+            .brand-image {
+                text-align: center;
+
+                img {
+                    max-width: 200px;
+                }
+            }
+        }
+    }
+}
