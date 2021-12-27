@@ -12,11 +12,13 @@ class TableManageBill extends Component {
         super(props);
         this.state = {
             bills: [],
+            invoicedetails: []
         }
     }
 
     componentDidMount() {
         this.props.fetchBillsRedux()
+        this.props.fetchInvoicedetailsRedux()
     }
 
     componentDidUpdate(prevState, prevProps) {
@@ -24,6 +26,12 @@ class TableManageBill extends Component {
             let arrBills = this.props.billsRedux
             this.setState({
                 bills: arrBills
+            })
+        }
+        if (prevProps.invoicedetails !== this.props.invoicedetailsRedux) {
+            let arrInvoicedetails = this.props.invoicedetailsRedux
+            this.setState({
+                invoicedetails: arrInvoicedetails
             })
         }
     }
@@ -39,12 +47,13 @@ class TableManageBill extends Component {
 
     render() {
         let arrBills = this.state.bills
-        // console.log('arr: ', arrBills)
+        let arrInvoicedetails = this.state.invoicedetails
+        console.log('invoicedetail: ', arrInvoicedetails)
         return (
             < div className="bill-container" >
                 <table className="table table-hover table table-bordered table-striped mb-0">
                     <thead className="">
-                        <tr>
+                        <tr style={{ textAlign: "center" }}>
                             <th scope="col">ID</th>
                             <th scope="col">Thời gian</th>
                             <th scope="col">Trạng thái sửa</th>
@@ -56,12 +65,15 @@ class TableManageBill extends Component {
                             <th scope="col">Ghi chú</th>
                             <th scope="col">Trạng thái</th>
                             <th scope="col">Phương thức thanh toán</th>
+                            <th scope="col">Sản phẩm</th>
+                            <th scope="col">Thành tiền</th>
                             <th scope="col" colspan="2">Hành động</th>
                         </tr>
                     </thead>
                     <tbody className="">
                         {arrBills && arrBills.length > 0 &&
                             arrBills.map((bill, index) => {
+                                let sumPrice = 0
                                 return (
                                     <tr >
                                         <th scope="row">{bill.id}</th>
@@ -75,6 +87,45 @@ class TableManageBill extends Component {
                                         <td>{bill.note}</td>
                                         <td>{bill.State.content}</td>
                                         <td>{(bill.paymentTypeId === 1 ? 'Thanh toán khi nhận' : 'Thanh toán trực tuyến')}</td>
+                                        <td>
+                                            <thead>
+                                                <tr style={{ textAlign: "center" }}>
+                                                    <th>Tên sp</th>
+                                                    <th>Giá</th>
+                                                    <th>Số lượng</th>
+                                                    <th>Chiết khấu</th>
+                                                    <th>Tổng</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {
+                                                    arrInvoicedetails.map((invoicedetail, index) => {
+                                                        if (invoicedetail.billId === bill.id)
+                                                            sumPrice += invoicedetail.price * invoicedetail.amount * (1 - invoicedetail.discount / 100)
+                                                        return (invoicedetail.billId === bill.id) ? (
+                                                            <tr>
+                                                                <td>
+                                                                    {invoicedetail.Product.name}
+                                                                </td>
+                                                                <td>
+                                                                    {invoicedetail.price}
+                                                                </td>
+                                                                <td>
+                                                                    {invoicedetail.amount}
+                                                                </td>
+                                                                <td>
+                                                                    {invoicedetail.discount}
+                                                                </td>
+                                                                <td>
+                                                                    {invoicedetail.price * invoicedetail.amount * (1 - invoicedetail.discount / 100)}
+                                                                </td>
+                                                            </tr>
+                                                        ) : (<></>)
+                                                    })
+                                                }
+                                            </tbody>
+                                        </td>
+                                        <td>{sumPrice}</td>
                                         <td>
                                             <button className="btn-edit"
                                                 onClick={() => this.handleEditBill(bill)}
@@ -90,7 +141,7 @@ class TableManageBill extends Component {
 
                     </tbody>
                 </table>
-            </ div>
+            </ div >
         );
     }
 
@@ -98,14 +149,17 @@ class TableManageBill extends Component {
 
 const mapStateToProps = state => {
     return {
-        billsRedux: state.bill.bills
+        billsRedux: state.bill.bills,
+        invoicedetailsRedux: state.invoicedetail.invoicedetails,
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
+        fetchInvoicedetailsRedux: () => dispatch(actions.fetchInvoicedetailStart()),
         fetchBillsRedux: () => dispatch(actions.fetchBillStart()),
         deleteBillRedux: (id) => dispatch(actions.deleteBill(id)),
+
     };
 };
 
