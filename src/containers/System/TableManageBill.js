@@ -16,15 +16,15 @@ class TableManageBill extends Component {
     }
 
     componentDidMount() {
-        // this.props.fetchBillsRedux()
+        this.props.fetchBillsRedux()
     }
 
     componentDidUpdate(prevState, prevProps) {
-        // if (prevProps.bills !== this.props.bills) {
-        //     this.setState({
-        //         bills: this.props.bills
-        //     })
-        // }
+        if (prevProps.bills !== this.props.billsRedux) {
+            this.setState({
+                bills: this.props.billsRedux
+            })
+        }
     }
 
     handleEditBill = (bill) => {
@@ -38,21 +38,21 @@ class TableManageBill extends Component {
 
     render() {
         let arrBills = this.state.bills
-        let types = this.props.types
-        let brands = this.props.brands
+        console.log('arr: ', arrBills)
         return (
             < div className="bill-container" >
                 <table className="table table-hover table table-bordered table-striped mb-0">
-                    {/* <thead className="">
+                    <thead className="">
                         <tr>
                             <th scope="col">ID</th>
-                            <th scope="col">Tên sản phẩm</th>
-                            <th scope="col">Hình ảnh</th>
-                            <th scope="col">Loại sản phẩm</th>
-                            <th scope="col">Thương hiệu</th>
-                            <th scope="col">Số lượng</th>
-                            <th scope="col">Giá</th>
-                            <th scope="col">Chiết khấu (%)</th>
+                            <th scope="col">Tên khách hàng</th>
+                            <th scope="col">Người nhận</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Số điện thoại</th>
+                            <th scope="col">Địa chỉ</th>
+                            <th scope="col">Ghi chú</th>
+                            <th scope="col">Trạng thái</th>
+                            <th scope="col">Phương thức thanh toán</th>
                             <th scope="col" colspan="2">Hành động</th>
                         </tr>
                     </thead>
@@ -62,29 +62,14 @@ class TableManageBill extends Component {
                                 return (
                                     <tr >
                                         <th scope="row">{bill.id}</th>
-                                        <td>{bill.name}</td>
-                                        <td>
-                                            <div className="bill-image">
-                                                <img src={bill.image} />
-                                            </div>
-                                        </td>
-                                        <td>
-                                            {
-                                                types.map((type, index) => {
-                                                    return (type.id === bill.typeId) ? (type.typeName) : (<div></div>)
-                                                })
-                                            }
-                                        </td>
-                                        <td>
-                                            {
-                                                brands.map((brand, index) => {
-                                                    return (brand.id === bill.brandId) ? (brand.name) : (<div></div>)
-                                                })
-                                            }
-                                        </td>
-                                        <td>{bill.amount}</td>
-                                        <td>{bill.price}</td>
-                                        <td>{bill.discount}</td>
+                                        <td>{bill.User.fullName}</td>
+                                        <td>{bill.fullName}</td>
+                                        <td>{bill.email}</td>
+                                        <td>{bill.phoneNumber}</td>
+                                        <td>{bill.address}</td>
+                                        <td>{bill.note}</td>
+                                        <td>{bill.State.content}</td>
+                                        <td>{(bill.paymentTypeId === 1 ? 'Thanh toán khi nhận' : 'Thanh toán trực tuyến')}</td>
                                         <td>
                                             <button className="btn-edit"
                                                 onClick={() => this.handleEditBill(bill)}
@@ -98,7 +83,7 @@ class TableManageBill extends Component {
                             })
                         }
 
-                    </tbody> */}
+                    </tbody>
                 </table>
             </ div>
         );
@@ -108,12 +93,13 @@ class TableManageBill extends Component {
 
 const mapStateToProps = state => {
     return {
+        billsRedux: state.bill.bills
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
-        // fetchBillsRedux: () => dispatch(actions.fetchAllBillsStart()),
+        fetchBillsRedux: () => dispatch(actions.fetchBillStart()),
         // deleteBillRedux: (id) => dispatch(actions.deleteBill(id)),
     };
 };

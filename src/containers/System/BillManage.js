@@ -212,7 +212,7 @@ class BillManage extends Component {
 
     render() {
 
-        console.log('fetch bill: ', this.props.billsRedux)
+        // console.log('fetch bill: ', this.props.billsRedux)
         // let { name, image, billtype, brand, amount, price, discount } = this.state
         return (
             <div className="bill-manage-container" >
@@ -319,12 +319,10 @@ class BillManage extends Component {
                             <div></div>
                         )}
                     </div> */}
-                    {/* <TableManageBill
+                    <TableManageBill
                         handleEditBillFromParent={this.handleEditBillFromParent}
                         action={this.state.action}
-                        types={types}
-                        brands={brands}
-                    /> */}
+                    />
                 </div>
             </div>
         )
