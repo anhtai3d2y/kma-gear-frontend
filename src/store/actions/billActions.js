@@ -17,7 +17,7 @@ export const fetchBillStart = () => {
 
             let res = await getAllBillsService('ALL')
             if (res && res.errCode === 0) {
-                dispatch(fetchBillSuccess(res.bills))
+                dispatch(fetchBillSuccess(res.bills.reverse()))
             } else {
                 dispatch(fetchBillFailed())
             }

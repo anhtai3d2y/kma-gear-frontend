@@ -21,30 +21,33 @@ class TableManageBill extends Component {
 
     componentDidUpdate(prevState, prevProps) {
         if (prevProps.bills !== this.props.billsRedux) {
+            let arrBills = this.props.billsRedux
             this.setState({
-                bills: this.props.billsRedux
+                bills: arrBills
             })
         }
     }
 
     handleEditBill = (bill) => {
-        // this.props.handleEditBillFromParent(bill)
+        this.props.handleEditBillFromParent(bill)
     }
 
     handleDeleteBill = async (bill) => {
-        // await this.props.deleteBillRedux(bill.id)
-        // await this.props.fetchBillsRedux()
+        await this.props.deleteBillRedux(bill.id)
+        await this.props.fetchBillsRedux()
     }
 
     render() {
         let arrBills = this.state.bills
-        console.log('arr: ', arrBills)
+        // console.log('arr: ', arrBills)
         return (
             < div className="bill-container" >
                 <table className="table table-hover table table-bordered table-striped mb-0">
                     <thead className="">
                         <tr>
                             <th scope="col">ID</th>
+                            <th scope="col">Thời gian</th>
+                            <th scope="col">Trạng thái sửa</th>
                             <th scope="col">Tên khách hàng</th>
                             <th scope="col">Người nhận</th>
                             <th scope="col">Email</th>
@@ -62,6 +65,8 @@ class TableManageBill extends Component {
                                 return (
                                     <tr >
                                         <th scope="row">{bill.id}</th>
+                                        <td>{bill.createdAt}</td>
+                                        <td><label style={bill.createdAt === bill.updatedAt ? {} : { color: "red" }}>{bill.createdAt === bill.updatedAt ? 'Chưa sửa' : `(Đã sửa) ${bill.updatedAt}`}</label></td>
                                         <td>{bill.User.fullName}</td>
                                         <td>{bill.fullName}</td>
                                         <td>{bill.email}</td>
@@ -100,7 +105,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         fetchBillsRedux: () => dispatch(actions.fetchBillStart()),
-        // deleteBillRedux: (id) => dispatch(actions.deleteBill(id)),
+        deleteBillRedux: (id) => dispatch(actions.deleteBill(id)),
     };
 };
 
