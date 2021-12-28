@@ -31,7 +31,7 @@ class HomePage extends Component {
                     <AllBrands />
                 </div>
                 <CategoryProductList />
-                {/* <DetailCart /> */}
+                <DetailCart />
                 <Footer />
             </div>
         );

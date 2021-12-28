@@ -1,0 +1,157 @@
+.cart {
+    display: flex;
+    justify-content: space-between;
+    .cart-products {
+        display: flex;
+        flex-direction: column;
+        width: calc(100% - 382px);
+        .cart-process {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 34px;
+            overflow: hidden;
+            .process {
+                flex-grow: 1;
+                width: 33.33%;
+                background: #ededed;
+                height: 40px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                position: relative;
+                transform: skewX(-20deg);
+                span {
+                    font-weight: 700;
+                    font-size: 18px;
+                    // color: #4e4e54;
+                    padding: 7px 0;
+                    transform: skewX(20deg);
+                }
+                &:first-child::before {
+                    content: " ";
+                    width: 16px;
+                    height: 100%;
+                    position: absolute;
+                    left: -7px;
+                    background: #005ec4;
+                    transform: skewX(20deg);
+                }
+                &:nth-child(2) {
+                    margin-left: 10px;
+                    margin-right: 10px;
+                }
+                &:nth-child(3)::before {
+                    content: " ";
+                    width: 16px;
+                    height: 100%;
+                    position: absolute;
+                    right: -7px;
+                    background: #ededed;
+                    transform: skewX(20deg);
+                }
+            }
+            .active {
+                background-color: #005ec4;
+                color: #fff !important;
+            }
+        }
+        .cart-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 24px;
+            color: #29324e;
+            .title {
+                font-weight: 700;
+                font-size: 20px;
+                color: #29324e;
+            }
+        }
+        .cart-p-item {
+            display: flex;
+            border: 1px solid #dddfe6;
+            margin-bottom: 10px;
+            padding: 10px 16px;
+        }
+    }
+    .cart-total-prices {
+        flex-basis: 356px;
+        margin-left: 26px;
+        .cart-prices {
+            background: #f0f3fc;
+            padding: 20px 24px;
+            margin-bottom: 24px;
+            color: #29324e;
+            .title {
+                font-weight: 700;
+                font-size: 18px;
+                margin-bottom: 16px;
+            }
+            div {
+                font-weight: 600;
+                font-size: 16px;
+                display: flex;
+                justify-content: space-between;
+                margin-bottom: 14px;
+                .p-count {
+                    color: #005ec4;
+                    font-weight: 700;
+                }
+                .price {
+                    color: #f9495f;
+                    font-size: 20px;
+                }
+            }
+            .text-vat {
+                font-size: 14px;
+                color: rgb(78, 78, 84);
+                font-weight: normal;
+                justify-content: flex-end;
+            }
+            a {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                text-decoration: none;
+                font-weight: 700;
+                font-size: 16px;
+                color: #005ec4;
+                margin-bottom: 16px;
+                background: #fff;
+                border: 1px solid #005ec4;
+                height: 44px;
+                cursor: pointer;
+                text-transform: uppercase;
+            }
+            .go-checkout {
+                background: #005ec4;
+                color: #fff;
+                border-color: #005ec4;
+            }
+            .go-del {
+                background: rgb(237, 27, 36);
+                border-color: rgb(237, 27, 36);
+                color: rgb(255, 255, 255);
+            }
+        }
+        .cart-info {
+            .info {
+                padding: 0 24px;
+                div {
+                    display: flex;
+                    align-items: center;
+                    margin-bottom: 8px;
+                    svg {
+                        margin-right: 12px;
+                    }
+                }
+            }
+            .bank {
+                padding-left: 15px;
+                img {
+                    max-width: 65px;
+                    max-height: 43px;
+                }
+            }
+        }
+    }
+}
