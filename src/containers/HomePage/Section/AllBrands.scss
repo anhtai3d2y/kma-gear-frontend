@@ -1,0 +1,63 @@
+.container {
+    .block-header {
+        margin-bottom: 32px;
+        background: #dddfe6;
+        height: 32px;
+        position: relative;
+        text-align: center;
+        .block-header-title {
+            background-color: #fff;
+            font-weight: 700;
+            font-size: 24px;
+            color: #29324e;
+            padding-left: 50px;
+            padding-right: 50px;
+            padding-top: 4px;
+            position: relative;
+        }
+    }
+}
+.all-brand {
+    margin: 50px 0;
+    height: 120px;
+    background-color: #eef0f7;
+    .all-brand-content {
+        // position: relative;
+        height: 100%;
+        .swiper {
+            width: 100%;
+            height: 100%;
+        }
+
+        .swiper-slide {
+            text-align: center;
+            font-size: 18px;
+            background: #fff;
+            // width: 338px !important;
+
+            /* Center slide text vertically */
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: -webkit-flex;
+            display: flex;
+            -webkit-box-pack: center;
+            -ms-flex-pack: center;
+            -webkit-justify-content: center;
+            justify-content: center;
+            -webkit-box-align: center;
+            -ms-flex-align: center;
+            -webkit-align-items: center;
+            align-items: center;
+        }
+
+        .swiper-slide {
+            max-height: 120px;
+            img {
+                display: block;
+                width: 100px;
+                height: 100px;
+                object-fit: cover;
+            }
+        }
+    }
+}

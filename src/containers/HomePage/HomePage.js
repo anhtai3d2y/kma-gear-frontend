@@ -5,7 +5,10 @@ import HomeHeader from './Header/HomeHeader'
 import HomeMainBannerSlide from './Section/HomeMainBannerSlide'
 import HomeSubBannerSlide from './Section/HomeSubBannerSlide'
 import OutstandingProduct from './Section/OutstandingProduct'
+import AllBrands from './Section/AllBrands'
 import ErrorNotFound from './Section/ErrorNotFound'
+import CategoryProductList from '../ProductPage/Section/CategoryProductList'
+import DetailCart from '../CartPage/Section/DetailCart'
 import Footer from './Footer/Footer'
 
 
@@ -24,6 +27,11 @@ class HomePage extends Component {
                 <div className="container">
                     <OutstandingProduct />
                 </div>
+                <div className="container">
+                    <AllBrands />
+                </div>
+                <CategoryProductList />
+                {/* <DetailCart /> */}
                 <Footer />
             </div>
         );

@@ -11,6 +11,11 @@ class ProductCard extends Component {
         this.props.history.push(`/product/${product.id}`)
     }
 
+    numberWithCommas = (x) => {
+        let result = Math.round(x)
+        return result.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ".");
+    }
+
     render() {
         let product = this.props.product
         return (
@@ -37,10 +42,10 @@ class ProductCard extends Component {
                         </div>
                     </div>
                     <div className="product-price">
-                        <span className="price-selling">{product.price * (100 - product.discount)}</span>
-                        <span className="price-old">{product.price}</span>
+                        <span className="price-selling">{this.numberWithCommas(product.price * (1 - product.discount / 100))} đ</span>
+                        <span className="price-old">{this.numberWithCommas(product.price)} đ</span>
                     </div>
-                    <button type="button" className="add-to-cart">Mua ngay</button>
+                    <button type="button" className="add-to-cart">Thêm vào giỏ hàng</button>
                 </div>
             </div>
         );
