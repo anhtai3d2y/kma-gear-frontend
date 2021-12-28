@@ -2,6 +2,87 @@ import actionTypes from './actionTypes';
 import { createNewProductService, getAllProductsService, deleteProductService, editProductService, getTopProductsHomeService } from "../../services/productService";
 import { toast } from 'react-toastify';
 
+
+export const fetchAllProductsStart = () => {
+    return async (dispatch, getState) => {
+        try {
+            let res = await getAllProductsService('ALL')
+            if (res && res.errCode === 0) {
+                dispatch(fetchAllProductsSuccess(res.products.reverse()))
+            } else {
+                toast.error('Lấy sản phẩm thất bại!')
+                dispatch(fetchAllProductsFailed())
+            }
+        } catch (error) {
+            toast.error('Lấy sản phẩm thất bại!')
+            dispatch(fetchAllProductsFailed())
+            console.log(error)
+        }
+    }
+}
+
+export const fetchAllProductsSuccess = (data) => ({
+    type: actionTypes.FETCH_ALL_PRODUCTS_SUCCESS,
+    products: data
+})
+export const fetchAllProductsFailed = () => ({
+    type: actionTypes.FETCH_ALL_PRODUCTS_FAILED
+})
+
+export const fetchProductsByIdStart = (id) => {
+    return async (dispatch, getState) => {
+        try {
+            let res = await getAllProductsService(id)
+            if (res && res.errCode === 0) {
+                dispatch(fetchProductsByIdSuccess(res.products))
+            } else {
+                toast.error('Lấy sản phẩm thất bại!')
+                dispatch(fetchProductsByIdFailed())
+            }
+        } catch (error) {
+            toast.error('Lấy sản phẩm thất bại!')
+            dispatch(fetchProductsByIdFailed())
+            console.log(error)
+        }
+    }
+}
+
+export const fetchProductsByIdSuccess = (data) => ({
+    type: actionTypes.FETCH_PRODUCTS_BY_ID_SUCCESS,
+    products: data
+})
+export const fetchProductsByIdFailed = () => ({
+    type: actionTypes.FETCH_PRODUCTS_BY_ID_FAILED
+})
+
+export const fetchTopProductsHomeStart = () => {
+    return async (dispatch, getState) => {
+        try {
+            let res = await getTopProductsHomeService(10)
+
+            if (res && res.errCode === 0) {
+
+                dispatch(fetchTopProductsHomeSuccess(res.products))
+            } else {
+                toast.error('Lấy sản phẩm thất bại!1')
+                dispatch(fetchTopProductsHomeFailed())
+            }
+        } catch (error) {
+            toast.error('Lấy sản phẩm thất bại!2')
+            dispatch(fetchTopProductsHomeFailed())
+            console.log(error)
+        }
+    }
+}
+
+export const fetchTopProductsHomeSuccess = (data) => ({
+    type: actionTypes.FETCH_TOP_PRODUCTS_HOME_SUCCESS,
+    products: data
+})
+export const fetchTopProductsHomeFailed = () => ({
+    type: actionTypes.FETCH_TOP_PRODUCTS_HOME_FAILED
+})
+
 export const createNewProduct = (data) => {
     return async (dispatch, getState) => {
         try {
@@ -51,60 +132,6 @@ export const editProductSuccess = () => ({
 })
 export const editProductFailed = () => ({
     type: actionTypes.EDIT_PRODUCT_FAILED
-})
-
-export const fetchAllProductsStart = () => {
-    return async (dispatch, getState) => {
-        try {
-            let res = await getAllProductsService('ALL')
-            if (res && res.errCode === 0) {
-                dispatch(fetchAllProductsSuccess(res.products.reverse()))
-            } else {
-                toast.error('Lấy sản phẩm thất bại!')
-                dispatch(fetchAllProductsFailed())
-            }
-        } catch (error) {
-            toast.error('Lấy sản phẩm thất bại!')
-            dispatch(fetchAllProductsFailed())
-            console.log(error)
-        }
-    }
-}
-
-export const fetchAllProductsSuccess = (data) => ({
-    type: actionTypes.FETCH_ALL_PRODUCTS_SUCCESS,
-    products: data
-})
-export const fetchAllProductsFailed = () => ({
-    type: actionTypes.FETCH_ALL_PRODUCTS_FAILED
-})
-
-export const fetchTopProductsHomeStart = () => {
-    return async (dispatch, getState) => {
-        try {
-            let res = await getTopProductsHomeService(10)
-
-            if (res && res.errCode === 0) {
-
-                dispatch(fetchTopProductsHomeSuccess(res.products))
-            } else {
-                toast.error('Lấy sản phẩm thất bại!1')
-                dispatch(fetchTopProductsHomeFailed())
-            }
-        } catch (error) {
-            toast.error('Lấy sản phẩm thất bại!2')
-            dispatch(fetchTopProductsHomeFailed())
-            console.log(error)
-        }
-    }
-}
-
-export const fetchTopProductsHomeSuccess = (data) => ({
-    type: actionTypes.FETCH_TOP_PRODUCTS_HOME_SUCCESS,
-    products: data
-})
-export const fetchTopProductsHomeFailed = () => ({
-    type: actionTypes.FETCH_TOP_PRODUCTS_HOME_FAILED
 })
 
 export const deleteProduct = (productId) => {

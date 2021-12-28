@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import './HomeMainBannerSlide.scss'
 import { changeLanguageApp } from "../../../store/actions";
+import *  as actions from "../../../store/actions";
+
 
 import { Swiper } from "swiper/react/swiper";
 import { SwiperSlide } from "swiper/react/swiper-slide";
@@ -18,8 +20,21 @@ import SwiperCore, { Pagination, Navigation, Autoplay } from 'swiper';
 SwiperCore.use([Pagination, Navigation, Autoplay]);
 
 class HomeMainBannerSlide extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            // mainBanners: []
+        }
+        this.scrollTop = React.createRef()
+    }
+
+    async componentDidMount() {
+        this.props.fetchMainBannersRedux()
+        // this.handleScroll()
+    }
 
     render() {
+        let arrMainBanners = this.props.mainBannerRedux
 
         return (
             <div className="main-banner">
@@ -38,36 +53,17 @@ class HomeMainBannerSlide extends Component {
                         navigation={true}
                         className="mySwiper"
                     >
-                        <SwiperSlide>
-                            <a href="https://www.tncstore.vn/khuyen-mai-noel-2021">
-                                <img src="https://res.cloudinary.com/dbammxapd/image/upload/v1640508778/kma_gear/j74rlnxue7jnjfkzyj6f.png" />
-                            </a>
-                        </SwiperSlide>
-                        <SwiperSlide>
-                            <a href="https://www.tncstore.vn/khuyen-mai-gaming-gear">
-                                <img src="https://res.cloudinary.com/dbammxapd/image/upload/v1640508824/kma_gear/2_yjiysg.png" />
-                            </a>
-                        </SwiperSlide>
-                        <SwiperSlide>
-                            <a href="https://www.tncstore.vn/gaming-pc.html">
-                                <img src="https://res.cloudinary.com/dbammxapd/image/upload/v1640508829/kma_gear/3_ndobek.png" />
-                            </a>
-                        </SwiperSlide>
-                        <SwiperSlide>
-                            <a href="https://www.tncstore.vn/gaming-pc.html">
-                                <img src="https://res.cloudinary.com/dbammxapd/image/upload/v1640508829/kma_gear/4_z2ltwt.png" />
-                            </a>
-                        </SwiperSlide>
-                        <SwiperSlide>
-                            <a href="https://www.tncstore.vn/gaming-pc.html">
-                                <img src="https://res.cloudinary.com/dbammxapd/image/upload/v1640508829/kma_gear/5_euedpl.png" />
-                            </a>
-                        </SwiperSlide>
-                        <SwiperSlide>
-                            <a href="https://www.tncstore.vn/gaming-pc.html">
-                                <img src="https://res.cloudinary.com/dbammxapd/image/upload/v1640508828/kma_gear/6_qapoo9.png" />
-                            </a>
-                        </SwiperSlide>
+                        {arrMainBanners && arrMainBanners.length > 0 &&
+                            arrMainBanners.map((banner, index) => {
+                                return (
+                                    <SwiperSlide>
+                                        <a href={banner.link}>
+                                            <img src={banner.image} />
+                                        </a>
+                                    </SwiperSlide>
+                                )
+                            })
+                        }
                     </Swiper>
                 </div>
             </div>
@@ -80,13 +76,16 @@ const mapStateToProps = state => {
     return {
         isLoggedIn: state.user.isLoggedIn,
         language: state.app.language,
+        mainBannerRedux: state.banner.mainBanners,
 
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
-        changeLanguageAppRedux: (language) => dispatch(changeLanguageApp(language))
+        changeLanguageAppRedux: (language) => dispatch(changeLanguageApp(language)),
+        fetchMainBannersRedux: () => dispatch(actions.fetchMainBannerStart()),
+
     };
 };
 

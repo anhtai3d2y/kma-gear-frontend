@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import BlockHeaderTitle from "../../HomePage/Section/BlockHeaderTitle.js"
+import *  as actions from "../../../store/actions";
+
 import './DetailProduct.scss'
 
 
@@ -13,7 +15,7 @@ class ProductPage extends Component {
 
     componentDidMount() {
         this.handleScroll()
-        document.title = "Bàn phím......"
+        this.props.fetchProductsById(this.props.productId)
     }
 
     componentDidUpdate() {
@@ -30,7 +32,7 @@ class ProductPage extends Component {
     }
 
     render() {
-        console.log('detail product did mount')
+        console.log('detail product did mount, product by id: ', this.props.productsByIdRedux)
         return (
             <div className="detail-product mt-4" ref={this.scrollTop}>
                 <div className="container">
@@ -171,11 +173,14 @@ class ProductPage extends Component {
 
 const mapStateToProps = state => {
     return {
+        productsByIdRedux: state.product.productsById
+
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
+        fetchProductsById: (id) => dispatch(actions.fetchProductsByIdSuccess(id)),
     };
 };
 

@@ -4,6 +4,14 @@ const getAllBannersService = (inputId) => {
     return axios.get(`/api/get-all-banners?id=${inputId}`)
 }
 
+const getAllMainBannersService = () => {
+    return axios.get('/api/get-all-main-banners')
+}
+
+const getAllSubBannersService = () => {
+    return axios.get('/api/get-all-sub-banners')
+}
+
 const createNewBannerService = (data) => {
     return axios.post('/api/create-new-banner', data)
 }
@@ -20,4 +28,4 @@ const editBannerService = (inputData) => {
     return axios.put('/api/edit-banner', inputData)
 }
 
-export { getAllBannersService, createNewBannerService, deleteBannerService, editBannerService }
+export { getAllBannersService, getAllMainBannersService, getAllSubBannersService, createNewBannerService, deleteBannerService, editBannerService }

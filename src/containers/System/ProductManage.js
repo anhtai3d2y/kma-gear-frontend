@@ -95,7 +95,7 @@ class ProductManage extends Component {
         if (index === selected) {
             setTimeout(() => {
                 this.scrollTop.current.scrollIntoView({ behavior: 'smooth' })
-            }, 500)
+            }, 200)
         }
     }
 

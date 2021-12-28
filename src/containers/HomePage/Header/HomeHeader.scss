@@ -142,6 +142,135 @@
                         color: #29324e;
                         font-size: 16px;
                     }
+                    .mega-menu {
+                        position: absolute;
+                        padding-left: 0;
+                        top: 100%;
+                        left: 0;
+                        width: 100%;
+                        min-height: 300px;
+                        background: #fff;
+                        border: 1px solid #d2d2d2;
+                        border-top: 0 solid #d2d2d2;
+                        visibility: hidden;
+                        opacity: 0;
+                        transition-duration: 0.2s;
+                        z-index: 99;
+                        .mega-menu-item {
+                            width: 100%;
+                            padding: 0;
+                            position: static;
+                            color: #535353;
+                            display: block;
+                            float: left;
+                            clear: none;
+                            width: 100%;
+                            .mega-menu-category {
+                                width: 254px;
+                                float: left;
+                                background: #fff;
+                                padding: 16px;
+                                margin: 0;
+                                display: flex !important;
+                                align-items: center;
+                                justify-content: space-between;
+                                border-bottom: 1px solid #ededed;
+                                // text-transform: uppercase;
+
+                                color: #000;
+                                font-size: 16px;
+                                font-weight: 500;
+                                text-decoration: none;
+                                box-sizing: border-box;
+                                display: inline-block;
+                                &:hover {
+                                    background-color: #005ec4;
+                                    color: #fff;
+                                }
+                            }
+                            .mega-sub-menu {
+                                width: calc(100% - 534px);
+                                float: left;
+                                clear: none;
+                                position: absolute;
+                                top: 0;
+                                left: 254px;
+                                padding: 10px;
+                                min-height: 100%;
+                                visibility: hidden;
+                                opacity: 0;
+                                display: block;
+                                box-sizing: border-box;
+                                h4 {
+                                    padding: 10px;
+                                    font-weight: 700;
+                                    font-size: 20px;
+                                    align-items: center;
+                                    color: #005ec4;
+                                    text-transform: uppercase;
+                                    a {
+                                        text-decoration: none;
+                                        color: #005ec4;
+                                    }
+                                }
+                                .mega-menu-sub-item {
+                                    width: 50% !important;
+                                    color: #535353;
+                                    display: block;
+                                    float: left;
+                                    clear: none;
+                                    width: 100%;
+                                }
+                                .mega-menu-sub-item-img {
+                                    position: absolute;
+                                    top: 0;
+                                    right: -280px;
+                                    max-width: 280px;
+                                    height: 100%;
+                                    display: flex;
+                                    align-items: center;
+                                    overflow: hidden;
+                                    .after-img {
+                                        content: "";
+                                        height: 100%;
+                                        width: 100%;
+                                        background: #005ec4;
+                                        position: absolute;
+                                        top: 0;
+                                        left: 110px;
+                                        z-index: 1;
+                                        transform: skewX(-17deg);
+                                    }
+                                    img {
+                                        max-width: 100%;
+                                        z-index: 2;
+                                    }
+                                }
+                                .mega-menu-sub-link {
+                                    padding: 16px;
+                                    display: flex !important;
+                                    color: #000;
+                                    font-size: 16px;
+                                    font-weight: 400;
+                                    text-decoration: none;
+                                    box-sizing: border-box;
+                                    display: inline-block;
+                                    &:hover {
+                                        background-color: #e3edf6;
+                                        color: #005ec4;
+                                    }
+                                }
+                            }
+                        }
+                        .mega-menu-item:hover .mega-sub-menu {
+                            visibility: visible;
+                            opacity: 1;
+                        }
+                    }
+                }
+                .header-bottom-item:hover .mega-menu {
+                    visibility: visible;
+                    opacity: 1;
                 }
             }
             .header-bottom-right {

@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import './HomeSubBannerSlide.scss'
 import { changeLanguageApp } from "../../../store/actions";
+import *  as actions from "../../../store/actions";
+
 
 import { Swiper } from "swiper/react/swiper";
 import { SwiperSlide } from "swiper/react/swiper-slide";
@@ -19,7 +21,22 @@ SwiperCore.use([Pagination, Navigation, Autoplay]);
 
 class HomeSubBannerSlide extends Component {
 
+    constructor(props) {
+        super(props);
+        this.state = {
+            // subBanners: []
+        }
+        this.scrollTop = React.createRef()
+    }
+
+    async componentDidMount() {
+        this.props.fetchSubBannersRedux()
+        // this.handleScroll()
+    }
+
     render() {
+
+        let arrSubBanners = this.props.subBannerRedux
 
         return (
             <div className="sub-banner">
@@ -40,46 +57,22 @@ class HomeSubBannerSlide extends Component {
                         navigation={true}
                         className="mySwiper"
                     >
-                        <SwiperSlide>
+                        {arrSubBanners && arrSubBanners.length > 0 &&
+                            arrSubBanners.map((banner, index) => {
+                                return (
+                                    <SwiperSlide>
+                                        <a href={banner.link}>
+                                            <img src={banner.image} />
+                                        </a>
+                                    </SwiperSlide>
+                                )
+                            })
+                        }
+                        {/* <SwiperSlide>
                             <a href="">
                                 <img src="https://www.tncstore.vn/image/catalog/banner/2021/Slide/WEB%20-%20OFFICIAL%20STORE%202%20-%20ACER.jpg" />
                             </a>
-                        </SwiperSlide>
-                        <SwiperSlide>
-                            <a href="">
-                                <img src="https://www.tncstore.vn/image/catalog/banner/2020/web-official-store-msi%20(1).jpg" />
-                            </a>
-                        </SwiperSlide>
-                        <SwiperSlide>
-                            <a href="">
-                                <img src="https://www.tncstore.vn/image/catalog/banner/2020/web-official-store-2%20(1).jpg" />
-                            </a>
-                        </SwiperSlide>
-                        <SwiperSlide>
-                            <a href="">
-                                <img src="https://www.tncstore.vn/image/catalog/banner/2021/Thang%201/WEB%20-%20OFFICIAL%20STORE%202%20-%20LG.jpg" />
-                            </a>
-                        </SwiperSlide>
-                        <SwiperSlide>
-                            <a href="">
-                                <img src="https://www.tncstore.vn/image/catalog/banner/2021/thang%2011/WEB%20-%20OFFICIAL%20STORE%202%20-%20VIEWSONIC.jpg" />
-                            </a>
-                        </SwiperSlide>
-                        <SwiperSlide>
-                            <a href="">
-                                <img src="https://www.tncstore.vn/image/catalog/banner/2021/Th%C3%A1ng%204/nzxt-store-2.jpg" />
-                            </a>
-                        </SwiperSlide>
-                        <SwiperSlide>
-                            <a href="">
-                                <img src="https://www.tncstore.vn/image/catalog/banner/2021/Slide/WEB%20-%20OFFICIAL%20STORE%202%20-%20ACER.jpg" />
-                            </a>
-                        </SwiperSlide>
-                        <SwiperSlide>
-                            <a href="">
-                                <img src="https://www.tncstore.vn/image/catalog/banner/2021/thang%2011/WEB%20-%20OFFICIAL%20STORE%202%20-%20VIEWSONIC.jpg" />
-                            </a>
-                        </SwiperSlide>
+                        </SwiperSlide> */}
                     </Swiper>
                 </div>
             </div>
@@ -92,13 +85,17 @@ const mapStateToProps = state => {
     return {
         isLoggedIn: state.user.isLoggedIn,
         language: state.app.language,
+        subBannerRedux: state.banner.subBanners
+
 
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
-        changeLanguageAppRedux: (language) => dispatch(changeLanguageApp(language))
+        changeLanguageAppRedux: (language) => dispatch(changeLanguageApp(language)),
+        fetchSubBannersRedux: () => dispatch(actions.fetchSubBannerStart()),
+
     };
 };
 

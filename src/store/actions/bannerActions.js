@@ -1,5 +1,5 @@
 import actionTypes from './actionTypes';
-import { getAllBannersService, createNewBannerService, deleteBannerService, editBannerService } from "../../services/bannerService";
+import { getAllBannersService, getAllMainBannersService, getAllSubBannersService, createNewBannerService, deleteBannerService, editBannerService } from "../../services/bannerService";
 import { toast } from 'react-toastify';
 
 
@@ -35,6 +35,66 @@ export const fetchBannerSuccess = (bannersData) => ({
 
 export const fetchBannerFailed = () => ({
     type: actionTypes.FETCH_BANNER_FAILED
+})
+
+export const fetchMainBannerStart = () => {
+
+    return async (dispatch, getState) => {
+        try {
+            dispatch({
+                type: actionTypes.FETCH_MAIN_BANNER_START
+            })
+
+            let res = await getAllMainBannersService()
+            if (res && res.errCode === 0) {
+                dispatch(fetchMainBannerSuccess(res.banners))
+            } else {
+                dispatch(fetchMainBannerFailed())
+            }
+        } catch (error) {
+            dispatch(fetchMainBannerFailed())
+            console.log(error)
+        }
+    }
+}
+
+export const fetchMainBannerSuccess = (bannersData) => ({
+    type: actionTypes.FETCH_MAIN_BANNER_SUCCESS,
+    data: bannersData
+})
+
+export const fetchMainBannerFailed = () => ({
+    type: actionTypes.FETCH_MAIN_BANNER_FAILED
+})
+
+export const fetchSubBannerStart = () => {
+
+    return async (dispatch, getState) => {
+        try {
+            dispatch({
+                type: actionTypes.FETCH_SUB_BANNER_START
+            })
+
+            let res = await getAllSubBannersService()
+            if (res && res.errCode === 0) {
+                dispatch(fetchSubBannerSuccess(res.banners))
+            } else {
+                dispatch(fetchSubBannerFailed())
+            }
+        } catch (error) {
+            dispatch(fetchSubBannerFailed())
+            console.log(error)
+        }
+    }
+}
+
+export const fetchSubBannerSuccess = (bannersData) => ({
+    type: actionTypes.FETCH_SUB_BANNER_SUCCESS,
+    data: bannersData
+})
+
+export const fetchSubBannerFailed = () => ({
+    type: actionTypes.FETCH_SUB_BANNER_FAILED
 })
 
 export const createNewBanner = (data) => {
