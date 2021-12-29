@@ -64,11 +64,11 @@ export const fetchTopProductsHomeStart = () => {
 
                 dispatch(fetchTopProductsHomeSuccess(res.products))
             } else {
-                toast.error('Lấy sản phẩm thất bại!1')
+                toast.error('Lấy sản phẩm thất bại!')
                 dispatch(fetchTopProductsHomeFailed())
             }
         } catch (error) {
-            toast.error('Lấy sản phẩm thất bại!2')
+            toast.error('Lấy sản phẩm thất bại!')
             dispatch(fetchTopProductsHomeFailed())
             console.log(error)
         }

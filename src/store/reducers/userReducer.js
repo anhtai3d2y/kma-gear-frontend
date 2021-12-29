@@ -42,7 +42,7 @@ const appReducer = (state = initialState, action) => {
         case actionTypes.PROCESS_CUSTOMER_LOGOUT:
             return {
                 ...state,
-                isLoggedIn: false,
+                isCustomerLoggedIn: false,
                 customerInfo: null
             }
         default:

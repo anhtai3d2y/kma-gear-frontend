@@ -41,22 +41,24 @@ class HomeHeader extends Component {
         this.props.history.push(`/cart`)
     }
 
+    handleViewListProduct = (typeProduct) => {
+        this.props.history.push(`/list-product/${typeProduct.id}`)
+    }
+
     render() {
 
         let arrCategorys = this.props.categorysRedux
         let arrProducttypes = this.props.producttypesRedux
-
-        // console.log('category: ', arrCategorys)
-        // console.log('producttype: ', arrProducttypes)
-
         let language = this.props.language
 
-        console.log('user info from header: ', this.props.isCustomerLoggedIn, this.props.customerInfo)
+        let isCustomerLoggedIn = this.props.isCustomerLoggedIn
+        let customerInfo = this.props.customerInfo
+
         return (
             <div className="header">
                 <div className="header-top">
                     <div className="container">
-                        <span>Hotline : (093) 206.2682 - (093) 206.2686 • Email: cskh@kmagear.vn</span>
+                        <span>Hotline : (093) 206.2682 - (093) 206.2686 • Email: cskh@kmagear.vn {isCustomerLoggedIn ? 'bạn đang đăng nhập' : 'k đăng nhập'}</span>
                     </div>
                 </div>
                 <div className="header-main">
@@ -87,7 +89,7 @@ class HomeHeader extends Component {
 
                         <div className="header-login" onClick={() => { this.handleGoLoginPage() }}>
                             <i class="far fa-user header-login-icon"></i>
-                            <span className="header-login-title">Đăng nhập</span>
+                            <span className="header-login-title">{customerInfo && customerInfo.fullName ? customerInfo.fullName : 'Đăng nhập'}</span>
                         </div>
                         <div className="header-cart" onClick={() => { this.handleGoCartPage() }}>
                             <img src="https://www.tncstore.vn/catalog/view/theme/default/image/cart-icon.svg" alt="" className="head-cart-icon" />
@@ -126,7 +128,9 @@ class HomeHeader extends Component {
                                                                     arrProducttypes.map((type, index) => {
                                                                         return (type.categoryId === category.id) ? (
                                                                             <li className="mega-menu-sub-item">
-                                                                                <a href="" className="mega-menu-sub-link">{type.typeName}</a>
+                                                                                <div className="mega-menu-sub-link"
+                                                                                    onClick={() => this.handleViewListProduct(type)}
+                                                                                >{type.typeName}</div>
                                                                             </li>
                                                                         ) : (<></>)
                                                                     })
@@ -179,8 +183,8 @@ const mapStateToProps = state => {
         language: state.app.language,
         categorysRedux: state.category.categorys,
         producttypesRedux: state.producttype.types,
-        isCustomerLoggedIn: state.user.isCustomerLoggedIn,
-        customerInfo: state.user.customerInfo
+        isCustomerLoggedIn: state.customer.isCustomerLoggedIn,
+        customerInfo: state.customer.customerInfo
     };
 };
 

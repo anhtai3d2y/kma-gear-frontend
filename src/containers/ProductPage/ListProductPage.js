@@ -11,13 +11,15 @@ import Footer from '../HomePage/Footer/Footer.js'
 class ListProductPage extends Component {
 
     render() {
-        let productId = this.props.match.params.id
+        let typeProductId = this.props.match.params.id
         return (
             <div>
                 <HomeBanner />
                 <HomeHeader />
-                <CategoryProductList />
-                <div>this is list product page</div>
+                <CategoryProductList
+                    typeId={typeProductId}
+                />
+                <div>this is list product page {typeProductId}</div>
                 <OutstandingProduct />
                 <Footer />
             </div>

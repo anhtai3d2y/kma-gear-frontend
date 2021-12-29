@@ -75,9 +75,9 @@ class DetailCart extends Component {
                                     <a href="">
                                         <img src="https://www.tncstore.vn/catalog/view/theme/default/image/internet-bank.png" alt="" />
                                     </a>
-                                    <a href="">
+                                    {/* <a href="">
                                         <img src="https://www.tncstore.vn/catalog/view/theme/default/image/mastercard.png" alt="" />
-                                    </a>
+                                    </a> */}
                                     <a href="">
                                         <img src="https://res.cloudinary.com/dbammxapd/image/upload/v1640708469/kma_gear/kisspng-logo-paypal-vector-graphics-product-computer-icons-5b7705010f2a82.8291480615345267210621_rvzb1x.png" alt="" />
                                     </a>

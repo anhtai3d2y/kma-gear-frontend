@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import HomeBanner from '../HomePage/Banner/HomeBanner.js'
 import HomeHeader from '../HomePage/Header/HomeHeader.js'
-import LoginForm from './Section/LoginForm.js'
+import InfoCustomerForm from './Section/InfoCustomerForm.js'
 import Footer from '../HomePage/Footer/Footer.js'
 
 import { withRouter } from 'react-router';
@@ -17,7 +17,7 @@ class InfoCustomerPage extends Component {
             <div>
                 <HomeBanner />
                 <HomeHeader />
-                <LoginForm />
+                <InfoCustomerForm />
                 <Footer />
             </div>
         );

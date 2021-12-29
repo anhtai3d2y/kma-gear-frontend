@@ -9,6 +9,7 @@ export const path = {
     CART: '/cart',
     LOGIN: '/login',
     REGISTER: '/register',
+    ACCOUNT: '/account',
 };
 
 export const LANGUAGES = {

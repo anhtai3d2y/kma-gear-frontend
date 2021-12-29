@@ -9,10 +9,10 @@ import { withRouter } from 'react-router';
 import { handleCustomerLogin } from '../../../services/userService';
 
 
-import './LoginForm.scss'
+import './InfoCustomerForm.scss'
 
 
-class LoginForm extends Component {
+class InfoCustomerForm extends Component {
 
     constructor(props) {
         super(props)
@@ -79,6 +79,10 @@ class LoginForm extends Component {
         }
     }
 
+    handleLogout = () => {
+        this.props.processCustomerLogout()
+    }
+
     handleShowHidePassword = (e) => {
         this.setState({
             isShowPassword: !this.state.isShowPassword
@@ -90,52 +94,44 @@ class LoginForm extends Component {
     }
 
     render() {
-        const { isCustomerLoggedIn } = this.props;
+        const { isCustomerLoggedIn, customerInfo } = this.props;
         let linkToRedirect = isCustomerLoggedIn ? '/account' : '/login';
 
         return (
             <div className="login-form mt-4" ref={this.scrollTop}>
                 <Redirect to={linkToRedirect} />
-
                 <div className="container">
                     <div className="login-form-container">
                         <div className="login-content row">
-                            <div className="col-12 text-login">Đăng nhập</div>
+                            <div className="col-12 text-login">Thông tin tài khoản</div>
                             <div className="col-12 form-group login-input">
-                                <label>Email:</label>
-                                <input type="text" className="form-control" placeholder="Nhập email của bạn"
-                                    value={this.state.username}
-                                    onChange={(e) => this.handleOnChangeEmail(e)}
-                                />
+                                <label>Email: {customerInfo && customerInfo.email}</label>
                             </div>
                             <div className="col-12 form-group login-input">
-                                <label>Mật khẩu:</label>
-                                <div className="custom-input-password">
-                                    <input type={this.state.isShowPassword ? "text" : "password"} className="form-control" placeholder="Nhập mật khẩu của bạn"
-                                        value={this.state.password}
-                                        onChange={(e) => this.handleOnChangePassword(e)}
-                                    />
-                                    <span onClick={() => { this.handleShowHidePassword() }}>
-                                        <i className={this.state.isShowPassword ? 'fas fa-eye' : 'fas fa-eye-slash'}></i>
-                                    </span>
-                                </div>
+                                <label>Họ tên: {customerInfo && customerInfo.fullName}</label>
                             </div>
+                            <div className="col-12 form-group login-input">
+                                <label>Số điện thoại: {customerInfo && customerInfo.phoneNumber}</label>
+                            </div>
+                            <div className="col-12 form-group login-input">
+                                <label>Địa chỉ: {customerInfo && customerInfo.address}</label>
+                            </div>
+
                             <div className="col-12" style={{ color: 'red' }}>
                                 {this.state.errMessage}
                             </div>
-                            <div className="col-12 pd-4 btn-actions">
+                            {/* <div className="col-12 pd-4 btn-actions">
                                 <button className="btn btn-primary btn-register" type="submit"
                                     onClick={() => this.handleGoRegisterPage()}
                                 >Đăng ký</button>
                                 <button className="btn btn-primary btn-login" type="submit"
                                     onClick={(e) => { this.handleLogin() }}
                                 >Đăng nhập</button>
-                            </div>
-                            <div className="col-12">
-                                <span className="forgot-password">Forgot your password?</span>
-                            </div>
-                            <div className="col-12">
-
+                            </div> */}
+                            <div className="col-12 pd-4 btn-actions">
+                                <button className="btn btn-primary btn-login" type="submit"
+                                    onClick={(e) => { this.handleLogout() }}
+                                >Đăng xuất</button>
                             </div>
                         </div>
                     </div>
@@ -162,4 +158,4 @@ const mapDispatchToProps = dispatch => {
     };
 };
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(LoginForm));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(InfoCustomerForm));

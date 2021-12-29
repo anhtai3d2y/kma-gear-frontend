@@ -32,28 +32,33 @@ class ProductPage extends Component {
         }
     }
 
+    numberWithCommas = (x) => {
+        let result = Math.round(x)
+        return result.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ".");
+    }
+
     render() {
-        console.log('detail product did mount, product by id: ', this.props.productsByIdRedux)
+        let product = this.props.productsByIdRedux
+        console.log(product)
         return (
             <div className="detail-product mt-4" ref={this.scrollTop}>
                 <div className="container">
                     <div className="product-detail-top">
                         <div className="product-detail-top-left">
                             <a href="https://www.tncstore.vn/index.php?route=product/manufacturer/info&amp;manufacturer_id=158"
-                                title="Newmen" class="product-brand">
-                                <img src="https://www.tncstore.vn/image/catalog/logo new/newmen-logo.jpg" alt="Newmen" />
+                                title={product && product.Brand && product.Brand.name} class="product-brand">
+                                <img src={product && product.Brand && product.Brand.image} alt={product && product.Brand && product.Brand.name} />
                             </a>
                             <div className="product-image">
                                 <img
-                                    src="https://www.tncstore.vn/image/cache/catalog/b%C3%A0n%20ph%C3%ADm%20c%C6%A1/Newmen/GM680/ban-phim-newmen-gm680-brown-500x500.jpg"
-                                    data-src="https://www.tncstore.vn/image/cache/catalog/b%C3%A0n%20ph%C3%ADm%20c%C6%A1/Newmen/GM680/ban-phim-newmen-gm680-brown-500x500.jpg"
-                                    title="Bàn Phím Bluetooth Newmen Dual mode GM680 BT5.0 -Brown Switch"
-                                    alt="Bàn Phím Bluetooth Newmen Dual mode GM680 BT5.0 -Brown Switch"
+                                    src={product && product.image}
+                                    title={product && product.name}
+                                    alt={product && product.name}
                                 />
                             </div>
                         </div>
                         <div className="product-detail-top-right">
-                            <h1>Bàn Phím Bluetooth Newmen Dual mode GM680 BT5.0 -Brown Switch</h1>
+                            <h1>{product && product.name}</h1>
                             <div class="rating-guarantee">
                                 <div class="product-rate">
                                     <div class="rate-star">
@@ -82,7 +87,7 @@ class ProductPage extends Component {
                                         <div class="quantity">
                                             Số lượng
                                             <div class="quantity-wrap">
-                                                <input type="text" name="quantity" value="0" size="2" />
+                                                <input type="text" name="quantity" value="1" size="2" />
                                                 <div class="qty-action">
                                                     <span title="Thêm" class="add-qty">+</span>
                                                     <span title="Bớt" class="sub-qty">-</span>
@@ -93,10 +98,10 @@ class ProductPage extends Component {
                                 <div class="col2">
                                     <ul class="list-unstyled list-price">
                                         <li>
-                                            <p class="price-old">1.690.000 đ</p>
+                                            <p class="price-old">{this.numberWithCommas(product.price)} đ</p>
                                         </li>
                                         <li>
-                                            <p class="price">1.599.000 đ</p>
+                                            <p class="price">{this.numberWithCommas(product.price * (1 - product.discount / 100))} đ</p>
                                         </li>
                                     </ul>
                                 </div>
@@ -123,7 +128,7 @@ class ProductPage extends Component {
                     <div className="product-detail-bottom">
                         <div className="content-bottom">
                             <BlockHeaderTitle headerTitle="THÔNG TIN SẢN PHẨM" />
-                            <div>Description content here {this.props.productId}</div>
+                            <div dangerouslySetInnerHTML={{ __html: product.descriptionHTML }}></div>
                         </div>
                     </div>
                 </div>
@@ -142,7 +147,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        fetchProductsById: (id) => dispatch(actions.fetchProductsByIdSuccess(id)),
+        fetchProductsById: (id) => dispatch(actions.fetchProductsByIdStart(id)),
     };
 };
 

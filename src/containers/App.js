@@ -18,6 +18,7 @@ import ListProductPage from './ProductPage/ListProductPage.js';
 import CartPage from './CartPage/CartPage.js';
 import LoginPage from './LoginPage/LoginPage.js';
 import RegisterPage from './LoginPage/RegisterPage.js';
+import InfoCustomerPage from './LoginPage/InfoCustomerPage.js';
 import ErrorPage from './ErrorPage/ErrorPage.js';
 
 class App extends Component {
@@ -60,6 +61,7 @@ class App extends Component {
                                     <Route path={path.CART} component={(CartPage)} />
                                     <Route path={path.LOGIN} component={(LoginPage)} />
                                     <Route path={path.REGISTER} component={(RegisterPage)} />
+                                    <Route path={path.ACCOUNT} component={(InfoCustomerPage)} />
                                     <Route path='/404' component={ErrorPage} />
                                     <Redirect from='*' to='/404' />
                                 </Switch>
