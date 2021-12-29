@@ -51,6 +51,7 @@ class HomeHeader extends Component {
 
         let language = this.props.language
 
+        console.log('user info from header: ', this.props.isCustomerLoggedIn, this.props.customerInfo)
         return (
             <div className="header">
                 <div className="header-top">
@@ -175,10 +176,11 @@ class HomeHeader extends Component {
 
 const mapStateToProps = state => {
     return {
-        isLoggedIn: state.user.isLoggedIn,
         language: state.app.language,
         categorysRedux: state.category.categorys,
         producttypesRedux: state.producttype.types,
+        isCustomerLoggedIn: state.user.isCustomerLoggedIn,
+        customerInfo: state.user.customerInfo
     };
 };
 
@@ -187,6 +189,8 @@ const mapDispatchToProps = dispatch => {
         changeLanguageAppRedux: (language) => dispatch(changeLanguageApp(language)),
         fetchCategorysRedux: () => dispatch(actions.fetchCategoryStart()),
         fetchProducttypesRedux: () => dispatch(actions.fetchProducttypeStart()),
+        customerLoginSuccess: (customerInfo) => dispatch(actions.customerLoginSuccess(customerInfo)),
+        customerLoginFail: () => dispatch(actions.customerLoginFail()),
 
     };
 };

@@ -8,7 +8,7 @@ import Footer from '../HomePage/Footer/Footer.js'
 import { withRouter } from 'react-router';
 
 
-class LoginPage extends Component {
+class InfoCustomerPage extends Component {
 
 
 
@@ -35,4 +35,4 @@ const mapDispatchToProps = dispatch => {
     };
 };
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(LoginPage));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(InfoCustomerPage));

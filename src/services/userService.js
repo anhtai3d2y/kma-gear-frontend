@@ -4,6 +4,10 @@ const handleLogin = (email, password) => {
     return axios.post('/api/login', { email, password })
 }
 
+const handleCustomerLogin = (email, password) => {
+    return axios.post('/api/customer-login', { email, password })
+}
+
 const getAllUsers = (inputId) => {
     return axios.get(`/api/get-all-users?id=${inputId}`)
 }
@@ -24,4 +28,4 @@ const editUserService = (inputData) => {
     return axios.put('/api/edit-user', inputData)
 }
 
-export { handleLogin, getAllUsers, createNewUserService, deleteUserService, editUserService }
+export { handleLogin, handleCustomerLogin, getAllUsers, createNewUserService, deleteUserService, editUserService }

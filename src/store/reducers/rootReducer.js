@@ -28,6 +28,12 @@ const userPersistConfig = {
     whitelist: ['isLoggedIn', 'userInfo']
 };
 
+const customerPersistConfig = {
+    ...persistCommonConfig,
+    key: 'customer',
+    whitelist: ['isCustomerLoggedIn', 'customerInfo']
+};
+
 const appPersistConfig = {
     ...persistCommonConfig,
     key: 'app',
@@ -37,6 +43,7 @@ const appPersistConfig = {
 export default (history) => combineReducers({
     router: connectRouter(history),
     user: persistReducer(userPersistConfig, userReducer),
+    customer: persistReducer(customerPersistConfig, userReducer),
     app: persistReducer(appPersistConfig, appReducer),
     producttype: producttypeReducer,
     brand: brandReducer,

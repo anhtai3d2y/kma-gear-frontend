@@ -1,0 +1,90 @@
+.login-form-container {
+    width: 400px;
+    height: 100px;
+    margin: 0 auto;
+    border-radius: 10px;
+    background-color: #fff;
+    margin: auto;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 400px;
+    .login-content {
+        padding: 16px;
+        .text-login {
+            font-weight: 600;
+            font-size: 40px;
+            text-align: center;
+            color: #005ec4;
+        }
+        .login-input {
+            margin: 8px 0;
+            font-size: 20px;
+
+            .custom-input-password {
+                position: relative;
+                i {
+                    position: absolute;
+                    right: 5px;
+                    top: 10px;
+                    cursor: pointer;
+                    font-size: 16px;
+                    color: #495057;
+                    &:hover {
+                        opacity: 0.8;
+                    }
+                }
+            }
+            .form-control {
+                font-size: 16px;
+                border: 2px solid #005ec4;
+                display: flex;
+                justify-content: space-between;
+                position: relative;
+                box-sizing: border-box;
+                border-radius: 0px;
+                &:focus {
+                    outline: none;
+                }
+            }
+        }
+        .btn-actions {
+            display: flex;
+            justify-content: space-between;
+            font-weight: 300;
+        }
+        .btn-register {
+            width: 40%;
+            font-size: 16px;
+            margin: 8px 0;
+            height: 36px;
+            border-radius: 0px;
+            border: 2px solid #005ec4;
+            background-color: #fff;
+            color: #000;
+            &:hover {
+                opacity: 0.8;
+            }
+        }
+        .btn-login {
+            width: 40%;
+            font-size: 16px;
+            margin: 8px 0;
+            height: 36px;
+            border-radius: 0px;
+            background-color: #005ec4;
+            &:hover {
+                opacity: 0.8;
+            }
+        }
+        .forgot-password {
+            font-size: 16px;
+            color: #005ec4;
+            cursor: pointer;
+            &:hover {
+                opacity: 0.8;
+            }
+        }
+    }
+}

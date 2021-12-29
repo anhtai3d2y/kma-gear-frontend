@@ -2,7 +2,9 @@ import actionTypes from '../actions/actionTypes';
 
 const initialState = {
     isLoggedIn: false,
-    userInfo: null
+    userInfo: null,
+    isCustomerLoggedIn: false,
+    customerInfo: null
 }
 
 const appReducer = (state = initialState, action) => {
@@ -19,11 +21,29 @@ const appReducer = (state = initialState, action) => {
                 isLoggedIn: false,
                 userInfo: null
             }
-        case actionTypes.PROCESS_LOGOUT:
+        case actionTypes.PROCESS_USER_LOGOUT:
             return {
                 ...state,
                 isLoggedIn: false,
                 userInfo: null
+            }
+        case actionTypes.CUSTOMER_LOGIN_SUCCESS:
+            return {
+                ...state,
+                isCustomerLoggedIn: true,
+                customerInfo: action.customerInfo
+            }
+        case actionTypes.CUSTOMER_LOGIN_FAIL:
+            return {
+                ...state,
+                isCustomerLoggedIn: false,
+                customerInfo: null
+            }
+        case actionTypes.PROCESS_CUSTOMER_LOGOUT:
+            return {
+                ...state,
+                isLoggedIn: false,
+                customerInfo: null
             }
         default:
             return state;
