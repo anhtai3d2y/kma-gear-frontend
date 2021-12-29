@@ -7,11 +7,18 @@ import { ToastContainer } from 'react-toastify';
 import CustomScrollbars from "../components/CustomScrollbars";
 import { userIsAuthenticated, userIsNotAuthenticated } from '../hoc/authentication';
 import { path } from '../utils'
+import { Redirect } from 'react-router-dom';
+
 import Home from '../routes/Home';
 import Login from './Auth/Login';
 import HomePage from './HomePage/HomePage.js';
 import System from '../routes/System';
 import ProductPage from './ProductPage/ProductPage.js';
+import ListProductPage from './ProductPage/ListProductPage.js';
+import CartPage from './CartPage/CartPage.js';
+import LoginPage from './LoginPage/LoginPage.js';
+import RegisterPage from './LoginPage/RegisterPage.js';
+import ErrorPage from './ErrorPage/ErrorPage.js';
 
 class App extends Component {
 
@@ -49,6 +56,12 @@ class App extends Component {
                                     <Route path={path.ADMIN} component={userIsNotAuthenticated(Login)} />
                                     <Route path={path.SYSTEM} component={userIsAuthenticated(System)} />
                                     <Route path={path.PRODUCT} component={(ProductPage)} />
+                                    <Route path={path.LIST_PRODUCT} component={(ListProductPage)} />
+                                    <Route path={path.CART} component={(CartPage)} />
+                                    <Route path={path.LOGIN} component={(LoginPage)} />
+                                    <Route path={path.REGISTER} component={(RegisterPage)} />
+                                    <Route path='/404' component={ErrorPage} />
+                                    <Redirect from='*' to='/404' />
                                 </Switch>
                             </CustomScrollbars>
                         </div>

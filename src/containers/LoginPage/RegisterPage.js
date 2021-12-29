@@ -2,11 +2,10 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import HomeBanner from '../HomePage/Banner/HomeBanner.js'
 import HomeHeader from '../HomePage/Header/HomeHeader.js'
-import DetailCart from './Section/DetailCart.js'
 import Footer from '../HomePage/Footer/Footer.js'
 
 
-class CartPage extends Component {
+class RegisterPage extends Component {
 
     render() {
         let productId = this.props.match.params.id
@@ -14,7 +13,7 @@ class CartPage extends Component {
             <div>
                 <HomeBanner />
                 <HomeHeader />
-                <DetailCart />
+                <div>This is Register page</div>
                 <Footer />
             </div>
         );
@@ -32,4 +31,4 @@ const mapDispatchToProps = dispatch => {
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(CartPage);
+export default connect(mapStateToProps, mapDispatchToProps)(RegisterPage);

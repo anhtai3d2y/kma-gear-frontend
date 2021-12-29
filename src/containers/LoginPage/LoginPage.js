@@ -2,11 +2,16 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import HomeBanner from '../HomePage/Banner/HomeBanner.js'
 import HomeHeader from '../HomePage/Header/HomeHeader.js'
-import DetailCart from './Section/DetailCart.js'
 import Footer from '../HomePage/Footer/Footer.js'
 
+import { withRouter } from 'react-router';
 
-class CartPage extends Component {
+
+class LoginPage extends Component {
+
+    handleGoRegisterPage = () => {
+        this.props.history.push('/register')
+    }
 
     render() {
         let productId = this.props.match.params.id
@@ -14,7 +19,8 @@ class CartPage extends Component {
             <div>
                 <HomeBanner />
                 <HomeHeader />
-                <DetailCart />
+                <div>This is login page</div>
+                <div onClick={() => this.handleGoRegisterPage()}>Go register page</div>
                 <Footer />
             </div>
         );
@@ -32,4 +38,4 @@ const mapDispatchToProps = dispatch => {
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(CartPage);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(LoginPage));

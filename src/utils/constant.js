@@ -5,6 +5,10 @@ export const path = {
     LOG_OUT: '/logout',
     SYSTEM: '/system',
     PRODUCT: '/product/:id',
+    LIST_PRODUCT: '/list-product/:id',
+    CART: '/cart',
+    LOGIN: '/login',
+    REGISTER: '/register',
 };
 
 export const LANGUAGES = {

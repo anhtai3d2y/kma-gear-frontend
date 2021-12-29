@@ -6,10 +6,12 @@ import HomeMainBannerSlide from './Section/HomeMainBannerSlide'
 import HomeSubBannerSlide from './Section/HomeSubBannerSlide'
 import OutstandingProduct from './Section/OutstandingProduct'
 import AllBrands from './Section/AllBrands'
-import ErrorNotFound from './Section/ErrorNotFound'
 import CategoryProductList from '../ProductPage/Section/CategoryProductList'
 import DetailCart from '../CartPage/Section/DetailCart'
 import Footer from './Footer/Footer'
+
+import { withRouter } from 'react-router';
+
 
 
 class HomePage extends Component {
@@ -23,7 +25,6 @@ class HomePage extends Component {
                 <HomeHeader />
                 <HomeMainBannerSlide />
                 <HomeSubBannerSlide />
-                <ErrorNotFound />
                 <div className="container">
                     <OutstandingProduct />
                 </div>
@@ -50,4 +51,4 @@ const mapDispatchToProps = dispatch => {
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(HomePage);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(HomePage));

@@ -33,6 +33,14 @@ class HomeHeader extends Component {
         this.props.history.push(`/home`)
     }
 
+    handleGoLoginPage = () => {
+        this.props.history.push(`/login`)
+    }
+
+    handleGoCartPage = () => {
+        this.props.history.push(`/cart`)
+    }
+
     render() {
 
         let arrCategorys = this.props.categorysRedux
@@ -76,11 +84,11 @@ class HomeHeader extends Component {
                             </div>
                         </form>
 
-                        <div className="header-login">
+                        <div className="header-login" onClick={() => { this.handleGoLoginPage() }}>
                             <i class="far fa-user header-login-icon"></i>
                             <span className="header-login-title">Đăng nhập</span>
                         </div>
-                        <div className="header-cart">
+                        <div className="header-cart" onClick={() => { this.handleGoCartPage() }}>
                             <img src="https://www.tncstore.vn/catalog/view/theme/default/image/cart-icon.svg" alt="" className="head-cart-icon" />
                             <span className="head-cart-amount">2</span>
                         </div>
