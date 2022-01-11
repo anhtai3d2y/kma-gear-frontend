@@ -6,7 +6,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import *  as actions from "../../store/actions";
 
 
-class TableManageProduct extends Component {
+class TableRecycleBinProduct extends Component {
 
     constructor(props) {
         super(props);
@@ -90,9 +90,9 @@ class TableManageProduct extends Component {
                                             <button className="btn-edit"
                                                 onClick={() => this.handleEditProduct(product)}
                                             ><i className="fas fa-pencil-alt"></i></button>
-                                            <button className="btn-delete"
+                                            {/* <button className="btn-delete"
                                                 onClick={() => this.handleDeleteProduct(product)}
-                                            ><i className="fas fa-trash"></i></button>
+                                            ><i className="fas fa-trash"></i></button> */}
                                         </td>
                                     </tr>
                                 )
@@ -124,4 +124,4 @@ const mapDispatchToProps = dispatch => {
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(TableManageProduct);
+export default connect(mapStateToProps, mapDispatchToProps)(TableRecycleBinProduct);

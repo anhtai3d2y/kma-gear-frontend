@@ -48,7 +48,6 @@ class TableManageBill extends Component {
     render() {
         let arrBills = this.state.bills
         let arrInvoicedetails = this.state.invoicedetails
-        console.log('invoicedetail: ', arrInvoicedetails)
         return (
             < div className="bill-container" >
                 <table className="table table-hover table table-bordered table-striped mb-0">

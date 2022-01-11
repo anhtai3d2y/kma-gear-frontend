@@ -11,6 +11,9 @@ class DetailCart extends Component {
 
     constructor(props) {
         super(props)
+        this.state = {
+            paypalLink: ''
+        }
         this.scrollTop = React.createRef()
     }
 
@@ -18,8 +21,13 @@ class DetailCart extends Component {
         // this.handleScroll()
     }
 
-    componentDidUpdate() {
+    componentDidUpdate(prevProps, prevState) {
         // this.handleScroll()
+        if (prevProps.paypalLinkRedux !== this.props.paypalLinkRedux) {
+            this.setState({
+                paypalLink: this.props.paypalLinkRedux
+            })
+        }
     }
 
     handleScroll = () => {
@@ -31,10 +39,10 @@ class DetailCart extends Component {
         }
     }
 
-    handlePayment = (event) => {
+    handlePayment = async (event) => {
         event.preventDefault()
-        // this.props.payWithPaypal()
-        window.open('https://www.w3schools.com/jsref/met_win_open.asp')
+        await this.props.payWithPaypal()
+        window.open(this.props.paypalLinkRedux)
     }
 
     render() {
@@ -102,7 +110,7 @@ class DetailCart extends Component {
 
 const mapStateToProps = state => {
     return {
-
+        paypalLinkRedux: state.paypal.paypalLink
     };
 };
 

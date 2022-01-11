@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { CRUDActions } from "../../utils";
 import './ProductManage.scss';
 import TableManageProduct from "./TableManageProduct";
+import TableRecycleBinProduct from "./TableRecycleBinProduct";
 
 // import { getAllProducttypesService } from "../../services/producttypeService";
 // import { getAllBrandsService } from "../../services/producttypeService";
@@ -40,7 +41,9 @@ class ProductManage extends Component {
 
             action: '',
 
-            isShowForm: false
+            isShowForm: false,
+            isOpenRecycleBin: false
+
         }
         this.scrollTop = React.createRef()
     }
@@ -225,6 +228,11 @@ class ProductManage extends Component {
             isShowForm: true
         })
     }
+    handleOpenRecycleBin = () => {
+        this.setState({
+            isOpenRecycleBin: !this.state.isOpenRecycleBin
+        })
+    }
 
     render() {
         let types = this.state.typeProductArr
@@ -347,12 +355,21 @@ class ProductManage extends Component {
                             <div></div>
                         )}
                     </div>
-                    <TableManageProduct
-                        handleEditProductFromParent={this.handleEditProductFromParent}
-                        action={this.state.action}
-                        types={types}
-                        brands={brands}
-                    />
+                    <div className="mb-4"
+                        onClick={() => { this.handleOpenRecycleBin() }}>Thùng rác</div>
+                    {this.state.isOpenRecycleBin ?
+                        (<TableRecycleBinProduct
+                            handleEditProductFromParent={this.handleEditProductFromParent}
+                            action={this.state.action}
+                            types={types}
+                            brands={brands}
+                        />) :
+                        (<TableManageProduct
+                            handleEditProductFromParent={this.handleEditProductFromParent}
+                            action={this.state.action}
+                            types={types}
+                            brands={brands}
+                        />)}
                 </div>
             </div>
         )

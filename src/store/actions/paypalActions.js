@@ -11,9 +11,8 @@ export const payWithPaypalStart = () => {
     return async (dispatch, getState) => {
         try {
             let res = await payWithPaypal()
-            console.log('res', res)
             if (res && res.errCode === 0) {
-                dispatch(payWithPaypalSuccess())
+                dispatch(payWithPaypalSuccess(res.paypalLink))
             } else {
                 toast.error('Thanh toán thất bại!')
                 dispatch(payWithPaypalFailed())
@@ -26,8 +25,9 @@ export const payWithPaypalStart = () => {
     }
 }
 
-export const payWithPaypalSuccess = () => ({
-    type: actionTypes.PAY_WITH_PAYPAL_SUCCESS
+export const payWithPaypalSuccess = (paypalLink) => ({
+    type: actionTypes.PAY_WITH_PAYPAL_SUCCESS,
+    paypalLink: paypalLink
 })
 export const payWithPaypalFailed = () => ({
     type: actionTypes.PAY_WITH_PAYPAL_FAILED

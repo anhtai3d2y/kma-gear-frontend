@@ -1,49 +1,24 @@
 import actionTypes from '../actions/actionTypes';
 
 const initialState = {
+    isLoadingPaypalLink: false,
+    paypalLink: ''
 }
 
 const paypalReducer = (state = initialState, action) => {
     let copyState
     switch (action.type) {
-        case actionTypes.FETCH_ALL_PRODUCTS_SUCCESS:
+        case actionTypes.PAY_WITH_PAYPAL_SUCCESS:
             copyState = { ...state }
-            copyState.products = action.products
+            copyState.paypalLink = action.paypalLink
             return {
                 ...copyState,
             }
-        case actionTypes.FETCH_ALL_PRODUCTS_FAILED:
+        case actionTypes.PAY_WITH_PAYPAL_FAILED:
             // let state = { ...state }
-            state.isLoadingProducts = false
+            state.isLoadingPaypalLink = false
             console.log('fetch failed', action)
             state.products = []
-            return {
-                ...state,
-            }
-        case actionTypes.FETCH_PRODUCTS_BY_ID_SUCCESS:
-
-            state.productsById = action.products
-            return {
-                ...state,
-            }
-        case actionTypes.FETCH_PRODUCTS_BY_ID_FAILED:
-            // let state = { ...state }
-            state.isLoadingProducts = false
-            console.log('fetch failed', action)
-            state.productsById = []
-            return {
-                ...state,
-            }
-        case actionTypes.FETCH_TOP_PRODUCTS_HOME_SUCCESS:
-            state.topProducts = action.products
-            return {
-                ...state,
-            }
-        case actionTypes.FETCH_TOP_PRODUCTS_HOME_FAILED:
-            // let state = { ...state }
-            state.isLoadingProducts = false
-            console.log('fetch failed', action)
-            state.topProducts = []
             return {
                 ...state,
             }

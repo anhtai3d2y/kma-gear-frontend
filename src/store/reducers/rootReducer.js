@@ -54,5 +54,5 @@ export default (history) => combineReducers({
     bill: billReducer,
     state: stateReducer,
     invoicedetail: invoicedetailReducer,
-    paypalReducer: paypalReducer,
+    paypal: paypalReducer,
 })
