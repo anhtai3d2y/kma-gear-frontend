@@ -25,12 +25,8 @@ class HomePage extends Component {
                 <HomeHeader />
                 <HomeMainBannerSlide />
                 <HomeSubBannerSlide />
-                <div className="container">
-                    <OutstandingProduct />
-                </div>
-                <div className="container">
-                    <AllBrands />
-                </div>
+                <OutstandingProduct />
+                <AllBrands />
                 {/* <CategoryProductList />
                 <DetailCart /> */}
                 <Footer />

@@ -11,6 +11,7 @@ import billReducer from "./billReducer";
 import stateReducer from "./stateReducer";
 import invoicedetailReducer from "./invoicedetailReducer";
 import categoryReducer from "./categoryReducer";
+import paypalReducer from "./paypalReducer";
 
 
 import autoMergeLevel2 from 'redux-persist/lib/stateReconciler/autoMergeLevel2';
@@ -53,4 +54,5 @@ export default (history) => combineReducers({
     bill: billReducer,
     state: stateReducer,
     invoicedetail: invoicedetailReducer,
+    paypalReducer: paypalReducer,
 })

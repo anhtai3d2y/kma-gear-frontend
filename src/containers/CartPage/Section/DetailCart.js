@@ -31,6 +31,12 @@ class DetailCart extends Component {
         }
     }
 
+    handlePayment = (event) => {
+        event.preventDefault()
+        // this.props.payWithPaypal()
+        window.open('https://www.w3schools.com/jsref/met_win_open.asp')
+    }
+
     render() {
         return (
             <div className="detail-cart mt-4" ref={this.scrollTop}>
@@ -56,7 +62,9 @@ class DetailCart extends Component {
                                 <div>Số lượng sản phẩm <span className="p-count">14</span></div>
                                 <div>Tổng chi phí <span className="price">344.460.000 đ</span></div>
                                 <div className="text-vat">Đã bao gồm VAT (nếu có)</div>
-                                <a href="https://www.tncstore.vn/index.php?route=checkout/checkout" className="go-checkout">Xác nhận đơn hàng</a>
+                                <a href="https://www.sandbox.paypal.com/cgi-bin/webscr?cmd=_express-checkout&token=EC-9K131186VX518583C" className="go-checkout"
+                                    onClick={(event) => { this.handlePayment(event) }}
+                                >Xác nhận đơn hàng</a>
                                 <a className="go-del">Xóa giỏ hàng</a>
                                 <a href="/" className="go-other-product">XEM SẢN PHẨM KHÁC</a>
                             </div>
@@ -100,6 +108,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
+        payWithPaypal: () => dispatch(actions.payWithPaypalStart()),
 
     };
 };
