@@ -4,6 +4,10 @@ const getAllProductsService = (inputId) => {
     return axios.get(`/api/get-all-products?id=${inputId}`)
 }
 
+const getAllProductsDeletedService = (inputId) => {
+    return axios.get(`/api/get-all-products-deleted?id=${inputId}`)
+}
+
 const getTopProductsHomeService = (limit) => {
     return axios.get(`/api/get-top-products-home?limit=${limit}`)
 }
@@ -24,5 +28,13 @@ const deleteProductService = (productId) => {
     })
 }
 
+const recoverProductService = (productId) => {
+    return axios.delete('/api/recover-product', {
+        data: {
+            id: productId
+        }
+    })
+}
 
-export { getAllProductsService, createNewProductService, deleteProductService, editProductService, getTopProductsHomeService }
+
+export { getAllProductsService, getAllProductsDeletedService, createNewProductService, deleteProductService, recoverProductService, editProductService, getTopProductsHomeService }

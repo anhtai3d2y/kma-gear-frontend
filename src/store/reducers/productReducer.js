@@ -3,6 +3,7 @@ import actionTypes from '../actions/actionTypes';
 const initialState = {
     isLoadingProducts: false,
     products: [],
+    productsDeleted: [],
     productsById: [],
     topProducts: []
 }
@@ -21,6 +22,20 @@ const productReducer = (state = initialState, action) => {
             state.isLoadingProducts = false
             console.log('fetch failed', action)
             state.products = []
+            return {
+                ...state,
+            }
+        case actionTypes.FETCH_ALL_PRODUCTS_DELETED_SUCCESS:
+            copyState = { ...state }
+            copyState.productsDeleted = action.products
+            return {
+                ...copyState,
+            }
+        case actionTypes.FETCH_ALL_PRODUCTS_DELETED_FAILED:
+            // let state = { ...state }
+            state.isLoadingProducts = false
+            console.log('fetch failed', action)
+            state.productsDeleted = []
             return {
                 ...state,
             }

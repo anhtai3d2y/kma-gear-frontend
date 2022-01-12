@@ -38,7 +38,6 @@ class TableManageProduct extends Component {
 
     render() {
         let arrProducts = this.state.products
-        console.log('list product: ', arrProducts)
         let types = this.props.types
         let brands = this.props.brands
         return (

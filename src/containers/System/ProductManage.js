@@ -355,11 +355,11 @@ class ProductManage extends Component {
                             <div></div>
                         )}
                     </div>
-                    <div className="mb-4"
-                        onClick={() => { this.handleOpenRecycleBin() }}>Thùng rác</div>
+                    <div className="mb-4 ml-4 btn-go-recyclebin"
+                        onClick={() => { this.handleOpenRecycleBin() }}>{this.state.isOpenRecycleBin ? (<div><i i className="fas fa-caret-left"></i> Quay lại</div>) : (<div><i className="fas fa-trash"></i> Thùng rác</div>)}
+                    </div>
                     {this.state.isOpenRecycleBin ?
                         (<TableRecycleBinProduct
-                            handleEditProductFromParent={this.handleEditProductFromParent}
                             action={this.state.action}
                             types={types}
                             brands={brands}

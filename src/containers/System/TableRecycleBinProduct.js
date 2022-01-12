@@ -11,33 +11,29 @@ class TableRecycleBinProduct extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            products: [],
+            productsDeleted: [],
         }
     }
 
     componentDidMount() {
-        this.props.fetchProductsRedux()
+        this.props.fetchProductsDeletedRedux()
     }
 
     componentDidUpdate(prevState, prevProps) {
-        if (prevProps.products !== this.props.products) {
+        if (prevProps.productsDeleted !== this.props.productsDeleted) {
             this.setState({
-                products: this.props.products
+                productsDeleted: this.props.productsDeleted
             })
         }
     }
 
-    handleEditProduct = (product) => {
-        this.props.handleEditProductFromParent(product)
-    }
-
-    handleDeleteProduct = async (product) => {
-        await this.props.deleteProductRedux(product.id)
-        await this.props.fetchProductsRedux()
+    handleRecoverProduct = async (product) => {
+        await this.props.recoverProductRedux(product.id)
+        await this.props.fetchProductsDeletedRedux()
     }
 
     render() {
-        let arrProducts = this.state.products
+        let arrProducts = this.state.productsDeleted
         console.log('list product: ', arrProducts)
         let types = this.props.types
         let brands = this.props.brands
@@ -47,6 +43,7 @@ class TableRecycleBinProduct extends Component {
                     <thead className="">
                         <tr>
                             <th scope="col">ID</th>
+                            <th scope="col">Thời gian xóa</th>
                             <th scope="col">Tên sản phẩm</th>
                             <th scope="col">Hình ảnh</th>
                             <th scope="col">Loại sản phẩm</th>
@@ -63,6 +60,7 @@ class TableRecycleBinProduct extends Component {
                                 return (
                                     <tr >
                                         <th scope="row">{product.id}</th>
+                                        <td>{product.updatedAt}</td>
                                         <td>{product.name}</td>
                                         <td>
                                             <div className="product-image">
@@ -87,12 +85,9 @@ class TableRecycleBinProduct extends Component {
                                         <td>{product.price}</td>
                                         <td>{product.discount}</td>
                                         <td>
-                                            <button className="btn-edit"
-                                                onClick={() => this.handleEditProduct(product)}
-                                            ><i className="fas fa-pencil-alt"></i></button>
-                                            {/* <button className="btn-delete"
-                                                onClick={() => this.handleDeleteProduct(product)}
-                                            ><i className="fas fa-trash"></i></button> */}
+                                            <div className="btn-restore"
+                                                onClick={() => this.handleRecoverProduct(product)}
+                                            ><i className="fab fa-trash"></i>Khôi phục</div>
                                         </td>
                                     </tr>
                                 )
@@ -109,7 +104,7 @@ class TableRecycleBinProduct extends Component {
 
 const mapStateToProps = state => {
     return {
-        products: state.product.products,
+        productsDeleted: state.product.productsDeleted,
         typesRedux: state.producttype.types,
         isLoadingType: state.producttype.isLoadingType,
         brandsRedux: state.brand.brands,
@@ -119,8 +114,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        fetchProductsRedux: () => dispatch(actions.fetchAllProductsStart()),
-        deleteProductRedux: (id) => dispatch(actions.deleteProduct(id)),
+        fetchProductsDeletedRedux: () => dispatch(actions.fetchAllProductsDeletedStart()),
+        recoverProductRedux: (id) => dispatch(actions.recoverProduct(id)),
     };
 };
 

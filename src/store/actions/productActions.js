@@ -1,5 +1,5 @@
 import actionTypes from './actionTypes';
-import { createNewProductService, getAllProductsService, deleteProductService, editProductService, getTopProductsHomeService } from "../../services/productService";
+import { createNewProductService, getAllProductsDeletedService, getAllProductsService, deleteProductService, recoverProductService, editProductService, getTopProductsHomeService } from "../../services/productService";
 import { toast } from 'react-toastify';
 
 
@@ -27,6 +27,32 @@ export const fetchAllProductsSuccess = (data) => ({
 })
 export const fetchAllProductsFailed = () => ({
     type: actionTypes.FETCH_ALL_PRODUCTS_FAILED
+})
+
+export const fetchAllProductsDeletedStart = () => {
+    return async (dispatch, getState) => {
+        try {
+            let res = await getAllProductsDeletedService('ALL')
+            if (res && res.errCode === 0) {
+                dispatch(fetchAllProductsDeletedSuccess(res.products.reverse()))
+            } else {
+                toast.error('Lấy sản phẩm thất bại!')
+                dispatch(fetchAllProductsDeletedFailed())
+            }
+        } catch (error) {
+            toast.error('Lấy sản phẩm thất bại!')
+            dispatch(fetchAllProductsDeletedFailed())
+            console.log(error)
+        }
+    }
+}
+
+export const fetchAllProductsDeletedSuccess = (data) => ({
+    type: actionTypes.FETCH_ALL_PRODUCTS_DELETED_SUCCESS,
+    products: data
+})
+export const fetchAllProductsDeletedFailed = () => ({
+    type: actionTypes.FETCH_ALL_PRODUCTS_DELETED_FAILED
 })
 
 export const fetchProductsByIdStart = (id) => {
@@ -158,4 +184,30 @@ export const deleteProductSuccess = () => ({
 })
 export const deleteProductFailed = () => ({
     type: actionTypes.DELETE_PRODUCT_FAILED
+})
+
+export const recoverProduct = (productId) => {
+    return async (dispatch, getState) => {
+        try {
+            let res = await recoverProductService(productId)
+            if (res && res.errCode === 0) {
+                dispatch(recoverProductSuccess())
+                toast('Khôi phục sản phẩm thành công')
+            } else {
+                toast.error('Khôi phục sản phẩm thất bại!')
+                dispatch(recoverProductFailed())
+            }
+        } catch (error) {
+            toast.error('Khôi phục sản phẩm thất bại!')
+            dispatch(recoverProductFailed())
+            console.log(error)
+        }
+    }
+}
+
+export const recoverProductSuccess = () => ({
+    type: actionTypes.RECOVER_PRODUCT_SUCCESS
+})
+export const recoverProductFailed = () => ({
+    type: actionTypes.RECOVER_PRODUCT_FAILED
 })
