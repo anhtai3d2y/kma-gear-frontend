@@ -38,12 +38,13 @@
             }
             .form-control {
                 font-size: 16px;
-                border: 2px solid #005ec4;
+                // border: 2px solid #005ec4;
                 display: flex;
                 justify-content: space-between;
                 position: relative;
                 box-sizing: border-box;
                 border-radius: 0px;
+                background: #f0f3fc;
                 &:focus {
                     outline: none;
                 }
@@ -61,7 +62,7 @@
             height: 36px;
             border-radius: 0px;
             border: 2px solid #005ec4;
-            background-color: #fff;
+            background-color: #f0f3fc;
             color: #000;
             &:hover {
                 opacity: 0.8;
