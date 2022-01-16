@@ -58,7 +58,7 @@ class HomeHeader extends Component {
             <div className="header">
                 <div className="header-top">
                     <div className="container">
-                        <span>Hotline : (093) 206.2682 - (093) 206.2686 • Email: cskh@kmagear.vn {isCustomerLoggedIn ? 'bạn đang đăng nhập' : 'k đăng nhập'}</span>
+                        <span>Hotline : (093) 206.2682 - (093) 206.2686 • Email: cskh@kmagear.vn </span>
                     </div>
                 </div>
                 <div className="header-main">

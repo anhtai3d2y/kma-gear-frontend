@@ -7,6 +7,7 @@ export const path = {
     PRODUCT: '/product/:id',
     LIST_PRODUCT: '/list-product/:id',
     CART: '/cart',
+    CHECKOUT: '/checkout',
     LOGIN: '/login',
     REGISTER: '/register',
     ACCOUNT: '/account',

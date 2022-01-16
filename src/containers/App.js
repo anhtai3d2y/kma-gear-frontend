@@ -16,6 +16,7 @@ import System from '../routes/System';
 import ProductPage from './ProductPage/ProductPage.js';
 import ListProductPage from './ProductPage/ListProductPage.js';
 import CartPage from './CartPage/CartPage.js';
+import CheckoutPage from './CartPage/CheckoutPage.js';
 import LoginPage from './LoginPage/LoginPage.js';
 import RegisterPage from './LoginPage/RegisterPage.js';
 import InfoCustomerPage from './LoginPage/InfoCustomerPage.js';
@@ -59,6 +60,7 @@ class App extends Component {
                                     <Route path={path.PRODUCT} component={(ProductPage)} />
                                     <Route path={path.LIST_PRODUCT} component={(ListProductPage)} />
                                     <Route path={path.CART} component={(CartPage)} />
+                                    <Route path={path.CHECKOUT} component={(CheckoutPage)} />
                                     <Route path={path.LOGIN} component={(LoginPage)} />
                                     <Route path={path.REGISTER} component={(RegisterPage)} />
                                     <Route path={path.ACCOUNT} component={(InfoCustomerPage)} />
