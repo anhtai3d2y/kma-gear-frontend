@@ -24,11 +24,14 @@ class TableManageProduct extends Component {
             this.setState({
                 products: this.props.products
             })
+            this.scrollTop = React.createRef()
+
         }
     }
 
     handleEditProduct = (product) => {
         this.props.handleEditProductFromParent(product)
+        // this.handleScroll()
     }
 
     handleDeleteProduct = async (product) => {
@@ -36,12 +39,21 @@ class TableManageProduct extends Component {
         await this.props.fetchProductsRedux()
     }
 
+    handleScroll = () => {
+        const { index, selected } = this.props
+        if (index === selected) {
+            setTimeout(() => {
+                this.scrollTop.current.scrollIntoView({ behavior: 'smooth' })
+            }, 100)
+        }
+    }
+
     render() {
         let arrProducts = this.state.products
         let types = this.props.types
         let brands = this.props.brands
         return (
-            < div className="product-container" >
+            < div className="product-container" ref={this.scrollTop}>
                 <table className="table table-hover table table-bordered table-striped mb-0">
                     <thead className="">
                         <tr>

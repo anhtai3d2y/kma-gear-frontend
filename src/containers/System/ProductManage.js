@@ -29,6 +29,8 @@ class ProductManage extends Component {
             id: '',
             name: '',
             image: '',
+            shortDescHTML: '',
+            shortDescMarkdown: '',
             descriptionHTML: '',
             descriptionMarkdown: '',
             producttype: '',
@@ -55,7 +57,6 @@ class ProductManage extends Component {
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        this.handleScroll()
         if (prevProps.typesRedux !== this.props.typesRedux) {
             let arrTypes = this.props.typesRedux
             this.setState({
@@ -78,6 +79,8 @@ class ProductManage extends Component {
             this.setState({
                 name: '',
                 image: '',
+                shortDescHTML: '',
+                shortDescMarkdown: '',
                 descriptionHTML: '',
                 descriptionMarkdown: '',
                 producttype: arrTypes && arrTypes.length > 0 ? arrTypes[0].id : '',
@@ -112,6 +115,8 @@ class ProductManage extends Component {
                 let newProduct = {
                     name: this.state.name,
                     image: this.state.image,
+                    shortDescHTML: this.state.shortDescHTML,
+                    shortDescMarkdown: this.state.shortDescMarkdown,
                     descriptionHTML: this.state.descriptionHTML,
                     descriptionMarkdown: this.state.descriptionMarkdown,
                     typeId: Number(this.state.producttype),
@@ -129,6 +134,8 @@ class ProductManage extends Component {
                     id: this.state.id,
                     name: this.state.name,
                     image: this.state.image,
+                    shortDescHTML: this.state.shortDescHTML,
+                    shortDescMarkdown: this.state.shortDescMarkdown,
                     descriptionHTML: this.state.descriptionHTML,
                     descriptionMarkdown: this.state.descriptionMarkdown,
                     typeId: Number(this.state.producttype),
@@ -139,6 +146,7 @@ class ProductManage extends Component {
                 })
             }
             await this.props.fetchProductsRedux()
+            this.handleScroll()
         }
     }
 
@@ -164,7 +172,14 @@ class ProductManage extends Component {
         })
     }
 
-    handleEditorChange = ({ html, text }) => {
+    handleEditorShortDescChange = ({ html, text }) => {
+        this.setState({
+            shortDescHTML: html,
+            shortDescMarkdown: text,
+        })
+    }
+
+    handleEditorDescChange = ({ html, text }) => {
         this.setState({
             descriptionHTML: html,
             descriptionMarkdown: text,
@@ -215,6 +230,8 @@ class ProductManage extends Component {
             id: product.id,
             name: product.name,
             image: product.image,
+            shortDescHTML: product.shortDescHTML,
+            shortDescMarkdown: product.shortDescMarkdown,
             descriptionHTML: product.descriptionHTML,
             descriptionMarkdown: product.descriptionMarkdown,
             producttype: product.typeId,
@@ -336,12 +353,21 @@ class ProductManage extends Component {
                                         />
                                     </div>
                                     <div className="col-12">
+                                        <label className="mt-1">Mô tả ngắn gọn</label>
+                                        <MdEditor
+                                            style={{ height: '200px' }}
+                                            value={this.state.shortDescMarkdown}
+                                            renderHTML={text => mdParser.render(text)}
+                                            onChange={this.handleEditorShortDescChange}
+                                        />
+                                    </div>
+                                    <div className="col-12">
                                         <label className="mt-1">Mô tả sản phẩm</label>
                                         <MdEditor
-                                            style={{ height: '300px' }}
+                                            style={{ height: '400px' }}
                                             value={this.state.descriptionMarkdown}
                                             renderHTML={text => mdParser.render(text)}
-                                            onChange={this.handleEditorChange}
+                                            onChange={this.handleEditorDescChange}
                                         />
                                     </div>
                                     <div className="col-12 my-3">
