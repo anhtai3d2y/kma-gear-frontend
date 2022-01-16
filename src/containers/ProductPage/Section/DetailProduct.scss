@@ -220,7 +220,12 @@
     .product-detail-bottom {
         .content-bottom {
             .description {
-                text-align: center;
+                width: 100%;
+                font-size: 16px;
+                font-weight: 600;
+                img {
+                    width: 100%;
+                }
             }
         }
     }
