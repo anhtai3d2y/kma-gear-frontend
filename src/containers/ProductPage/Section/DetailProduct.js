@@ -46,7 +46,7 @@ class ProductPage extends Component {
                     <div className="product-detail-top">
                         <div className="product-detail-top-left">
                             <a href="https://www.tncstore.vn/index.php?route=product/manufacturer/info&amp;manufacturer_id=158"
-                                title={product && product.Brand && product.Brand.name} class="product-brand">
+                                title={product && product.Brand && product.Brand.name} className="product-brand">
                                 <img src={product && product.Brand && product.Brand.image} alt={product && product.Brand && product.Brand.name} />
                             </a>
                             <div className="product-image">
@@ -59,76 +59,85 @@ class ProductPage extends Component {
                         </div>
                         <div className="product-detail-top-right">
                             <h1>{product && product.name}</h1>
-                            <div class="rating-guarantee">
-                                <div class="product-rate">
-                                    <div class="rate-star">
-                                        <i class="fas fa-star "></i>
-                                        <i class="fas fa-star "></i>
-                                        <i class="fas fa-star "></i>
-                                        <i class="fas fa-star "></i>
-                                        <i class="fas fa-star "></i>
+                            <div className="rating-guarantee">
+                                <div className="product-rate">
+                                    <div className="rate-star">
+                                        <i className="fas fa-star "></i>
+                                        <i className="fas fa-star "></i>
+                                        <i className="fas fa-star "></i>
+                                        <i className="fas fa-star "></i>
+                                        <i className="fas fa-star "></i>
                                     </div>
-                                    <div class="rate-text">0 đánh giá</div>
+                                    <div className="rate-text">0 đánh giá</div>
                                 </div>
-                                <div class="product-guarantee">
+                                <div className="product-guarantee">
                                     <span>Bảo hành 24 Tháng</span>
                                 </div>
                             </div>
-                            <div id="product" class="status-price">
-                                <div class="col1">
+                            <div className="short-desc" dangerouslySetInnerHTML={{ __html: product.shortDescHTML }}></div>
+                            <div id="product" className="status-price">
+                                <div className="col1">
                                     <div>
-                                        <p class="status-stock">
-                                            <span class="status status1">
-                                                <i aria-hidden="true" class="fa fa-circle">
+                                        <p className="status-stock">
+                                            <span className={product.amount > 0 ? "status status1" : "status status2"}>
+                                                <i aria-hidden="true" className="fa fa-circle">
 
-                                                </i>Còn hàng
+                                                </i>{product.amount > 0 ? "Còn hàng" : "Hết hàng"}
                                             </span>
                                         </p>
-                                        <div class="quantity">
+                                        <div className="quantity">
                                             Số lượng
-                                            <div class="quantity-wrap">
+                                            <div className="quantity-wrap">
                                                 <input type="text" name="quantity" value="1" size="2" />
-                                                <div class="qty-action">
-                                                    <span title="Thêm" class="add-qty">+</span>
-                                                    <span title="Bớt" class="sub-qty">-</span>
+                                                <div className="qty-action">
+                                                    <span title="Thêm" className="add-qty">+</span>
+                                                    <span title="Bớt" className="sub-qty">-</span>
                                                 </div></div> <input type="hidden" name="product_id" value="6084" />
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col2">
-                                    <ul class="list-unstyled list-price">
+                                <div className="col2">
+                                    <ul className="list-unstyled list-price">
                                         <li>
-                                            <p class="price-old">{this.numberWithCommas(product.price)} đ</p>
+                                            <p className="price-old">{this.numberWithCommas(product.price)} đ</p>
                                         </li>
                                         <li>
-                                            <p class="price">{this.numberWithCommas(product.price * (1 - product.discount / 100))} đ</p>
+                                            <p className="price">{this.numberWithCommas(product.price * (1 - product.discount / 100))} đ</p>
                                         </li>
                                     </ul>
                                 </div>
                             </div>
-                            <div class="add-cart-buttons">
-                                <button type="button" data-loading-text="Đang tải..." class="btn-add-cart btn-add-cart-2">
-                                    <svg width="21" height="20" viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-
-                                        <path d="M1.33301 0.833252H4.66634L6.89967 11.9916C6.97588 12.3752 7.1846 12.7199 7.4893 12.9652C7.79399 13.2105 8.17526 13.3407 8.56634 13.3333H16.6663C17.0574 13.3407 17.4387 13.2105 17.7434 12.9652C18.0481 12.7199 18.2568 12.3752 18.333 11.9916L19.6663 4.99992H5.49967" stroke="#005EC4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-                                    </svg>
-                                    Thêm vào giỏ
-                                </button>
-                                <button type="button" data-loading-text="Đang tải..." class="btn-add-cart ">
-                                    <svg width="17" height="18" viewBox="0 0 17 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-
-                                        <path d="M15.9187 9.83092L15.9187 8.16922L9.33085 8.16922L9.33085 1.58134H7.66915L7.66915 8.16922L1.08127 8.16922L1.08127 9.83092L7.66915 9.83092L7.66915 16.4188H9.33085L9.33085 9.83092L15.9187 9.83092Z" fill="white"></path>
-                                    </svg>
-                                    Mua hàng
-                                </button>
-                            </div>
+                            {product.amount > 0 ? (
+                                <div className="add-cart-buttons">
+                                    <button type="button" data-loading-text="Đang tải..." className="btn-add-cart btn-add-cart-2">
+                                        <svg width="21" height="20" viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M8.00033 18.3334C8.46056 18.3334 8.83366 17.9603 8.83366 17.5001C8.83366 17.0398 8.46056 16.6667 8.00033 16.6667C7.54009 16.6667 7.16699 17.0398 7.16699 17.5001C7.16699 17.9603 7.54009 18.3334 8.00033 18.3334Z" stroke="#005EC4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                                            <path d="M17.1663 18.3334C17.6266 18.3334 17.9997 17.9603 17.9997 17.5001C17.9997 17.0398 17.6266 16.6667 17.1663 16.6667C16.7061 16.6667 16.333 17.0398 16.333 17.5001C16.333 17.9603 16.7061 18.3334 17.1663 18.3334Z" stroke="#005EC4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                                            <path d="M1.33301 0.833252H4.66634L6.89967 11.9916C6.97588 12.3752 7.1846 12.7199 7.4893 12.9652C7.79399 13.2105 8.17526 13.3407 8.56634 13.3333H16.6663C17.0574 13.3407 17.4387 13.2105 17.7434 12.9652C18.0481 12.7199 18.2568 12.3752 18.333 11.9916L19.6663 4.99992H5.49967" stroke="#005EC4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                                        Thêm vào giỏ
+                                    </button>
+                                    <button type="button" data-loading-text="Đang tải..." className="btn-add-cart ">
+                                        <svg width="17" height="18" viewBox="0 0 17 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M15.9187 9.83092L15.9187 8.16922L9.33085 8.16922L9.33085 1.58134H7.66915L7.66915 8.16922L1.08127 8.16922L1.08127 9.83092L7.66915 9.83092L7.66915 16.4188H9.33085L9.33085 9.83092L15.9187 9.83092Z" fill="white"></path>
+                                        </svg>
+                                        Mua hàng
+                                    </button>
+                                </div>
+                            ) : (
+                                <div className="add-cart-buttons">
+                                    <button type="button" data-loading-text="Đang tải..." className="btn-add-cart ">
+                                        <i class="fas fa-phone mr-3"></i>
+                                        Liên hệ : 0932062686
+                                    </button>
+                                </div>
+                            )}
                         </div>
                     </div>
                     <PolicyBlock />
                     <div className="product-detail-bottom">
                         <div className="content-bottom">
                             <BlockHeaderTitle headerTitle="THÔNG TIN SẢN PHẨM" />
-                            <div dangerouslySetInnerHTML={{ __html: product.descriptionHTML }}></div>
+                            <div className="description" dangerouslySetInnerHTML={{ __html: product.descriptionHTML }}></div>
                         </div>
                     </div>
                 </div>

@@ -61,6 +61,13 @@
                     text-transform: capitalize;
                 }
             }
+            .short-desc {
+                margin-top: 18px;
+                margin-bottom: 18px;
+                font-size: 16px;
+                line-height: 30px;
+                color: #000;
+            }
             .status-price {
                 display: flex;
                 flex-direction: row;
@@ -207,6 +214,13 @@
                 line-height: 21px;
                 display: flex;
                 color: #000;
+            }
+        }
+    }
+    .product-detail-bottom {
+        .content-bottom {
+            .description {
+                text-align: center;
             }
         }
     }
