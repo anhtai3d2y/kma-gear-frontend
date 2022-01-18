@@ -9,6 +9,7 @@ import bannerReducer from "./bannerReducer";
 import productReducer from "./productReducer";
 import billReducer from "./billReducer";
 import cartReducer from "./cartReducer";
+import cartdetailReducer from "./cartdetailReducer";
 import stateReducer from "./stateReducer";
 import invoicedetailReducer from "./invoicedetailReducer";
 import categoryReducer from "./categoryReducer";
@@ -60,6 +61,7 @@ export default (history) => combineReducers({
     category: categoryReducer,
     bill: billReducer,
     cart: cartReducer,
+    cartdetail: cartdetailReducer,
     state: stateReducer,
     invoicedetail: invoicedetailReducer,
     paypal: paypalReducer,
