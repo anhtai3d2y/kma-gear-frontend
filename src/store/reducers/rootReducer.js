@@ -8,6 +8,7 @@ import brandReducer from "./brandReducer";
 import bannerReducer from "./bannerReducer";
 import productReducer from "./productReducer";
 import billReducer from "./billReducer";
+import cartReducer from "./cartReducer";
 import stateReducer from "./stateReducer";
 import invoicedetailReducer from "./invoicedetailReducer";
 import categoryReducer from "./categoryReducer";
@@ -35,6 +36,12 @@ const customerPersistConfig = {
     whitelist: ['isCustomerLoggedIn', 'customerInfo']
 };
 
+// const customerPersistConfig = {
+//     ...persistCommonConfig,
+//     key: 'localCart',
+//     whitelist: ['isCustomerLoggedIn', 'customerInfo']
+// };
+
 const appPersistConfig = {
     ...persistCommonConfig,
     key: 'app',
@@ -52,6 +59,7 @@ export default (history) => combineReducers({
     product: productReducer,
     category: categoryReducer,
     bill: billReducer,
+    cart: cartReducer,
     state: stateReducer,
     invoicedetail: invoicedetailReducer,
     paypal: paypalReducer,

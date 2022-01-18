@@ -25,6 +25,15 @@ class HomeHeader extends Component {
         // this.handleScroll()
     }
 
+    async componentDidUpdate(prevProps, prevState) {
+        // this.handleScroll()
+        if (prevProps.isCustomerLoggedIn !== this.props.isCustomerLoggedIn) {
+            if (this.props.isCustomerLoggedIn) {
+                await this.props.fetchCartStart(this.props.customerInfo.id)
+            }
+        }
+    }
+
     changeLanguage = (language) => {
         this.props.changeLanguageAppRedux(language)
     }
@@ -53,6 +62,8 @@ class HomeHeader extends Component {
 
         let isCustomerLoggedIn = this.props.isCustomerLoggedIn
         let customerInfo = this.props.customerInfo
+
+        const { cartInfo } = this.props;
 
         return (
             <div className="header">
@@ -93,7 +104,7 @@ class HomeHeader extends Component {
                         </div>
                         <div className="header-cart" onClick={() => { this.handleGoCartPage() }}>
                             <img src="https://www.tncstore.vn/catalog/view/theme/default/image/cart-icon.svg" alt="" className="head-cart-icon" />
-                            <span className="head-cart-amount">2</span>
+                            <span className="head-cart-amount">1000</span>
                         </div>
                     </div>
                 </div>
@@ -184,7 +195,8 @@ const mapStateToProps = state => {
         categorysRedux: state.category.categorys,
         producttypesRedux: state.producttype.types,
         isCustomerLoggedIn: state.customer.isCustomerLoggedIn,
-        customerInfo: state.customer.customerInfo
+        customerInfo: state.customer.customerInfo,
+        cartInfo: state.cart.carts
     };
 };
 
@@ -195,6 +207,7 @@ const mapDispatchToProps = dispatch => {
         fetchProducttypesRedux: () => dispatch(actions.fetchProducttypeStart()),
         customerLoginSuccess: (customerInfo) => dispatch(actions.customerLoginSuccess(customerInfo)),
         customerLoginFail: () => dispatch(actions.customerLoginFail()),
+        fetchCartStart: (userId) => dispatch(actions.fetchCartStart(userId)),
 
     };
 };

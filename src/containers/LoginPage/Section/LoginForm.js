@@ -67,6 +67,7 @@ class LoginForm extends Component {
             }
             if (data && data.errCode === 0) {
                 this.props.customerLoginSuccess(data.user)
+                this.props.fetchCartStart(data.user.id)
             }
         } catch (error) {
             if (error.response) {
@@ -150,6 +151,8 @@ const mapStateToProps = state => {
     return {
         isCustomerLoggedIn: state.customer.isCustomerLoggedIn,
         customerInfo: state.customer.customerInfo,
+        cartInfo: state.cart.carts
+
     };
 };
 
@@ -159,6 +162,8 @@ const mapDispatchToProps = dispatch => {
         customerLoginSuccess: (customerInfo) => dispatch(actions.customerLoginSuccess(customerInfo)),
         customerLoginFail: () => dispatch(actions.customerLoginFail()),
         processCustomerLogout: () => dispatch(actions.processCustomerLogout()),
+        fetchCartStart: (userId) => dispatch(actions.fetchCartStart(userId)),
+
     };
 };
 

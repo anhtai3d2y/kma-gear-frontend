@@ -11,16 +11,35 @@ class ProductPage extends Component {
 
     constructor(props) {
         super(props)
+        this.state = {
+            productId: '',
+        }
         this.scrollTop = React.createRef()
     }
 
     componentDidMount() {
         this.handleScroll()
         this.props.fetchProductsById(this.props.productId)
+        this.setState({
+            productId: this.props.productId
+        })
     }
 
-    componentDidUpdate() {
+    componentDidUpdate(prevProps, prevState) {
         this.handleScroll()
+        // console.log("prevs props: ", prevProps.productsByIdRedux.id)
+        // console.log("id from parent: ", this.props.productId)
+        // if (prevProps.productsByIdRedux !== this.props.productsByIdRedux) {
+        //     this.setState({
+        //         product: this.props.productsByIdRedux
+        //     })
+        // }
+        if (prevState.productId !== this.props.productId) {
+            this.setState({
+                productId: this.props.productId
+            })
+            this.props.fetchProductsById(this.state.productId)
+        }
     }
 
     handleScroll = () => {
@@ -37,9 +56,12 @@ class ProductPage extends Component {
         return result.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ".");
     }
 
+    handleAddToCart = (event) => {
+        console.log('add item to card', event.target.value)
+    }
+
     render() {
         let product = this.props.productsByIdRedux
-        console.log(product)
         return (
             <div className="detail-product mt-4" ref={this.scrollTop}>
                 <div className="container">
@@ -109,7 +131,9 @@ class ProductPage extends Component {
                             </div>
                             {product.amount > 0 ? (
                                 <div className="add-cart-buttons">
-                                    <button type="button" data-loading-text="Đang tải..." className="btn-add-cart btn-add-cart-2">
+                                    <button type="button" value={product.id} className="btn-add-cart btn-add-cart-2"
+                                        onClick={(event) => this.handleAddToCart(event)}
+                                    >
                                         <svg width="21" height="20" viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <path d="M8.00033 18.3334C8.46056 18.3334 8.83366 17.9603 8.83366 17.5001C8.83366 17.0398 8.46056 16.6667 8.00033 16.6667C7.54009 16.6667 7.16699 17.0398 7.16699 17.5001C7.16699 17.9603 7.54009 18.3334 8.00033 18.3334Z" stroke="#005EC4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
                                             <path d="M17.1663 18.3334C17.6266 18.3334 17.9997 17.9603 17.9997 17.5001C17.9997 17.0398 17.6266 16.6667 17.1663 16.6667C16.7061 16.6667 16.333 17.0398 16.333 17.5001C16.333 17.9603 16.7061 18.3334 17.1663 18.3334Z" stroke="#005EC4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>

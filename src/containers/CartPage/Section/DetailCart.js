@@ -24,11 +24,11 @@ class DetailCart extends Component {
 
     componentDidUpdate(prevProps, prevState) {
         // this.handleScroll()
-        if (prevProps.paypalLinkRedux !== this.props.paypalLinkRedux) {
-            this.setState({
-                paypalLink: this.props.paypalLinkRedux
-            })
-        }
+        // if (prevProps.paypalLinkRedux !== this.props.paypalLinkRedux) {
+        //     this.setState({
+        //         paypalLink: this.props.paypalLinkRedux
+        //     })
+        // }
     }
 
     handleScroll = () => {
@@ -40,7 +40,8 @@ class DetailCart extends Component {
         }
     }
 
-    handleCheckout = () => {
+    handleCheckout = (event) => {
+        event.preventDefault()
         this.props.history.push(`/checkout`)
     }
 
@@ -75,8 +76,8 @@ class DetailCart extends Component {
                                 <div>Số lượng sản phẩm <span className="p-count">14</span></div>
                                 <div>Tổng chi phí <span className="price">344.460.000 đ</span></div>
                                 <div className="text-vat">Đã bao gồm VAT (nếu có)</div>
-                                <a href="https://www.sandbox.paypal.com/cgi-bin/webscr?cmd=_express-checkout&token=EC-9K131186VX518583C" className="go-checkout"
-                                    onClick={() => { this.handleCheckout() }}
+                                <a href="" className="go-checkout"
+                                    onClick={(event) => { this.handleCheckout(event) }}
                                 >Xác nhận đơn hàng</a>
                                 <a className="go-del">Xóa giỏ hàng</a>
                                 <a href="/" className="go-other-product">XEM SẢN PHẨM KHÁC</a>
@@ -115,13 +116,13 @@ class DetailCart extends Component {
 
 const mapStateToProps = state => {
     return {
-        paypalLinkRedux: state.paypal.paypalLink
+        // paypalLinkRedux: state.paypal.paypalLink
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
-        payWithPaypal: () => dispatch(actions.payWithPaypalStart()),
+        // payWithPaypal: () => dispatch(actions.payWithPaypalStart()),
 
     };
 };
