@@ -96,7 +96,6 @@ export const deleteCart = (cartId) => {
             let res = await deleteCartService(cartId)
             if (res && res.errCode === 0) {
                 dispatch(deleteCartSuccess())
-                toast('Xóa giỏ hàng thành công')
             } else {
                 toast.error('Xóa giỏ hàng thất bại!')
                 dispatch(deleteCartFailed())

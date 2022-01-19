@@ -16,6 +16,10 @@ const createNewProductService = (data) => {
     return axios.post('/api/create-new-product', data)
 }
 
+const updateAmountProductService = (data) => {
+    return axios.post('/api/bulk-update-amount-product', data)
+}
+
 const editProductService = (data) => {
     return axios.put('/api/edit-product', data)
 }
@@ -37,4 +41,13 @@ const recoverProductService = (productId) => {
 }
 
 
-export { getAllProductsService, getAllProductsDeletedService, createNewProductService, deleteProductService, recoverProductService, editProductService, getTopProductsHomeService }
+export {
+    getAllProductsService,
+    getAllProductsDeletedService,
+    createNewProductService,
+    updateAmountProductService,
+    deleteProductService,
+    recoverProductService,
+    editProductService,
+    getTopProductsHomeService
+}

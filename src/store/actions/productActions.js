@@ -1,5 +1,14 @@
 import actionTypes from './actionTypes';
-import { createNewProductService, getAllProductsDeletedService, getAllProductsService, deleteProductService, recoverProductService, editProductService, getTopProductsHomeService } from "../../services/productService";
+import {
+    createNewProductService,
+    getAllProductsDeletedService,
+    getAllProductsService,
+    updateAmountProductService,
+    deleteProductService,
+    recoverProductService,
+    editProductService,
+    getTopProductsHomeService
+} from "../../services/productService";
 import { toast } from 'react-toastify';
 
 
@@ -132,6 +141,31 @@ export const saveProductSuccess = () => ({
 })
 export const saveProductFailed = () => ({
     type: actionTypes.CREATE_PRODUCT_FAILED
+})
+
+export const updateAmountProduct = (data) => {
+    return async (dispatch, getState) => {
+        try {
+            let res = await updateAmountProductService(data)
+            if (res && res.errCode === 0) {
+                dispatch(updateAmountProductSuccess())
+            } else {
+                toast.error('Cập nhật số lượng sản phẩm thất bại!')
+                dispatch(updateAmountProductFailed())
+            }
+        } catch (error) {
+            toast.error('Cập nhật số lượng sản phẩm thất bại!')
+            dispatch(updateAmountProductFailed())
+            console.log(error)
+        }
+    }
+}
+
+export const updateAmountProductSuccess = () => ({
+    type: actionTypes.UPDATE_AMOUNT_PRODUCT_SUCCESS
+})
+export const updateAmountProductFailed = () => ({
+    type: actionTypes.UPDATE_AMOUNT_PRODUCT_FAILED
 })
 
 export const editProduct = (data) => {

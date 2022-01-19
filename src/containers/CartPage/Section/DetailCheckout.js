@@ -84,21 +84,46 @@ class DetailCheckout extends Component {
         }
         await this.props.createNewBill(newBill)
         let arrDetails = []
-        for (let i = 0; i < this.props.cartdetails.length; i++) {
+        let arrProducts = []
+        let { cartdetails } = this.props
+        for (let i = 0; i < cartdetails.length; i++) {
+            let cd = cartdetails[i]
             let newDetail = {
                 billId: this.props.bill.id,
-                productId: this.props.cartdetails[i].productId,
-                price: this.props.cartdetails[i].Product.price,
-                discount: this.props.cartdetails[i].Product.discount,
-                amount: this.props.cartdetails[i].amount,
+                productId: cd.productId,
+                price: cd.Product.price,
+                discount: cd.Product.discount,
+                amount: cd.amount,
+            }
+            let newProduct = {
+                id: cd.Product.id,
+                name: cd.Product.name,
+                brandId: cd.Product.brandId,
+                typeId: cd.Product.typeId,
+                amount: cd.Product.amount - cd.amount,
+                price: cd.Product.price,
+                discount: cd.Product.discount,
+                image: cd.Product.image,
+                shortDescHTML: cd.Product.shortDescHTML,
+                shortDescMarkdown: cd.Product.shortDescMarkdown,
+                descriptionHTML: cd.Product.descriptionHTML,
+                descriptionMarkdown: cd.Product.descriptionMarkdown,
+                deleted: cd.Product.deleted,
             }
             arrDetails.push(newDetail)
+            arrProducts.push(newProduct)
         }
+        console.log(arrProducts)
         await this.props.bulkCreateInvoicedetail(arrDetails)
+        await this.props.updateAmountProduct(arrProducts)
+        await this.props.clearCartdetail(this.props.cartInfo.id)
+        await this.props.fetchCartdetailStart(this.props.cartInfo.id)
+        this.props.history.push(`/account`)
     }
 
-    paymentByPaypal = () => {
-        console.log("thanh toan qua paypal")
+    paymentByPaypal = async () => {
+        await this.props.payWithPaypal()
+        window.open(this.props.paypalLinkRedux)
     }
 
     paymentByBank = () => {
@@ -124,12 +149,6 @@ class DetailCheckout extends Component {
         let result = Math.round(x)
         return result.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ".");
     }
-
-    // handlePayment = async (event) => {
-    //     event.preventDefault()
-    //     await this.props.payWithPaypal()
-    //     window.open(this.props.paypalLinkRedux)
-    // }
 
     render() {
         const { cartdetails } = this.props;
@@ -241,7 +260,7 @@ class DetailCheckout extends Component {
 
 const mapStateToProps = state => {
     return {
-        // paypalLinkRedux: state.paypal.paypalLink
+        paypalLinkRedux: state.paypal.paypalLink,
         cartInfo: state.cart.carts,
         cartdetails: state.cartdetail.cartdetails,
         customerInfo: state.customer.customerInfo,
@@ -251,9 +270,12 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        // payWithPaypal: () => dispatch(actions.payWithPaypalStart()),
+        payWithPaypal: () => dispatch(actions.payWithPaypalStart()),
         createNewBill: (data) => dispatch(actions.createNewBill(data)),
         bulkCreateInvoicedetail: (data) => dispatch(actions.bulkCreateInvoicedetail(data)),
+        updateAmountProduct: (data) => dispatch(actions.updateAmountProduct(data)),
+        clearCartdetail: (cartId) => dispatch(actions.clearCartdetail(cartId)),
+        fetchCartdetailStart: (cartId) => dispatch(actions.fetchCartdetailStart(cartId)),
     };
 };
 

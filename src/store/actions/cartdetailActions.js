@@ -129,7 +129,6 @@ export const clearCartdetail = (cartId) => {
             let res = await clearCartdetailService(cartId)
             if (res && res.errCode === 0) {
                 dispatch(clearCartdetailSuccess())
-                toast.success('Xóa giỏ hàng thành công!')
             } else {
                 toast.error('Xóa sản phẩm trong giỏ hàng thất bại!')
                 dispatch(clearCartdetailFailed())
