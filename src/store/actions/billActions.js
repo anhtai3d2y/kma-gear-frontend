@@ -44,7 +44,7 @@ export const createNewBill = (data) => {
         try {
             let res = await createNewBillService(data)
             if (res && res.errCode === 0) {
-                dispatch(saveBillSuccess())
+                dispatch(saveBillSuccess(res.bill))
             } else {
                 toast.error('Thêm đơn hàng thất bại!')
                 dispatch(saveBillFailed())
@@ -57,8 +57,9 @@ export const createNewBill = (data) => {
     }
 }
 
-export const saveBillSuccess = () => ({
-    type: actionTypes.CREATE_BILL_SUCCESS
+export const saveBillSuccess = (typesData) => ({
+    type: actionTypes.CREATE_BILL_SUCCESS,
+    data: typesData
 })
 export const saveBillFailed = () => ({
     type: actionTypes.CREATE_BILL_FAILED

@@ -6,6 +6,7 @@ import { withRouter } from 'react-router';
 
 
 import './DetailCheckout.scss'
+import { isThisTypeNode } from 'typescript';
 
 
 class DetailCheckout extends Component {
@@ -18,6 +19,7 @@ class DetailCheckout extends Component {
             phoneNumber: this.props.cartInfo.phoneNumber,
             address: this.props.cartInfo.address,
             note: this.props.cartInfo.note,
+            paymentType: 1,
 
             paypalLink: ''
         }
@@ -52,7 +54,55 @@ class DetailCheckout extends Component {
 
     handleCheckout = (event) => {
         event.preventDefault()
-        this.props.history.push(`/checkout`)
+        switch (this.state.paymentType) {
+            case 1:
+                this.paymentOnDelivery()
+                break;
+            case 2:
+                this.paymentByPaypal()
+                break;
+            case 3:
+                this.paymentByBank()
+                break;
+
+            default:
+                break;
+        }
+        // this.props.history.push(`/checkout`)
+    }
+
+    paymentOnDelivery = async () => {
+        let newBill = {
+            userId: this.props.customerInfo.id,
+            fullName: this.state.fullName,
+            email: this.state.email,
+            phoneNumber: this.state.phoneNumber,
+            address: this.state.address,
+            note: this.state.note,
+            stateId: 1,
+            paymentTypeId: 1,
+        }
+        await this.props.createNewBill(newBill)
+        let arrDetails = []
+        for (let i = 0; i < this.props.cartdetails.length; i++) {
+            let newDetail = {
+                billId: this.props.bill.id,
+                productId: this.props.cartdetails[i].productId,
+                price: this.props.cartdetails[i].Product.price,
+                discount: this.props.cartdetails[i].Product.discount,
+                amount: this.props.cartdetails[i].amount,
+            }
+            arrDetails.push(newDetail)
+        }
+        await this.props.bulkCreateInvoicedetail(arrDetails)
+    }
+
+    paymentByPaypal = () => {
+        console.log("thanh toan qua paypal")
+    }
+
+    paymentByBank = () => {
+        console.log("thanh toan qua ngan hang")
     }
 
     onChangeInput = (event, id) => {
@@ -61,6 +111,12 @@ class DetailCheckout extends Component {
 
         this.setState({
             ...copyState
+        })
+    }
+
+    handleChangePaymentType = (event) => {
+        this.setState({
+            paymentType: Number(event.target.value)
         })
     }
 
@@ -134,15 +190,21 @@ class DetailCheckout extends Component {
                             <div className="group-info pay-method">
                                 <div className="title">Hình thức thanh toán</div>
                                 <div className="input-group">
-                                    <input type="radio" value="atSpot" className="input-radio" name="payMethod" />
+                                    <input type="radio" value={1} className="input-radio" name="payMethod" checked={this.state.paymentType === 1}
+                                        onClick={(event) => { this.handleChangePaymentType(event) }}
+                                    />
                                     <label for="">Thanh toán tại nơi giao hàng</label>
                                 </div>
                                 <div className="input-group">
-                                    <input type="radio" value="paypal" className="input-radio" name="payMethod" />
+                                    <input type="radio" value={2} className="input-radio" name="payMethod" checked={this.state.paymentType === 2}
+                                        onClick={(event) => { this.handleChangePaymentType(event) }}
+                                    />
                                     <label for="">Thanh toán qua Paypal</label>
                                 </div>
                                 <div className="input-group">
-                                    <input type="radio" value="bank" className="input-radio" name="payMethod" />
+                                    <input type="radio" value={3} className="input-radio" name="payMethod" checked={this.state.paymentType === 3}
+                                        onClick={(event) => { this.handleChangePaymentType(event) }}
+                                    />
                                     <label for="">Thanh toán qua ngân hàng</label>
                                 </div>
                             </div>
@@ -181,14 +243,17 @@ const mapStateToProps = state => {
     return {
         // paypalLinkRedux: state.paypal.paypalLink
         cartInfo: state.cart.carts,
-        cartdetails: state.cartdetail.cartdetails
+        cartdetails: state.cartdetail.cartdetails,
+        customerInfo: state.customer.customerInfo,
+        bill: state.bill.bill
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
         // payWithPaypal: () => dispatch(actions.payWithPaypalStart()),
-
+        createNewBill: (data) => dispatch(actions.createNewBill(data)),
+        bulkCreateInvoicedetail: (data) => dispatch(actions.bulkCreateInvoicedetail(data)),
     };
 };
 

@@ -1,5 +1,11 @@
 import actionTypes from './actionTypes';
-import { getAllInvoicedetailsService, createNewInvoicedetailService, deleteInvoicedetailService, editInvoicedetailService } from "../../services/invoicedetailService";
+import {
+    getAllInvoicedetailsService,
+    createNewInvoicedetailService,
+    bulkCreateInvoicedetailService,
+    deleteInvoicedetailService,
+    editInvoicedetailService
+} from "../../services/invoicedetailService";
 import { toast } from 'react-toastify';
 
 
@@ -62,6 +68,31 @@ export const saveInvoicedetailSuccess = () => ({
 })
 export const saveInvoicedetailFailed = () => ({
     type: actionTypes.CREATE_INVOICEDETAIL_FAILED
+})
+
+export const bulkCreateInvoicedetail = (data) => {
+    return async (dispatch, getState) => {
+        try {
+            let res = await bulkCreateInvoicedetailService(data)
+            if (res && res.errCode === 0) {
+                dispatch(bulkInvoicedetailSuccess())
+            } else {
+                toast.error('Thêm chi tiết đơn hàng thất bại!')
+                dispatch(bulkInvoicedetailFailed())
+            }
+        } catch (error) {
+            toast.error('Thêm chi tiết đơn hàng thất bại!')
+            dispatch(bulkInvoicedetailFailed())
+            console.log(error)
+        }
+    }
+}
+
+export const bulkInvoicedetailSuccess = () => ({
+    type: actionTypes.BULK_CREATE_INVOICEDETAIL_SUCCESS
+})
+export const bulkInvoicedetailFailed = () => ({
+    type: actionTypes.BULK_CREATE_INVOICEDETAIL_FAILED
 })
 
 export const editInvoicedetail = (data) => {

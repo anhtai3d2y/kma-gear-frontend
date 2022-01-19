@@ -9,6 +9,10 @@ const createNewInvoicedetailService = (data) => {
     return axios.post('/api/create-new-invoicedetail', data)
 }
 
+const bulkCreateInvoicedetailService = (data) => {
+    return axios.post('/api/bulk-create-invoicedetail', data)
+}
+
 const deleteInvoicedetailService = (invoicedetailId) => {
     return axios.delete('/api/delete-invoicedetail', {
         data: {
@@ -21,4 +25,10 @@ const editInvoicedetailService = (inputData) => {
     return axios.put('/api/edit-invoicedetail', inputData)
 }
 
-export { getAllInvoicedetailsService, createNewInvoicedetailService, deleteInvoicedetailService, editInvoicedetailService }
+export {
+    getAllInvoicedetailsService,
+    createNewInvoicedetailService,
+    bulkCreateInvoicedetailService,
+    deleteInvoicedetailService,
+    editInvoicedetailService
+}

@@ -2,10 +2,12 @@ import actionTypes from '../actions/actionTypes';
 
 const initialState = {
     isLoadingBill: false,
-    bills: []
+    bills: [],
+    bill: ''
 }
 
 const billReducer = (state = initialState, action) => {
+    let copyState
     switch (action.type) {
         case actionTypes.FETCH_BILL_START:
             // let copyState = { ...state }
@@ -14,7 +16,7 @@ const billReducer = (state = initialState, action) => {
                 ...state,
             }
         case actionTypes.FETCH_BILL_SUCCESS:
-            let copyState = { ...state }
+            copyState = { ...state }
             copyState.bills = action.data
             return {
                 ...copyState,
@@ -24,6 +26,20 @@ const billReducer = (state = initialState, action) => {
             state.isLoadingType = false
             console.log('fetch failed', action)
             state.bills = []
+            return {
+                ...state,
+            }
+        case actionTypes.CREATE_BILL_SUCCESS:
+            copyState = { ...state }
+            copyState.bill = action.data
+            return {
+                ...copyState,
+            }
+        case actionTypes.CREATE_BILL_FAILED:
+            // let state = { ...state }
+            state.isLoadingType = false
+            console.log('fetch failed', action)
+            state.bill = []
             return {
                 ...state,
             }
