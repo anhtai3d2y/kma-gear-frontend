@@ -8,6 +8,15 @@
         .swiper {
             width: 100%;
             height: 100%;
+            .swiper-pagination-bullet {
+                width: 10px;
+                height: 10px;
+                border-radius: 0;
+                background: rgba(238, 240, 247, 0.6);
+            }
+            .swiper-pagination-bullet-active {
+                background: #29324e;
+            }
         }
 
         .swiper-slide {
