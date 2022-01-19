@@ -17,8 +17,16 @@ const deleteCartdetailService = (cartdetailId) => {
     })
 }
 
+const clearCartdetailService = (cartId) => {
+    return axios.delete('/api/clear-cartdetail', {
+        data: {
+            id: cartId
+        }
+    })
+}
+
 const editCartdetailService = (inputData) => {
     return axios.put('/api/edit-cartdetail', inputData)
 }
 
-export { getAllCartdetailsService, createNewCartdetailService, deleteCartdetailService, editCartdetailService }
+export { getAllCartdetailsService, createNewCartdetailService, deleteCartdetailService, clearCartdetailService, editCartdetailService }

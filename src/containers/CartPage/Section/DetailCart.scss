@@ -127,6 +127,12 @@
                 color: #fff;
                 border-color: #005ec4;
             }
+            .cart-empty {
+                background: #979797 !important;
+                color: #fff;
+                border-color: #979797 !important;
+                cursor: default;
+            }
             .go-del {
                 background: rgb(237, 27, 36);
                 border-color: rgb(237, 27, 36);

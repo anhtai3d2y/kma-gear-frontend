@@ -1,5 +1,11 @@
 import actionTypes from './actionTypes';
-import { getAllCartdetailsService, createNewCartdetailService, deleteCartdetailService, editCartdetailService } from "../../services/cartdetailService";
+import {
+    getAllCartdetailsService,
+    createNewCartdetailService,
+    deleteCartdetailService,
+    clearCartdetailService,
+    editCartdetailService
+} from "../../services/cartdetailService";
 import { toast } from 'react-toastify';
 
 
@@ -93,6 +99,7 @@ export const editCartdetailFailed = () => ({
 export const deleteCartdetail = (cartdetailId) => {
     return async (dispatch, getState) => {
         try {
+            console.log(cartdetailId)
             let res = await deleteCartdetailService(cartdetailId)
             if (res && res.errCode === 0) {
                 dispatch(deleteCartdetailSuccess())
@@ -114,4 +121,30 @@ export const deleteCartdetailSuccess = () => ({
 })
 export const deleteCartdetailFailed = () => ({
     type: actionTypes.DELETE_CARTDETAIL_FAILED
+})
+
+export const clearCartdetail = (cartId) => {
+    return async (dispatch, getState) => {
+        try {
+            let res = await clearCartdetailService(cartId)
+            if (res && res.errCode === 0) {
+                dispatch(clearCartdetailSuccess())
+                toast.success('Xóa giỏ hàng thành công!')
+            } else {
+                toast.error('Xóa sản phẩm trong giỏ hàng thất bại!')
+                dispatch(clearCartdetailFailed())
+            }
+        } catch (error) {
+            toast.error('Xóa sản phẩm trong giỏ hàng thất bại!')
+            dispatch(clearCartdetailFailed())
+            console.log(error)
+        }
+    }
+}
+
+export const clearCartdetailSuccess = () => ({
+    type: actionTypes.CLEAR_CARTDETAIL_SUCCESS
+})
+export const clearCartdetailFailed = () => ({
+    type: actionTypes.CLEAR_CARTDETAIL_FAILED
 })

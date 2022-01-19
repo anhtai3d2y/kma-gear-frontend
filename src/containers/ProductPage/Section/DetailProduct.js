@@ -119,19 +119,19 @@ class DetailProduct extends Component {
             } else {
                 toast(`Bạn đã thêm hết số lượng của sản phẩm.`)
             }
-            await this.props.fetchCartdetailStart(cartdetails[0].cartId)
+            await this.props.fetchCartdetailStart(this.props.cartInfo.id)
         } else {
             amount = product.amount
             if (amountAddToCart <= amount) {
                 let newCartdetail = {
-                    cartId: cartdetails[0].cartId,
+                    cartId: this.props.cartInfo.id,
                     productId: product.id,
                     price: product.price,
                     amount: this.state.amountAddToCart,
                     discount: product.discount,
                 }
                 await this.props.createNewCartdetail(newCartdetail)
-                await this.props.fetchCartdetailStart(cartdetails[0].cartId)
+                await this.props.fetchCartdetailStart(this.props.cartInfo.id)
                 toast.success(`Sản phẩm đã được thêm vào giỏ hàng.`)
             }
         }
@@ -278,8 +278,8 @@ class DetailProduct extends Component {
 const mapStateToProps = state => {
     return {
         productsByIdRedux: state.product.productsById,
-        cartdetails: state.cartdetail.cartdetails
-
+        cartdetails: state.cartdetail.cartdetails,
+        cartInfo: state.cart.carts
     };
 };
 
