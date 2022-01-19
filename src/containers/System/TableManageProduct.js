@@ -48,6 +48,11 @@ class TableManageProduct extends Component {
         }
     }
 
+    numberWithCommas = (x) => {
+        let result = Math.round(x)
+        return result.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ".");
+    }
+
     render() {
         let arrProducts = this.state.products
         let types = this.props.types
@@ -95,7 +100,7 @@ class TableManageProduct extends Component {
                                             }
                                         </td>
                                         <td>{product.amount}</td>
-                                        <td>{product.price}</td>
+                                        <td>{this.numberWithCommas(product.price)} đ</td>
                                         <td>{product.discount}</td>
                                         <td>
                                             <button className="btn-edit"

@@ -45,6 +45,11 @@ class TableManageBill extends Component {
         await this.props.fetchBillsRedux()
     }
 
+    numberWithCommas = (x) => {
+        let result = Math.round(x)
+        return result.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ".");
+    }
+
     render() {
         let arrBills = this.state.bills
         let arrInvoicedetails = this.state.invoicedetails
@@ -115,16 +120,14 @@ class TableManageBill extends Component {
                                                                 <td>
                                                                     {invoicedetail.discount}
                                                                 </td>
-                                                                <td>
-                                                                    {invoicedetail.price * invoicedetail.amount * (1 - invoicedetail.discount / 100)}
-                                                                </td>
+                                                                <td>{this.numberWithCommas(invoicedetail.price * invoicedetail.amount * (1 - invoicedetail.discount / 100))} đ</td>
                                                             </tr>
                                                         ) : (<></>)
                                                     })
                                                 }
                                             </tbody>
                                         </td>
-                                        <td>{sumPrice}</td>
+                                        <td>{this.numberWithCommas(sumPrice)} đ</td>
                                         <td>
                                             <button className="btn-edit"
                                                 onClick={() => this.handleEditBill(bill)}

@@ -32,6 +32,11 @@ class TableRecycleBinProduct extends Component {
         await this.props.fetchProductsDeletedRedux()
     }
 
+    numberWithCommas = (x) => {
+        let result = Math.round(x)
+        return result.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ".");
+    }
+
     render() {
         let arrProducts = this.state.productsDeleted
         console.log('list product: ', arrProducts)
@@ -82,7 +87,7 @@ class TableRecycleBinProduct extends Component {
                                             }
                                         </td>
                                         <td>{product.amount}</td>
-                                        <td>{product.price}</td>
+                                        <td>{this.numberWithCommas(product.price)} đ</td>
                                         <td>{product.discount}</td>
                                         <td>
                                             <div className="btn-restore"
