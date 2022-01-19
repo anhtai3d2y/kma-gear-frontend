@@ -105,6 +105,11 @@ class DetailProduct extends Component {
         }
     }
 
+    handbleGoBuy = (product, cartdetails) => {
+        this.handleAddToCart(product, cartdetails)
+        this.props.history.push(`/cart`)
+    }
+
     handleAddToCart = async (product, cartdetails) => {
         let { isExisted, cartdetail } = this.checkExistedProduct(product, cartdetails)
         let amountAddToCart = this.state.amountAddToCart
@@ -244,7 +249,9 @@ class DetailProduct extends Component {
                                             <path d="M1.33301 0.833252H4.66634L6.89967 11.9916C6.97588 12.3752 7.1846 12.7199 7.4893 12.9652C7.79399 13.2105 8.17526 13.3407 8.56634 13.3333H16.6663C17.0574 13.3407 17.4387 13.2105 17.7434 12.9652C18.0481 12.7199 18.2568 12.3752 18.333 11.9916L19.6663 4.99992H5.49967" stroke="#005EC4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
                                         Thêm vào giỏ
                                     </button>
-                                    <button type="button" data-loading-text="Đang tải..." className="btn-add-cart ">
+                                    <button type="button" data-loading-text="Đang tải..." className="btn-add-cart "
+                                        onClick={() => this.handbleGoBuy(product, cartdetails)}
+                                    >
                                         <svg width="17" height="18" viewBox="0 0 17 18" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <path d="M15.9187 9.83092L15.9187 8.16922L9.33085 8.16922L9.33085 1.58134H7.66915L7.66915 8.16922L1.08127 8.16922L1.08127 9.83092L7.66915 9.83092L7.66915 16.4188H9.33085L9.33085 9.83092L15.9187 9.83092Z" fill="white"></path>
                                         </svg>

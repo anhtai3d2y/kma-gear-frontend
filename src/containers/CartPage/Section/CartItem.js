@@ -54,8 +54,9 @@ class CartItem extends Component {
         return (
             <>
                 <div className="cart-p-img">
-                    <img src={product.Product.image} />
-
+                    <img src={product.Product.image}
+                        onClick={(event) => { this.handleGoProductPage(event, product.Product.id) }}
+                    />
                 </div>
                 <div className="cart-p-content">
                     <a href="" class="cart-p-name"
