@@ -80,7 +80,7 @@ class DetailProduct extends Component {
         }
     }
 
-    handleIncreateAmount = (product, cartdetails) => {
+    handleIncreaseAmount = (product, cartdetails) => {
         let { isExisted, cartdetail } = this.checkExistedProduct(product, cartdetails)
         let amountAddToCart = this.state.amountAddToCart
         let amount
@@ -218,7 +218,7 @@ class DetailProduct extends Component {
                                                 />
                                                 <div className="qty-action">
                                                     <span title="Thêm" dataAmount={product} className="add-qty"
-                                                        onClick={() => { this.handleIncreateAmount(product, cartdetails) }}
+                                                        onClick={() => { this.handleIncreaseAmount(product, cartdetails) }}
                                                     >+</span>
                                                     <span title="Bớt" className="sub-qty"
                                                         onClick={() => { this.handleReduceAmount() }}

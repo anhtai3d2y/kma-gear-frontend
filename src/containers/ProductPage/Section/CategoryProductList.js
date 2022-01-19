@@ -33,9 +33,7 @@ class CategoryProductList extends Component {
     }
 
     render() {
-
         let arrProducts = this.props.productsRedux
-        console.log('type id from list product page: ', this.props.typeId)
         return (
             <div className="category-product-list mt-4" ref={this.scrollTop}>
                 <div className="container">

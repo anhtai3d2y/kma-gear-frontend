@@ -160,7 +160,6 @@ const mapDispatchToProps = dispatch => {
     return {
         // payWithPaypal: () => dispatch(actions.payWithPaypalStart()),
         clearCartdetail: (cartId) => dispatch(actions.clearCartdetail(cartId)),
-        deleteCartdetail: (id) => dispatch(actions.deleteCartdetail(id)),
         fetchCartdetailStart: (cartId) => dispatch(actions.fetchCartdetailStart(cartId)),
 
     };
