@@ -125,6 +125,7 @@
             padding: 20px 24px;
             margin-bottom: 24px;
             color: #29324e;
+            max-width: 356px;
             .title {
                 font-weight: 700;
                 font-size: 18px;
@@ -135,7 +136,6 @@
                 font-size: 16px;
                 display: flex;
                 justify-content: space-between;
-                margin-bottom: 14px;
                 .p-count {
                     color: #005ec4;
                     font-weight: 700;

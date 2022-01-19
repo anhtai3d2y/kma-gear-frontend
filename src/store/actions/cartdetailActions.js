@@ -7,7 +7,7 @@ import { toast } from 'react-toastify';
 //     type: actionTypes.FETCH_CARTDETAIL_START
 // })
 
-export const fetchCartdetailStart = () => {
+export const fetchCartdetailStart = (cartId) => {
 
     return async (dispatch, getState) => {
         try {
@@ -15,9 +15,9 @@ export const fetchCartdetailStart = () => {
                 type: actionTypes.FETCH_CARTDETAIL_START
             })
 
-            let res = await getAllCartdetailsService('ALL')
+            let res = await getAllCartdetailsService(cartId.toString())
             if (res && res.errCode === 0) {
-                dispatch(fetchCartdetailSuccess(res.cartdetails.reverse()))
+                dispatch(fetchCartdetailSuccess(res.cartdetails))
             } else {
                 dispatch(fetchCartdetailFailed())
             }

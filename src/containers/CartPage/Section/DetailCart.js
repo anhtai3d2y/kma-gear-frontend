@@ -40,6 +40,11 @@ class DetailCart extends Component {
         }
     }
 
+    numberWithCommas = (x) => {
+        let result = Math.round(x)
+        return result.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ".");
+    }
+
     handleCheckout = (event) => {
         event.preventDefault()
         this.props.history.push(`/checkout`)
@@ -52,6 +57,13 @@ class DetailCart extends Component {
     // }
 
     render() {
+        const { cartdetails } = this.props;
+        let totalProductsCart = cartdetails.reduce((total, item) => {
+            return total + item.amount
+        }, 0)
+        let totalPriceCart = cartdetails.reduce((total, item) => {
+            return total + item.amount * item.Product.price * (100 - item.Product.discount) / 100
+        }, 0)
         return (
             <div className="detail-cart mt-4" ref={this.scrollTop}>
                 <div className="container">
@@ -65,16 +77,21 @@ class DetailCart extends Component {
                             <div className="cart-header">
                                 <div className="title">THÔNG TIN SẢN PHẨM</div>
                             </div>
-                            <div className="cart-p-item">
-                                <CartItem />
-                            </div>
-
+                            {cartdetails && cartdetails.length > 0 &&
+                                cartdetails.map((product, index) => {
+                                    return (
+                                        <div className="cart-p-item">
+                                            <CartItem product={product} />
+                                        </div>
+                                    )
+                                })
+                            }
                         </div>
                         <div className="cart-total-prices">
                             <div className="cart-prices">
                                 <div className="title">THÔNG TIN GIỎ HÀNG</div>
-                                <div>Số lượng sản phẩm <span className="p-count">14</span></div>
-                                <div>Tổng chi phí <span className="price">344.460.000 đ</span></div>
+                                <div>Số lượng sản phẩm <span className="p-count">{totalProductsCart}</span></div>
+                                <div>Tổng chi phí <span className="price">{this.numberWithCommas(totalPriceCart)} đ</span></div>
                                 <div className="text-vat">Đã bao gồm VAT (nếu có)</div>
                                 <a href="" className="go-checkout"
                                     onClick={(event) => { this.handleCheckout(event) }}
@@ -117,6 +134,7 @@ class DetailCart extends Component {
 const mapStateToProps = state => {
     return {
         // paypalLinkRedux: state.paypal.paypalLink
+        cartdetails: state.cartdetail.cartdetails
     };
 };
 

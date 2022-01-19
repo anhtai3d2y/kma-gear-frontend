@@ -9,6 +9,9 @@ class CartItem extends Component {
 
     constructor(props) {
         super(props)
+        this.state = {
+            isOpenShortDesc: false
+        }
         this.scrollTop = React.createRef()
     }
 
@@ -29,37 +32,49 @@ class CartItem extends Component {
         }
     }
 
+    handleOpenDesc = () => {
+        this.setState({
+            isOpenShortDesc: !this.state.isOpenShortDesc
+        })
+    }
+
+    numberWithCommas = (x) => {
+        let result = Math.round(x)
+        return result.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ".");
+    }
+
     render() {
+        let product = this.props.product
         return (
             <>
                 <div className="cart-p-img">
-                    <img src="https://www.tncstore.vn/image/cache/catalog/vga/msi/3060_TI_Ventus_3x_OC/card-man-hinh-msi-geforce-rtx-3060-ti-ventus-3x-oc-1-228x228.jpg" alt="Card Màn Hình MSI GeForce RTX 3060 Ti VENTUS 3X OC" />
+                    <img src={product.Product.image} />
 
                 </div>
                 <div className="cart-p-content">
-                    <a href="https://www.tncstore.vn/card-man-hinh-msi-geforce-rtx-3060-ti-ventus-3x-oc.html" target="_blank" class="cart-p-name">Card Màn Hình MSI GeForce RTX 3060 Ti VENTUS 3X OC</a>
+                    <a href="" target="_blank" class="cart-p-name">{product.Product.name}</a>
                     <div className="cart-p-meta">
                         <div className="cart-p-desc">
                             <div className="collapse">
-                                <div className="collapse-header">
-                                    <i className="far fa-angle-right"></i>
+                                <div className="collapse-header"
+                                    onClick={() => { this.handleOpenDesc() }}
+                                >
+                                    {this.state.isOpenShortDesc ? (<i class="fas fa-angle-right"></i>) : (<i class="fas fa-angle-down"></i>)}
                                     Chi tiết sản phẩm
                                 </div>
-                                <div className="collapse-body">
-                                    <div className="short-desc">
-                                        mô tả ngắn ở đây
-                                        <p><span >- Thương hiệu: MSI</span></p>
-                                    </div>
-                                </div>
+                                {this.state.isOpenShortDesc ?
+                                    (<div className="collapse-body">
+                                        <div className="short-desc" dangerouslySetInnerHTML={{ __html: product.Product.shortDescHTML }}></div>
+                                    </div>) : (<></>)}
                             </div>
                         </div>
-                        <div className="cart-p-price">22.490.000 đ</div>
+                        <div className="cart-p-price">{this.numberWithCommas(product.Product.price * (100 - product.Product.discount) / 100 * product.amount)} đ</div>
                     </div>
                     <div className="cart-p-actions">
                         Số lượng
                         <div className="cart-p-qty">
                             <span className="qty-decrease">-</span>
-                            <input type="tel" className="qty-input" value={1} />
+                            <input type="tel" className="qty-input" value={product.amount} />
                             <span className="qty-increase">+</span>
                         </div>
                         <div className="cart-p-remove">

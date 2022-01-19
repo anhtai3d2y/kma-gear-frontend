@@ -32,6 +32,10 @@ class HomeHeader extends Component {
                 await this.props.fetchCartStart(this.props.customerInfo.id)
             }
         }
+
+        if (prevProps.cartInfo !== this.props.cartInfo) {
+            await this.props.fetchCartdetailStart(this.props.cartInfo.id)
+        }
     }
 
     changeLanguage = (language) => {
@@ -63,7 +67,11 @@ class HomeHeader extends Component {
         let isCustomerLoggedIn = this.props.isCustomerLoggedIn
         let customerInfo = this.props.customerInfo
 
-        const { cartInfo } = this.props;
+        const { cartInfo, cartdetails } = this.props;
+
+        let totalProductsCart = cartdetails.reduce((total, item) => {
+            return total + item.amount
+        }, 0)
 
         return (
             <div className="header">
@@ -104,7 +112,7 @@ class HomeHeader extends Component {
                         </div>
                         <div className="header-cart" onClick={() => { this.handleGoCartPage() }}>
                             <img src="https://www.tncstore.vn/catalog/view/theme/default/image/cart-icon.svg" alt="" className="head-cart-icon" />
-                            <span className="head-cart-amount">1000</span>
+                            <span className="head-cart-amount">{totalProductsCart}</span>
                         </div>
                     </div>
                 </div>
@@ -196,7 +204,8 @@ const mapStateToProps = state => {
         producttypesRedux: state.producttype.types,
         isCustomerLoggedIn: state.customer.isCustomerLoggedIn,
         customerInfo: state.customer.customerInfo,
-        cartInfo: state.cart.carts
+        cartInfo: state.cart.carts,
+        cartdetails: state.cartdetail.cartdetails
     };
 };
 
@@ -208,6 +217,7 @@ const mapDispatchToProps = dispatch => {
         customerLoginSuccess: (customerInfo) => dispatch(actions.customerLoginSuccess(customerInfo)),
         customerLoginFail: () => dispatch(actions.customerLoginFail()),
         fetchCartStart: (userId) => dispatch(actions.fetchCartStart(userId)),
+        fetchCartdetailStart: (cartId) => dispatch(actions.fetchCartdetailStart(cartId)),
 
     };
 };

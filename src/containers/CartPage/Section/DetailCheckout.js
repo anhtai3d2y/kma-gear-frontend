@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import *  as actions from "../../../store/actions";
-import CartItem from "./CartItem.js";
+import InfoItem from "./InfoItem.js";
 import { withRouter } from 'react-router';
 
 
@@ -64,6 +64,11 @@ class DetailCheckout extends Component {
         })
     }
 
+    numberWithCommas = (x) => {
+        let result = Math.round(x)
+        return result.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ".");
+    }
+
     // handlePayment = async (event) => {
     //     event.preventDefault()
     //     await this.props.payWithPaypal()
@@ -71,6 +76,13 @@ class DetailCheckout extends Component {
     // }
 
     render() {
+        const { cartdetails } = this.props;
+        let totalProductsCart = cartdetails.reduce((total, item) => {
+            return total + item.amount
+        }, 0)
+        let totalPriceCart = cartdetails.reduce((total, item) => {
+            return total + item.amount * item.Product.price * (100 - item.Product.discount) / 100
+        }, 0)
         return (
             <div className="detail-cart mt-4" ref={this.scrollTop}>
                 <div className="container">
@@ -139,9 +151,19 @@ class DetailCheckout extends Component {
                         <div className="cart-total-prices">
                             <div className="cart-prices">
                                 <div className="title">THÔNG TIN GIỎ HÀNG</div>
-                                <div>Số lượng sản phẩm <span className="p-count">14</span></div>
-                                <div>Tổng chi phí <span className="price">344.460.000 đ</span></div>
+                                <div>Số lượng sản phẩm <span className="p-count">{totalProductsCart}</span></div>
+                                <div>Tổng chi phí <span className="price">{this.numberWithCommas(totalPriceCart)} đ</span></div>
                                 <div className="text-vat">Đã bao gồm VAT (nếu có)</div>
+
+                                {cartdetails && cartdetails.length > 0 &&
+                                    cartdetails.map((product, index) => {
+                                        return (
+                                            <div className="cart-p-item">
+                                                <InfoItem product={product} />
+                                            </div>
+                                        )
+                                    })
+                                }
 
                                 <a href="" className="go-checkout"
                                     onClick={(event) => { this.handleCheckout(event) }}
@@ -159,7 +181,8 @@ class DetailCheckout extends Component {
 const mapStateToProps = state => {
     return {
         // paypalLinkRedux: state.paypal.paypalLink
-        cartInfo: state.cart.carts
+        cartInfo: state.cart.carts,
+        cartdetails: state.cartdetail.cartdetails
     };
 };
 
