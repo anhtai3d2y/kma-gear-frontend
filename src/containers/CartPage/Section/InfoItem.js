@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import *  as actions from "../../../store/actions";
+import { withRouter } from 'react-router';
 
 import './InfoItem.scss'
 
@@ -38,6 +39,10 @@ class InfoItem extends Component {
         })
     }
 
+    handleGoProductPage = (id) => {
+        this.props.history.push(`/product/${id}`)
+    }
+
     numberWithCommas = (x) => {
         let result = Math.round(x)
         return result.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ".");
@@ -48,7 +53,7 @@ class InfoItem extends Component {
         return (
             <>
                 <div className="cart-item">
-                    <div className="product-name">{product.Product.name}</div>
+                    <div className="product-name" onClick={() => { this.handleGoProductPage(product.Product.id) }}>{product.Product.name}</div>
                     <div className="product-content">
                         <div className="collapse">
                             <div className="collapse-header"
@@ -64,7 +69,7 @@ class InfoItem extends Component {
                         </div>
                         <div className="cart-item-price">
                             <div></div>
-                            {this.numberWithCommas(product.Product.price * (100 - product.Product.discount) / 100 * product.amount)} đ
+                            <div>{this.numberWithCommas(product.Product.price * (100 - product.Product.discount) / 100 * product.amount)} đ</div>
                         </div>
                     </div>
                 </div>
@@ -86,4 +91,4 @@ const mapDispatchToProps = dispatch => {
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(InfoItem);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(InfoItem));

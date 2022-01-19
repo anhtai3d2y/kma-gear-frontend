@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import *  as actions from "../../../store/actions";
+import { withRouter } from 'react-router';
 
 import './CartItem.scss'
 
@@ -38,6 +39,11 @@ class CartItem extends Component {
         })
     }
 
+    handleGoProductPage = (event, id) => {
+        event.preventDefault()
+        this.props.history.push(`/product/${id}`)
+    }
+
     numberWithCommas = (x) => {
         let result = Math.round(x)
         return result.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ".");
@@ -52,7 +58,9 @@ class CartItem extends Component {
 
                 </div>
                 <div className="cart-p-content">
-                    <a href="" target="_blank" class="cart-p-name">{product.Product.name}</a>
+                    <a href="" class="cart-p-name"
+                        onClick={(event) => { this.handleGoProductPage(event, product.Product.id) }}
+                    >{product.Product.name}</a>
                     <div className="cart-p-meta">
                         <div className="cart-p-desc">
                             <div className="collapse">
@@ -106,4 +114,4 @@ const mapDispatchToProps = dispatch => {
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(CartItem);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(CartItem));

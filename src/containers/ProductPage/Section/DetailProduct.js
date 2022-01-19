@@ -3,22 +3,25 @@ import { connect } from 'react-redux';
 import PolicyBlock from "./PolicyBlock.js"
 import BlockHeaderTitle from "../../HomePage/Section/BlockHeaderTitle.js"
 import *  as actions from "../../../store/actions";
+import { ToastContainer, toast } from 'react-toastify';
+import { withRouter } from 'react-router';
 
 import './DetailProduct.scss'
 
 
-class ProductPage extends Component {
+class DetailProduct extends Component {
 
     constructor(props) {
         super(props)
         this.state = {
             productId: '',
+            amountAddToCart: 1
         }
         this.scrollTop = React.createRef()
     }
 
     componentDidMount() {
-        this.handleScroll()
+        // this.handleScroll()
         this.props.fetchProductsById(this.props.productId)
         this.setState({
             productId: this.props.productId
@@ -26,14 +29,7 @@ class ProductPage extends Component {
     }
 
     componentDidUpdate(prevProps, prevState) {
-        this.handleScroll()
-        // console.log("prevs props: ", prevProps.productsByIdRedux.id)
-        // console.log("id from parent: ", this.props.productId)
-        // if (prevProps.productsByIdRedux !== this.props.productsByIdRedux) {
-        //     this.setState({
-        //         product: this.props.productsByIdRedux
-        //     })
-        // }
+        // this.handleScroll()
         if (prevState.productId !== this.props.productId) {
             this.setState({
                 productId: this.props.productId
@@ -56,12 +52,114 @@ class ProductPage extends Component {
         return result.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ".");
     }
 
-    handleAddToCart = (event) => {
-        console.log('add item to card', event.target.value)
+    handleChangeAmount = (event, product, cartdetails) => {
+        console.log(event.target.value)
+        if (event.target.value === '0' || event.target.value === '') {
+            this.setState({
+                amountAddToCart: 1
+            })
+        } else {
+            let { isExisted, cartdetail } = this.checkExistedProduct(product, cartdetails)
+            console.log(product, cartdetails)
+            let amountAddToCart = this.state.amountAddToCart
+            let amount
+            if (isExisted) {
+                amount = product.amount - cartdetail.amount
+            } else {
+                amount = product.amount
+            }
+            if (amountAddToCart < amount) {
+                this.setState({
+                    amountAddToCart: Number(event.target.value)
+                })
+            } else {
+                this.setState({
+                    amountAddToCart: amount
+                })
+            }
+        }
+    }
+
+    handleIncreateAmount = (product, cartdetails) => {
+        let { isExisted, cartdetail } = this.checkExistedProduct(product, cartdetails)
+        let amountAddToCart = this.state.amountAddToCart
+        let amount
+        if (isExisted) {
+            amount = product.amount - cartdetail.amount
+        } else {
+            amount = product.amount
+        }
+        if (amountAddToCart < amount) {
+            this.setState({
+                amountAddToCart: amountAddToCart + 1
+            })
+        }
+    }
+
+    handleReduceAmount = () => {
+        let amountAddToCart = this.state.amountAddToCart
+        if (amountAddToCart > 1) {
+            this.setState({
+                amountAddToCart: amountAddToCart - 1
+            })
+        }
+    }
+
+    handleAddToCart = async (product, cartdetails) => {
+        let { isExisted, cartdetail } = this.checkExistedProduct(product, cartdetails)
+        let amountAddToCart = this.state.amountAddToCart
+        let amount
+        if (isExisted) {
+            amount = product.amount - cartdetail.amount
+            if (amountAddToCart <= amount) {
+                await this.props.editCartdetail({
+                    id: cartdetail.id,
+                    amount: this.state.amountAddToCart + cartdetail.amount,
+                })
+            } else {
+                toast(`Bạn đã thêm hết số lượng của sản phẩm.`)
+            }
+            await this.props.fetchCartdetailStart(cartdetails[0].cartId)
+        } else {
+            amount = product.amount
+            if (amountAddToCart <= amount) {
+                let newCartdetail = {
+                    cartId: cartdetails[0].cartId,
+                    productId: product.id,
+                    price: product.price,
+                    amount: this.state.amountAddToCart,
+                    discount: product.discount,
+                }
+                await this.props.createNewCartdetail(newCartdetail)
+                await this.props.fetchCartdetailStart(cartdetails[0].cartId)
+                toast.success(`Sản phẩm đã được thêm vào giỏ hàng.`)
+            }
+        }
+        this.setState({
+            amountAddToCart: 1
+        })
+    }
+
+    checkExistedProduct = (product, cartdetails) => {
+        let existed = {
+            isExisted: false,
+            cartdetail: {}
+        }
+        for (let i = 0; i < cartdetails.length; i++) {
+            if (product.id === cartdetails[i].productId) {
+                existed = {
+                    isExisted: true,
+                    cartdetail: cartdetails[i]
+                }
+                break
+            }
+        }
+        return existed
     }
 
     render() {
         let product = this.props.productsByIdRedux
+        const { cartdetails } = this.props
         return (
             <div className="detail-product mt-4" ref={this.scrollTop}>
                 <div className="container">
@@ -110,10 +208,16 @@ class ProductPage extends Component {
                                         <div className="quantity">
                                             Số lượng
                                             <div className="quantity-wrap">
-                                                <input type="text" name="quantity" value="1" size="2" />
+                                                <input type="text" name="quantity" value={this.state.amountAddToCart} size="2"
+                                                    onChange={(event) => { this.handleChangeAmount(event, product, cartdetails) }}
+                                                />
                                                 <div className="qty-action">
-                                                    <span title="Thêm" className="add-qty">+</span>
-                                                    <span title="Bớt" className="sub-qty">-</span>
+                                                    <span title="Thêm" dataAmount={product} className="add-qty"
+                                                        onClick={() => { this.handleIncreateAmount(product, cartdetails) }}
+                                                    >+</span>
+                                                    <span title="Bớt" className="sub-qty"
+                                                        onClick={() => { this.handleReduceAmount() }}
+                                                    >-</span>
                                                 </div></div> <input type="hidden" name="product_id" value="6084" />
                                         </div>
                                     </div>
@@ -132,7 +236,7 @@ class ProductPage extends Component {
                             {product.amount > 0 ? (
                                 <div className="add-cart-buttons">
                                     <button type="button" value={product.id} className="btn-add-cart btn-add-cart-2"
-                                        onClick={(event) => this.handleAddToCart(event)}
+                                        onClick={() => this.handleAddToCart(product, cartdetails)}
                                     >
                                         <svg width="21" height="20" viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <path d="M8.00033 18.3334C8.46056 18.3334 8.83366 17.9603 8.83366 17.5001C8.83366 17.0398 8.46056 16.6667 8.00033 16.6667C7.54009 16.6667 7.16699 17.0398 7.16699 17.5001C7.16699 17.9603 7.54009 18.3334 8.00033 18.3334Z" stroke="#005EC4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
@@ -173,7 +277,8 @@ class ProductPage extends Component {
 
 const mapStateToProps = state => {
     return {
-        productsByIdRedux: state.product.productsById
+        productsByIdRedux: state.product.productsById,
+        cartdetails: state.cartdetail.cartdetails
 
     };
 };
@@ -181,7 +286,10 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         fetchProductsById: (id) => dispatch(actions.fetchProductsByIdStart(id)),
+        fetchCartdetailStart: (cartId) => dispatch(actions.fetchCartdetailStart(cartId)),
+        createNewCartdetail: (data) => dispatch(actions.createNewCartdetail(data)),
+        editCartdetail: (data) => dispatch(actions.editCartdetail(data)),
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ProductPage);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(DetailProduct));

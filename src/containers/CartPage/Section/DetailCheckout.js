@@ -164,7 +164,6 @@ class DetailCheckout extends Component {
                                         )
                                     })
                                 }
-
                                 <a href="" className="go-checkout"
                                     onClick={(event) => { this.handleCheckout(event) }}
                                 >Xác nhận mua hàng</a>

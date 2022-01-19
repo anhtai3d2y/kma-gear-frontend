@@ -67,7 +67,6 @@ class BannerManage extends Component {
 
             if (action === CRUDActions.CREATE) {
                 //create category
-                console.log('create')
                 let newBanner = {
                     link: this.state.link,
                     image: this.state.image,
