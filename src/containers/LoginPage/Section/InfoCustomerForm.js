@@ -2,11 +2,10 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { push } from "connected-react-router";
 import { Redirect } from 'react-router-dom';
-
 import *  as actions from "../../../store/actions";
+import { Helmet } from 'react-helmet'
 
 import { withRouter } from 'react-router';
-import { handleCustomerLogin } from '../../../services/userService';
 
 
 import './InfoCustomerForm.scss'
@@ -18,10 +17,6 @@ class InfoCustomerForm extends Component {
         super(props)
         this.scrollTop = React.createRef()
         this.state = {
-            email: '',
-            password: '',
-            isShowPassword: false,
-            errMessage: '',
         }
     }
 
@@ -42,55 +37,8 @@ class InfoCustomerForm extends Component {
         }
     }
 
-    handleOnChangeEmail = (e) => {
-        this.setState({
-            email: e.target.value,
-        })
-    }
-
-    handleOnChangePassword = (e) => {
-        this.setState({
-            password: e.target.value,
-        })
-    }
-
-    handleLogin = async () => {
-        this.setState({
-            errMessage: ''
-        })
-        try {
-            let data = await handleCustomerLogin(this.state.email, this.state.password)
-            if (data && data.errCode !== 0) {
-                this.setState({
-                    errMessage: data.message
-                })
-            }
-            if (data && data.errCode === 0) {
-                this.props.customerLoginSuccess(data.user)
-            }
-        } catch (error) {
-            if (error.response) {
-                if (error.response.data) {
-                    this.setState({
-                        errMessage: error.response.data.message
-                    })
-                }
-            }
-        }
-    }
-
     handleLogout = () => {
         this.props.processCustomerLogout()
-    }
-
-    handleShowHidePassword = (e) => {
-        this.setState({
-            isShowPassword: !this.state.isShowPassword
-        })
-    }
-
-    handleGoRegisterPage = () => {
-        this.props.history.push('/register')
     }
 
     render() {
@@ -99,6 +47,9 @@ class InfoCustomerForm extends Component {
 
         return (
             <div className="login-form mt-4" ref={this.scrollTop}>
+                <Helmet>
+                    <title>{customerInfo && customerInfo.fullName}</title>
+                </Helmet>
                 <Redirect to={linkToRedirect} />
                 <div className="container">
                     <div className="login-form-container">
@@ -120,14 +71,6 @@ class InfoCustomerForm extends Component {
                             <div className="col-12" style={{ color: 'red' }}>
                                 {this.state.errMessage}
                             </div>
-                            {/* <div className="col-12 pd-4 btn-actions">
-                                <button className="btn btn-primary btn-register" type="submit"
-                                    onClick={() => this.handleGoRegisterPage()}
-                                >Đăng ký</button>
-                                <button className="btn btn-primary btn-login" type="submit"
-                                    onClick={(e) => { this.handleLogin() }}
-                                >Đăng nhập</button>
-                            </div> */}
                             <div className="col-12 pd-4 btn-actions">
                                 <button className="btn btn-primary btn-login" type="submit"
                                     onClick={(e) => { this.handleLogout() }}

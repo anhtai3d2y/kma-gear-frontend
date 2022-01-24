@@ -7,6 +7,8 @@ import OutstandingProduct from '../HomePage/Section/OutstandingProduct'
 import AllBrands from '../HomePage/Section/AllBrands'
 import Footer from '../HomePage/Footer/Footer'
 
+import { Helmet } from 'react-helmet'
+
 import { withRouter } from 'react-router';
 
 
@@ -18,6 +20,9 @@ class ErrorPage extends Component {
 
         return (
             <div>
+                <Helmet>
+                    <title>Trang bạn yêu cầu không tồn tại!</title>
+                </Helmet>
                 <HomeBanner />
                 <HomeHeader />
                 <ErrorNotFound />

@@ -5,6 +5,9 @@ import HomeHeader from '../HomePage/Header/HomeHeader.js'
 import DetailCart from './Section/DetailCart.js'
 import Footer from '../HomePage/Footer/Footer.js'
 
+import { Helmet } from 'react-helmet'
+
+
 
 class CartPage extends Component {
 
@@ -12,6 +15,9 @@ class CartPage extends Component {
         let productId = this.props.match.params.id
         return (
             <div>
+                <Helmet>
+                    <title>Giỏ hàng</title>
+                </Helmet>
                 <HomeBanner />
                 <HomeHeader />
                 <DetailCart />

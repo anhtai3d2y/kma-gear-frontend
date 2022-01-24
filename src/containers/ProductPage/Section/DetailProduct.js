@@ -5,6 +5,7 @@ import BlockHeaderTitle from "../../HomePage/Section/BlockHeaderTitle.js"
 import *  as actions from "../../../store/actions";
 import { ToastContainer, toast } from 'react-toastify';
 import { withRouter } from 'react-router';
+import { Helmet } from 'react-helmet'
 
 import './DetailProduct.scss'
 
@@ -167,6 +168,9 @@ class DetailProduct extends Component {
         const { cartdetails } = this.props
         return (
             <div className="detail-product mt-4" ref={this.scrollTop}>
+                <Helmet>
+                    <title>{product && product.name}</title>
+                </Helmet>
                 <div className="container">
                     <div className="product-detail-top">
                         <div className="product-detail-top-left">

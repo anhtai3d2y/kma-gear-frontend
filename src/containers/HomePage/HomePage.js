@@ -7,9 +7,9 @@ import HomeSubBannerSlide from './Section/HomeSubBannerSlide'
 import OutstandingProduct from './Section/OutstandingProduct'
 import AllBrands from './Section/AllBrands'
 import CategoryProductList from '../ProductPage/Section/CategoryProductList'
-import DetailCart from '../CartPage/Section/DetailCart'
 import Footer from './Footer/Footer'
 
+import { Helmet } from 'react-helmet'
 import { withRouter } from 'react-router';
 
 
@@ -21,14 +21,16 @@ class HomePage extends Component {
 
         return (
             <div>
+                <Helmet>
+                    <title>KMA Gear</title>
+                </Helmet>
                 <HomeBanner />
                 <HomeHeader />
                 <HomeMainBannerSlide />
                 <HomeSubBannerSlide />
                 <OutstandingProduct />
                 <AllBrands />
-                {/* <CategoryProductList />
-                <DetailCart /> */}
+                {/* <CategoryProductList /> */}
                 <Footer />
             </div>
         );

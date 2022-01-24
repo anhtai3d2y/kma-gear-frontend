@@ -4,6 +4,7 @@ import { push } from "connected-react-router";
 import { Redirect } from 'react-router-dom';
 
 import *  as actions from "../../../store/actions";
+import { Helmet } from 'react-helmet'
 
 import { withRouter } from 'react-router';
 import { handleCustomerLogin } from '../../../services/userService';
@@ -96,6 +97,9 @@ class LoginForm extends Component {
 
         return (
             <div className="login-form mt-4" ref={this.scrollTop}>
+                <Helmet>
+                    <title>Đăng nhập</title>
+                </Helmet>
                 <Redirect to={linkToRedirect} />
 
                 <div className="container">

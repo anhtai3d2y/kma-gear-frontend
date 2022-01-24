@@ -5,6 +5,8 @@ import HomeHeader from '../HomePage/Header/HomeHeader.js'
 import DetailCheckout from './Section/DetailCheckout.js'
 import Footer from '../HomePage/Footer/Footer.js'
 
+import { Helmet } from 'react-helmet'
+
 
 class CheckoutPage extends Component {
 
@@ -12,6 +14,9 @@ class CheckoutPage extends Component {
         let productId = this.props.match.params.id
         return (
             <div>
+                <Helmet>
+                    <title>Thanh toán</title>
+                </Helmet>
                 <HomeBanner />
                 <HomeHeader />
                 <DetailCheckout />
