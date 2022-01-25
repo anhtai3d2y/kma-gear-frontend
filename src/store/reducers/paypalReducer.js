@@ -2,7 +2,7 @@ import actionTypes from '../actions/actionTypes';
 
 const initialState = {
     isLoadingPaypalLink: false,
-    paypalLink: ''
+    paypalInfo: ''
 }
 
 const paypalReducer = (state = initialState, action) => {
@@ -10,7 +10,7 @@ const paypalReducer = (state = initialState, action) => {
     switch (action.type) {
         case actionTypes.PAY_WITH_PAYPAL_SUCCESS:
             copyState = { ...state }
-            copyState.paypalLink = action.paypalLink
+            copyState.paypalInfo = action.paypalInfo
             return {
                 ...copyState,
             }

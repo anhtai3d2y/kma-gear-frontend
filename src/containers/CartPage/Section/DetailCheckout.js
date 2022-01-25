@@ -6,7 +6,6 @@ import { withRouter } from 'react-router';
 
 
 import './DetailCheckout.scss'
-import { isThisTypeNode } from 'typescript';
 
 
 class DetailCheckout extends Component {
@@ -71,7 +70,50 @@ class DetailCheckout extends Component {
         // this.props.history.push(`/checkout`)
     }
 
-    paymentOnDelivery = async () => {
+    paymentOnDelivery = () => {
+        this.createNewBill('', '')
+    }
+
+    paymentByPaypal = async () => {
+        let currencyVNDToUSD = await fetch('http://data.fixer.io/api/latest?access_key=f72e203d0060492aef14ae6921ab81f7&format=1')
+            .then(response => response.json())
+            .then(data => this.handleCaculateCurrency(data));
+        let arrDetails = []
+        let totalPrice = 0
+        let { cartdetails } = this.props
+        for (let i = 0; i < cartdetails.length; i++) {
+            let cd = cartdetails[i]
+            let price = Math.round(cd.price * (1 - cd.discount / 100) / currencyVNDToUSD * 100) / 100
+            let newDetail = {
+                name: cd.Product.name,
+                sku: cd.productId.toString(),
+                price: price,
+                currency: "USD",
+                quantity: cd.amount
+            }
+            arrDetails.push(newDetail)
+            totalPrice = totalPrice + parseFloat((price * cd.amount).toFixed(2))
+        }
+        totalPrice = parseFloat(totalPrice.toFixed(2))
+        await this.props.payWithPaypal({
+            arrDetails,
+            totalPrice: totalPrice.toString(),
+        })
+        this.createNewBill(this.props.paypalInfo.paymentId, totalPrice.toString())
+        window.open(this.props.paypalInfo.paypalLink)
+    }
+
+    handleCaculateCurrency = (data) => {
+        let USD = data.rates.USD
+        let VND = data.rates.VND
+        return VND / USD
+    }
+
+    paymentByBank = () => {
+        console.log("thanh toan qua ngan hang")
+    }
+
+    createNewBill = async (payId, totalPrice) => {
         let newBill = {
             userId: this.props.customerInfo.id,
             fullName: this.state.fullName,
@@ -81,6 +123,8 @@ class DetailCheckout extends Component {
             note: this.state.note,
             stateId: 1,
             paymentTypeId: 1,
+            payId: payId,
+            totalPrice: totalPrice
         }
         await this.props.createNewBill(newBill)
         let arrDetails = []
@@ -113,21 +157,11 @@ class DetailCheckout extends Component {
             arrDetails.push(newDetail)
             arrProducts.push(newProduct)
         }
-        console.log(arrProducts)
         await this.props.bulkCreateInvoicedetail(arrDetails)
         await this.props.updateAmountProduct(arrProducts)
         await this.props.clearCartdetail(this.props.cartInfo.id)
         await this.props.fetchCartdetailStart(this.props.cartInfo.id)
         this.props.history.push(`/account`)
-    }
-
-    paymentByPaypal = async () => {
-        await this.props.payWithPaypal()
-        window.open(this.props.paypalLinkRedux)
-    }
-
-    paymentByBank = () => {
-        console.log("thanh toan qua ngan hang")
     }
 
     onChangeInput = (event, id) => {
@@ -260,7 +294,7 @@ class DetailCheckout extends Component {
 
 const mapStateToProps = state => {
     return {
-        paypalLinkRedux: state.paypal.paypalLink,
+        paypalInfo: state.paypal.paypalInfo,
         cartInfo: state.cart.carts,
         cartdetails: state.cartdetail.cartdetails,
         customerInfo: state.customer.customerInfo,
@@ -270,7 +304,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        payWithPaypal: () => dispatch(actions.payWithPaypalStart()),
+        payWithPaypal: (data) => dispatch(actions.payWithPaypalStart(data)),
         createNewBill: (data) => dispatch(actions.createNewBill(data)),
         bulkCreateInvoicedetail: (data) => dispatch(actions.bulkCreateInvoicedetail(data)),
         updateAmountProduct: (data) => dispatch(actions.updateAmountProduct(data)),

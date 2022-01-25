@@ -7,12 +7,12 @@ import { toast } from 'react-toastify';
 //     type: actionTypes.FETCH_INVOICEDETAIL_START
 // })
 
-export const payWithPaypalStart = () => {
+export const payWithPaypalStart = (data) => {
     return async (dispatch, getState) => {
         try {
-            let res = await payWithPaypal()
+            let res = await payWithPaypal(data)
             if (res && res.errCode === 0) {
-                dispatch(payWithPaypalSuccess(res.paypalLink))
+                dispatch(payWithPaypalSuccess(res))
             } else {
                 toast.error('Thanh toán thất bại!')
                 dispatch(payWithPaypalFailed())
@@ -25,9 +25,9 @@ export const payWithPaypalStart = () => {
     }
 }
 
-export const payWithPaypalSuccess = (paypalLink) => ({
+export const payWithPaypalSuccess = (paypalInfo) => ({
     type: actionTypes.PAY_WITH_PAYPAL_SUCCESS,
-    paypalLink: paypalLink
+    paypalInfo: paypalInfo
 })
 export const payWithPaypalFailed = () => ({
     type: actionTypes.PAY_WITH_PAYPAL_FAILED

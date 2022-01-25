@@ -1,7 +1,7 @@
 import axios from "../axios";
 
-const payWithPaypal = () => {
-    return axios.post(`/api/paypal`)
+const payWithPaypal = (data) => {
+    return axios.post(`/api/paypal`, data)
 }
 
 export { payWithPaypal }
