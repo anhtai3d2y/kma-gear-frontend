@@ -112,7 +112,7 @@ class TableManageBill extends Component {
                                                                     {invoicedetail.Product.name}
                                                                 </td>
                                                                 <td>
-                                                                    {invoicedetail.price}
+                                                                    {this.numberWithCommas(invoicedetail.price)} đ
                                                                 </td>
                                                                 <td>
                                                                     {invoicedetail.amount}
