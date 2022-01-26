@@ -207,7 +207,7 @@ class ProductTypeManage extends Component {
                             action={this.state.action}
                         />) :
                         (<TableManageProductType
-                            handleEditProductFromParent={this.handleEditProductFromParent}
+                            handleEditProductTypeFromParent={this.handleEditProductTypeFromParent}
                             action={this.state.action}
                         />)}
                 </div>

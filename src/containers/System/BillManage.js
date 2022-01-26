@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 import { CRUDActions } from "../../utils";
 import './BillManage.scss';
 import TableManageBill from "./TableManageBill";
+import TableRecycleBinBill from "./TableRecycleBinBill";
+
 
 import { ToastContainer, toast } from 'react-toastify';
 import *  as actions from "../../store/actions";
@@ -31,7 +33,9 @@ class BillManage extends Component {
 
             action: CRUDActions.CREATE,
 
-            isShowForm: false
+            isShowForm: false,
+            isOpenRecycleBin: false
+
         }
         this.scrollTop = React.createRef()
     }
@@ -169,6 +173,12 @@ class BillManage extends Component {
         })
     }
 
+    handleOpenRecycleBin = () => {
+        this.setState({
+            isOpenRecycleBin: !this.state.isOpenRecycleBin
+        })
+    }
+
     render() {
 
         // console.log('fetch state: ', this.state)
@@ -263,10 +273,17 @@ class BillManage extends Component {
                             <div></div>
                         )}
                     </div>
-                    <TableManageBill
-                        handleEditBillFromParent={this.handleEditBillFromParent}
-                        action={this.state.action}
-                    />
+                    <div className="mb-4 ml-4 btn-go-recyclebin"
+                        onClick={() => { this.handleOpenRecycleBin() }}>{this.state.isOpenRecycleBin ? (<div><i i className="fas fa-caret-left"></i> Quay lại</div>) : (<div><i className="fas fa-trash"></i> Thùng rác</div>)}
+                    </div>
+                    {this.state.isOpenRecycleBin ?
+                        (<TableRecycleBinBill
+                            action={this.state.action}
+                        />) :
+                        (<TableManageBill
+                            handleEditBillFromParent={this.handleEditBillFromParent}
+                            action={this.state.action}
+                        />)}
                 </div>
             </div>
         )

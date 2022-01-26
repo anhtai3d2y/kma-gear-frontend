@@ -224,7 +224,7 @@ class CategoryManage extends Component {
                             action={this.state.action}
                         />) :
                         (<TableManageCategory
-                            handleEditProductFromParent={this.handleEditProductFromParent}
+                            handleEditCategoryFromParent={this.handleEditCategoryFromParent}
                             action={this.state.action}
                         />)}
                 </div>
