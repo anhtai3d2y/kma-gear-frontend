@@ -1,49 +1,42 @@
 import React, { Component } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
-import './TableManageBrand.scss';
+import './TableManageProduct.scss';
 import { ToastContainer, toast } from 'react-toastify';
 import *  as actions from "../../store/actions";
 
 
-class TableManageBrand extends Component {
+class TableRecycleBinBrand extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            brands: [],
         }
     }
 
     componentDidMount() {
-        this.props.fetchBrandsRedux()
+        this.props.fetchBrandDeletedRedux()
     }
 
     componentDidUpdate(prevState, prevProps) {
-        // if (prevProps.brandsRedux !== this.props.brandsRedux) {
-        //     this.setState({
-        //         brands: this.props.brandsRedux
-        //     })
-        // }
+
     }
 
-    handleEditBrand = (brand) => {
-        this.props.handleEditBrandFromParent(brand)
-    }
-
-    handleDeleteBrand = async (brand) => {
-        await this.props.deleteBrandRedux(brand.id)
-        await this.props.fetchBrandsRedux()
+    handleRecoverBrand = async (brand) => {
+        await this.props.recoverBrand(brand.id)
+        await this.props.fetchBrandDeletedRedux()
     }
 
     render() {
-        let arrBrands = this.props.brandsRedux
+        let arrBrands = this.props.brandsDeleted
+        console.log(arrBrands)
         return (
-            < div className="brand-container" >
+            < div className="product-container" >
                 <table className="table table-hover table table-bordered table-striped mb-0">
                     <thead className="">
                         <tr>
                             <th scope="col">ID</th>
+                            <th scope="col">Thời gian xóa</th>
                             <th scope="col">Tên nhãn hàng</th>
                             <th scope="col">Logo</th>
                             <th scope="col" colspan="2">Hành động</th>
@@ -55,19 +48,18 @@ class TableManageBrand extends Component {
                                 return (
                                     <tr >
                                         <th scope="row">{brand.id}</th>
+                                        <td>{brand.updatedAt}</td>
                                         <td>{brand.name}</td>
                                         <td>
                                             <div className="brand-image">
                                                 <img src={brand.image} />
                                             </div>
                                         </td>
+
                                         <td>
-                                            <button className="btn-edit"
-                                                onClick={() => this.handleEditBrand(brand)}
-                                            ><i className="fas fa-pencil-alt"></i></button>
-                                            <button className="btn-delete"
-                                                onClick={() => this.handleDeleteBrand(brand)}
-                                            ><i className="fas fa-trash"></i></button>
+                                            <div className="btn-restore"
+                                                onClick={() => this.handleRecoverBrand(brand)}
+                                            ><i className="fab fa-trash"></i>Khôi phục</div>
                                         </td>
                                     </tr>
                                 )
@@ -84,15 +76,15 @@ class TableManageBrand extends Component {
 
 const mapStateToProps = state => {
     return {
-        brandsRedux: state.brand.brands
+        brandsDeleted: state.brand.brandsDeleted,
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
-        fetchBrandsRedux: () => dispatch(actions.fetchBrandStart()),
-        deleteBrandRedux: (id) => dispatch(actions.deleteBrand(id)),
+        fetchBrandDeletedRedux: () => dispatch(actions.fetchBrandDeletedStart()),
+        recoverBrand: (id) => dispatch(actions.recoverBrand(id)),
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(TableManageBrand);
+export default connect(mapStateToProps, mapDispatchToProps)(TableRecycleBinBrand);
