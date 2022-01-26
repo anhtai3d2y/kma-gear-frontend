@@ -4,11 +4,33 @@ const initialState = {
     isLoggedIn: false,
     userInfo: null,
     isCustomerLoggedIn: false,
-    customerInfo: null
+    customerInfo: null,
+    usersDeleted: [],
 }
 
 const appReducer = (state = initialState, action) => {
+    let copyState
     switch (action.type) {
+        case actionTypes.FETCH_USER_DELETED_START:
+            // let copyState = { ...state }
+            state.isLoadingUser = true
+            return {
+                ...state,
+            }
+        case actionTypes.FETCH_USER_DELETED_SUCCESS:
+            copyState = { ...state }
+            copyState.usersDeleted = action.data
+            return {
+                ...copyState,
+            }
+        case actionTypes.FETCH_USER_DELETED_FAILED:
+            // let state = { ...state }
+            state.isLoadingType = false
+            console.log('fetch failed', action)
+            state.usersDeleted = []
+            return {
+                ...state,
+            }
         case actionTypes.USER_LOGIN_SUCCESS:
             return {
                 ...state,

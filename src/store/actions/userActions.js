@@ -1,7 +1,66 @@
 import actionTypes from './actionTypes';
 import { toast } from 'react-toastify';
-import { createNewUserService } from "../../services/userService";
+import {
+    createNewUserService,
+    getAllUsersDeletedService,
+    recoverUserService,
+} from "../../services/userService";
 
+export const fetchUserDeletedStart = () => {
+    return async (dispatch, getState) => {
+        try {
+            dispatch({
+                type: actionTypes.FETCH_USER_DELETED_START
+            })
+
+            let res = await getAllUsersDeletedService('ALL')
+            if (res && res.errCode === 0) {
+                dispatch(fetchUserDeletedSuccess(res.users))
+            } else {
+                dispatch(fetchUserDeletedFailed())
+            }
+        } catch (error) {
+            dispatch(fetchUserDeletedFailed())
+            console.log(error)
+            toast.error('Lấy danh sách người dùng thất bại!')
+        }
+    }
+}
+
+export const fetchUserDeletedSuccess = (typesData) => ({
+    type: actionTypes.FETCH_USER_DELETED_SUCCESS,
+    data: typesData
+})
+
+export const fetchUserDeletedFailed = () => ({
+    type: actionTypes.FETCH_USER_DELETED_FAILED
+})
+
+export const recoverUser = (userId) => {
+    return async (dispatch, getState) => {
+        try {
+            let res = await recoverUserService(userId)
+            if (res && res.errCode === 0) {
+                dispatch(recoverUserSuccess())
+                toast('Khôi phục người dùng thành công')
+            } else {
+                toast.error('Khôi phục người dùng thất bại!')
+                dispatch(recoverUserFailed())
+            }
+        } catch (error) {
+            toast.error('Khôi phục người dùng thất bại!')
+            dispatch(recoverUserFailed())
+            console.log(error)
+        }
+    }
+}
+
+export const recoverUserSuccess = () => ({
+    type: actionTypes.RECOVER_USER_SUCCESS
+})
+export const recoverUserFailed = () => ({
+    type: actionTypes.RECOVER_USER_FAILED
+})
 
 export const addUserSuccess = () => ({
     type: actionTypes.ADD_USER_SUCCESS

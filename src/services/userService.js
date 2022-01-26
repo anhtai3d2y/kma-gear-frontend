@@ -12,8 +12,16 @@ const getAllUsers = (inputId) => {
     return axios.get(`/api/get-all-users?id=${inputId}`)
 }
 
+const getAllUsersDeletedService = (inputId) => {
+    return axios.get(`/api/get-all-users-deleted?id=${inputId}`)
+}
+
 const createNewUserService = (data) => {
     return axios.post('/api/create-new-user', data)
+}
+
+const editUserService = (inputData) => {
+    return axios.put('/api/edit-user', inputData)
 }
 
 const deleteUserService = (userId) => {
@@ -24,8 +32,22 @@ const deleteUserService = (userId) => {
     })
 }
 
-const editUserService = (inputData) => {
-    return axios.put('/api/edit-user', inputData)
+const recoverUserService = (userId) => {
+    return axios.delete('/api/recover-user', {
+        data: {
+            id: userId
+        }
+    })
 }
 
-export { handleLogin, handleCustomerLogin, getAllUsers, createNewUserService, deleteUserService, editUserService }
+
+export {
+    handleLogin,
+    handleCustomerLogin,
+    getAllUsers,
+    getAllUsersDeletedService,
+    createNewUserService,
+    editUserService,
+    deleteUserService,
+    recoverUserService,
+}

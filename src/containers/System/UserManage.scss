@@ -30,9 +30,19 @@
     color: rgb(57, 223, 121);
     font-size: 16px;
     font-weight: 600;
+    cursor: pointer;
     &:hover {
         color: rgb(107, 207, 94) !important;
         background-color: transparent !important;
+    }
+}
+.btn-go-recyclebin {
+    margin-top: 20px;
+    font-size: 20px;
+    cursor: pointer;
+    color: #339af0;
+    &:hover {
+        opacity: 0.8;
     }
 }
 .modal-user-container {

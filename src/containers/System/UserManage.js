@@ -5,6 +5,8 @@ import './UserManage.scss';
 import { getAllUsers, createNewUserService, deleteUserService, editUserService } from "../../services/userService";
 import ModalUser from './ModalUser';
 import ModalEditUser from './ModalEditUser';
+import TableRecycleBinUser from "./TableRecycleBinUser";
+
 import { emitter } from "../../utils/emitter";
 import { ToastContainer, toast } from 'react-toastify';
 
@@ -16,7 +18,9 @@ class UserManage extends Component {
             arrUsers: [],
             isOpenModalUser: false,
             isOpenModalEditUser: false,
-            userEdit: {}
+            userEdit: {},
+            isOpenRecycleBin: false
+
         }
     }
 
@@ -112,12 +116,16 @@ class UserManage extends Component {
         }
     }
 
+    handleOpenRecycleBin = () => {
+        this.setState({
+            isOpenRecycleBin: !this.state.isOpenRecycleBin
+        })
+        this.getAllUsersFromReact()
+    }
+
 
     render() {
-
         let arrUsers = this.state.arrUsers
-
-
         return (
             < div className="user-container" >
                 <ModalUser
@@ -140,38 +148,45 @@ class UserManage extends Component {
                         onClick={(e) => { this.handleAddNewUser() }}
                     ><i className="fas fa-plus"></i>Add a new user</button>
                 </div>
-                <div className="users-table mt-4 mx-3 table-wrapper-scroll-y my-custom-scrollbar">
-                    <table className="table table-hover table table-bordered table-striped mb-0">
-                        <thead className="">
-                            <tr>
-                                <th scope="col">ID</th>
-                                <th scope="col">Email</th>
-                                <th scope="col">Full Name</th>
-                                <th scope="col">Phone Number</th>
-                                <th scope="col">Address</th>
-                                <th scope="col" colspan="2">Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody className="">
-                            {arrUsers && arrUsers.map((user, index) => {
-                                return (
-                                    <tr key={user.id}>
-                                        <th scope="row">{user.id}</th>
-                                        <td>{user.email}</td>
-                                        <td>{user.fullName}</td>
-                                        <td>{user.phoneNumber}</td>
-                                        <td>{user.address}</td>
-                                        <td>
-                                            <button className="btn-edit" onClick={() => { this.hadleEditUser(user) }}><i className="fas fa-pencil-alt"></i></button>
-                                            <button className="btn-delete" onClick={() => { this.handleDeleteUser(user) }}><i className="fas fa-trash"></i></button>
-                                        </td>
-                                    </tr>
-                                )
-                            })}
-
-                        </tbody>
-                    </table>
+                <div className="mb-4 ml-4 btn-go-recyclebin"
+                    onClick={() => { this.handleOpenRecycleBin() }}>{this.state.isOpenRecycleBin ? (<div><i i className="fas fa-caret-left"></i> Quay lại</div>) : (<div><i className="fas fa-trash"></i> Thùng rác</div>)}
                 </div>
+                {this.state.isOpenRecycleBin ?
+                    (<TableRecycleBinUser
+                        action={this.state.action}
+                    />) :
+                    (<div className="users-table mt-4 mx-3 table-wrapper-scroll-y my-custom-scrollbar">
+                        <table className="table table-hover table table-bordered table-striped mb-0">
+                            <thead className="">
+                                <tr>
+                                    <th scope="col">ID</th>
+                                    <th scope="col">Email</th>
+                                    <th scope="col">Full Name</th>
+                                    <th scope="col">Phone Number</th>
+                                    <th scope="col">Address</th>
+                                    <th scope="col" colspan="2">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody className="">
+                                {arrUsers && arrUsers.map((user, index) => {
+                                    return (
+                                        <tr key={user.id}>
+                                            <th scope="row">{user.id}</th>
+                                            <td>{user.email}</td>
+                                            <td>{user.fullName}</td>
+                                            <td>{user.phoneNumber}</td>
+                                            <td>{user.address}</td>
+                                            <td>
+                                                <button className="btn-edit" onClick={() => { this.hadleEditUser(user) }}><i className="fas fa-pencil-alt"></i></button>
+                                                <button className="btn-delete" onClick={() => { this.handleDeleteUser(user) }}><i className="fas fa-trash"></i></button>
+                                            </td>
+                                        </tr>
+                                    )
+                                })}
+
+                            </tbody>
+                        </table>
+                    </div>)}
             </ div>
         );
     }

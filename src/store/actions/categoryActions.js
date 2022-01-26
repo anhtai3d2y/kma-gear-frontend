@@ -53,7 +53,7 @@ export const fetchCategoryDeletedStart = () => {
 
             let res = await getAllCategorysDeletedService('ALL')
             if (res && res.errCode === 0) {
-                dispatch(fetchCategoryDeletedSuccess(res.categorys.reverse()))
+                dispatch(fetchCategoryDeletedSuccess(res.categorys))
             } else {
                 dispatch(fetchCategoryDeletedFailed())
             }
