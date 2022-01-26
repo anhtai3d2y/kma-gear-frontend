@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 import { CRUDActions } from "../../utils";
 import './CategoryManage.scss';
 import TableManageCategory from "./TableManageCategory";
+import TableRecycleBinCategory from "./TableRecycleBinCategory";
+
 
 import { ToastContainer, toast } from 'react-toastify';
 
@@ -24,7 +26,9 @@ class CategoryManage extends Component {
 
             action: CRUDActions.CREATE,
 
-            isShowForm: false
+            isShowForm: false,
+            isOpenRecycleBin: false
+
         }
         this.scrollTop = React.createRef()
     }
@@ -150,9 +154,13 @@ class CategoryManage extends Component {
         })
     }
 
+    handleOpenRecycleBin = () => {
+        this.setState({
+            isOpenRecycleBin: !this.state.isOpenRecycleBin
+        })
+    }
+
     render() {
-
-
         let { name, image } = this.state
         return (
             <div className="category-manage-container" >
@@ -208,10 +216,17 @@ class CategoryManage extends Component {
                             <div></div>
                         )}
                     </div>
-                    <TableManageCategory
-                        handleEditCategoryFromParent={this.handleEditCategoryFromParent}
-                        action={this.state.action}
-                    />
+                    <div className="mb-4 ml-4 btn-go-recyclebin"
+                        onClick={() => { this.handleOpenRecycleBin() }}>{this.state.isOpenRecycleBin ? (<div><i i className="fas fa-caret-left"></i> Quay lại</div>) : (<div><i className="fas fa-trash"></i> Thùng rác</div>)}
+                    </div>
+                    {this.state.isOpenRecycleBin ?
+                        (<TableRecycleBinCategory
+                            action={this.state.action}
+                        />) :
+                        (<TableManageCategory
+                            handleEditProductFromParent={this.handleEditProductFromParent}
+                            action={this.state.action}
+                        />)}
                 </div>
             </div>
         )
