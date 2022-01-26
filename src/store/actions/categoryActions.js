@@ -158,13 +158,13 @@ export const recoverCategory = (categoryId) => {
             let res = await recoverCategoryService(categoryId)
             if (res && res.errCode === 0) {
                 dispatch(recoverCategorySuccess())
-                toast('Xóa danh mục thành công')
+                toast('Khôi phục danh mục thành công')
             } else {
-                toast.error('Xóa danh mục thất bại!')
+                toast.error('Khôi phục danh mục thất bại!')
                 dispatch(recoverCategoryFailed())
             }
         } catch (error) {
-            toast.error('Xóa danh mục thất bại!')
+            toast.error('Khôi phục danh mục thất bại!')
             dispatch(recoverCategoryFailed())
             console.log(error)
         }

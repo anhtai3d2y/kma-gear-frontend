@@ -5,8 +5,17 @@ const getAllBillsService = (inputId) => {
     return axios.get(`/api/get-all-bills?id=${inputId}`)
 }
 
+const getAllBillsDeletedService = (inputId) => {
+
+    return axios.get(`/api/get-all-bills-deleted?id=${inputId}`)
+}
+
 const createNewBillService = (data) => {
     return axios.post('/api/create-new-bill', data)
+}
+
+const editBillService = (inputData) => {
+    return axios.put('/api/edit-bill', inputData)
 }
 
 const deleteBillService = (billId) => {
@@ -17,8 +26,19 @@ const deleteBillService = (billId) => {
     })
 }
 
-const editBillService = (inputData) => {
-    return axios.put('/api/edit-bill', inputData)
+const recoverBillService = (billId) => {
+    return axios.delete('/api/recover-bill', {
+        data: {
+            id: billId
+        }
+    })
 }
 
-export { getAllBillsService, createNewBillService, deleteBillService, editBillService }
+export {
+    getAllBillsService,
+    getAllBillsDeletedService,
+    createNewBillService,
+    editBillService,
+    deleteBillService,
+    recoverBillService,
+}

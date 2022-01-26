@@ -1,5 +1,12 @@
 import actionTypes from './actionTypes';
-import { getAllBillsService, createNewBillService, deleteBillService, editBillService } from "../../services/billService";
+import {
+    getAllBillsService,
+    getAllBillsDeletedService,
+    createNewBillService,
+    editBillService,
+    deleteBillService,
+    recoverBillService,
+} from "../../services/billService";
 import { toast } from 'react-toastify';
 
 
@@ -36,6 +43,37 @@ export const fetchBillSuccess = (typesData) => ({
 
 export const fetchBillFailed = () => ({
     type: actionTypes.FETCH_BILL_FAILED
+})
+
+export const fetchBillDeletedStart = () => {
+
+    return async (dispatch, getState) => {
+        try {
+            dispatch({
+                type: actionTypes.FETCH_BILL_DELETED_START
+            })
+
+            let res = await getAllBillsDeletedService('ALL')
+            if (res && res.errCode === 0) {
+                dispatch(fetchBillDeletedSuccess(res.bills.reverse()))
+            } else {
+                dispatch(fetchBillDeletedFailed())
+            }
+        } catch (error) {
+            dispatch(fetchBillDeletedFailed())
+            console.log(error)
+            toast.error('Lấy đơn hàng thất bại!')
+        }
+    }
+}
+
+export const fetchBillDeletedSuccess = (typesData) => ({
+    type: actionTypes.FETCH_BILL_DELETED_SUCCESS,
+    data: typesData
+})
+
+export const fetchBillDeletedFailed = () => ({
+    type: actionTypes.FETCH_BILL_DELETED_FAILED
 })
 
 
@@ -115,4 +153,30 @@ export const deleteBillSuccess = () => ({
 })
 export const deleteBillFailed = () => ({
     type: actionTypes.DELETE_BILL_FAILED
+})
+
+export const recoverBill = (billId) => {
+    return async (dispatch, getState) => {
+        try {
+            let res = await recoverBillService(billId)
+            if (res && res.errCode === 0) {
+                dispatch(recoverBillSuccess())
+                toast('Khôi phục đơn hàng thành công')
+            } else {
+                toast.error('Khôi phục đơn hàng thất bại!')
+                dispatch(recoverBillFailed())
+            }
+        } catch (error) {
+            toast.error('Khôi phục đơn hàng thất bại!')
+            dispatch(recoverBillFailed())
+            console.log(error)
+        }
+    }
+}
+
+export const recoverBillSuccess = () => ({
+    type: actionTypes.RECOVER_BILL_SUCCESS
+})
+export const recoverBillFailed = () => ({
+    type: actionTypes.RECOVER_BILL_FAILED
 })
