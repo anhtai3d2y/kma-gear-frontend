@@ -1,5 +1,12 @@
 import actionTypes from './actionTypes';
-import { getAllProducttypesService, createNewProducttypeService, deleteProducttypeService, editProducttypeService } from "../../services/producttypeService";
+import {
+    getAllProducttypesService,
+    getAllProducttypesDeletedService,
+    createNewProducttypeService,
+    editProducttypeService,
+    deleteProducttypeService,
+    recoverProducttypeService,
+} from "../../services/producttypeService";
 import { toast } from 'react-toastify';
 
 
@@ -36,6 +43,37 @@ export const fetchProducttypeSuccess = (typesData) => ({
 
 export const fetchProducttypeFailed = () => ({
     type: actionTypes.FETCH_PRODUCTTYPE_FAILED
+})
+
+export const fetchProducttypeDeletedStart = () => {
+
+    return async (dispatch, getState) => {
+        try {
+            dispatch({
+                type: actionTypes.FETCH_PRODUCTTYPE_DELETED_START
+            })
+
+            let res = await getAllProducttypesDeletedService('ALL')
+            if (res && res.errCode === 0) {
+                dispatch(fetchProducttypeDeletedSuccess(res.producttypes))
+            } else {
+                dispatch(fetchProducttypeDeletedFailed())
+            }
+        } catch (error) {
+            dispatch(fetchProducttypeDeletedFailed())
+            console.log(error)
+            toast.error('Lấy loại sản phẩm thất bại!')
+        }
+    }
+}
+
+export const fetchProducttypeDeletedSuccess = (typesData) => ({
+    type: actionTypes.FETCH_PRODUCTTYPE_DELETED_SUCCESS,
+    data: typesData
+})
+
+export const fetchProducttypeDeletedFailed = () => ({
+    type: actionTypes.FETCH_PRODUCTTYPE_DELETED_FAILED
 })
 
 

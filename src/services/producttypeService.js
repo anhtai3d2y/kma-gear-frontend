@@ -5,8 +5,17 @@ const getAllProducttypesService = (inputId) => {
     return axios.get(`/api/get-all-producttypes?id=${inputId}`)
 }
 
+const getAllProducttypesDeletedService = (inputId) => {
+
+    return axios.get(`/api/get-all-producttypes-deleted?id=${inputId}`)
+}
+
 const createNewProducttypeService = (data) => {
     return axios.post('/api/create-new-producttype', data)
+}
+
+const editProducttypeService = (inputData) => {
+    return axios.put('/api/edit-producttype', inputData)
 }
 
 const deleteProducttypeService = (producttypeId) => {
@@ -17,8 +26,20 @@ const deleteProducttypeService = (producttypeId) => {
     })
 }
 
-const editProducttypeService = (inputData) => {
-    return axios.put('/api/edit-producttype', inputData)
+const recoverProducttypeService = (producttypeId) => {
+    return axios.delete('/api/recover-producttype', {
+        data: {
+            id: producttypeId
+        }
+    })
 }
 
-export { getAllProducttypesService, createNewProducttypeService, deleteProducttypeService, editProducttypeService }
+
+export {
+    getAllProducttypesService,
+    getAllProducttypesDeletedService,
+    createNewProducttypeService,
+    editProducttypeService,
+    deleteProducttypeService,
+    recoverProducttypeService,
+}
