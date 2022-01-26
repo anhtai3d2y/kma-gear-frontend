@@ -3,6 +3,7 @@ import actionTypes from '../actions/actionTypes';
 const initialState = {
     isLoadingBanner: false,
     banners: [],
+    bannersDeleted: [],
     mainBanners: [],
     subBanners: [],
 }
@@ -28,6 +29,27 @@ const bannerReducer = (state = initialState, action) => {
             state.isLoadingType = false
             console.log('fetch failed', action)
             state.banners = []
+            return {
+                ...state,
+            }
+
+        case actionTypes.FETCH_BANNER_DELETED_START:
+            // let copyState = { ...state }
+            state.isLoadingBanner = true
+            return {
+                ...state,
+            }
+        case actionTypes.FETCH_BANNER_DELETED_SUCCESS:
+            copyState = { ...state }
+            copyState.bannersDeleted = action.data
+            return {
+                ...copyState,
+            }
+        case actionTypes.FETCH_BANNER_DELETED_FAILED:
+            // let state = { ...state }
+            state.isLoadingType = false
+            console.log('fetch failed', action)
+            state.bannersDeleted = []
             return {
                 ...state,
             }

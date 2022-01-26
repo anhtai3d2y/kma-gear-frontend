@@ -1,5 +1,14 @@
 import actionTypes from './actionTypes';
-import { getAllBannersService, getAllMainBannersService, getAllSubBannersService, createNewBannerService, deleteBannerService, editBannerService } from "../../services/bannerService";
+import {
+    getAllBannersService,
+    getAllBannersDeletedService,
+    getAllMainBannersService,
+    getAllSubBannersService,
+    createNewBannerService,
+    editBannerService,
+    deleteBannerService,
+    recoverBannerService,
+} from "../../services/bannerService";
 import { toast } from 'react-toastify';
 
 
@@ -35,6 +44,36 @@ export const fetchBannerSuccess = (bannersData) => ({
 
 export const fetchBannerFailed = () => ({
     type: actionTypes.FETCH_BANNER_FAILED
+})
+
+export const fetchBannerDeletedStart = () => {
+
+    return async (dispatch, getState) => {
+        try {
+            dispatch({
+                type: actionTypes.FETCH_BANNER_DELETED_START
+            })
+
+            let res = await getAllBannersDeletedService('ALL')
+            if (res && res.errCode === 0) {
+                dispatch(fetchBannerDeletedSuccess(res.banners))
+            } else {
+                dispatch(fetchBannerDeletedFailed())
+            }
+        } catch (error) {
+            dispatch(fetchBannerDeletedFailed())
+            console.log(error)
+        }
+    }
+}
+
+export const fetchBannerDeletedSuccess = (bannersData) => ({
+    type: actionTypes.FETCH_BANNER_DELETED_SUCCESS,
+    data: bannersData
+})
+
+export const fetchBannerDeletedFailed = () => ({
+    type: actionTypes.FETCH_BANNER_DELETED_FAILED
 })
 
 export const fetchMainBannerStart = () => {
@@ -172,4 +211,30 @@ export const deleteBannerSuccess = () => ({
 })
 export const deleteBannerFailed = () => ({
     type: actionTypes.DELETE_BANNER_FAILED
+})
+
+export const recoverBanner = (bannerId) => {
+    return async (dispatch, getState) => {
+        try {
+            let res = await recoverBannerService(bannerId)
+            if (res && res.errCode === 0) {
+                dispatch(recoverBannerSuccess())
+                toast('Khôi phục biển quảng cáo thành công')
+            } else {
+                toast.error('Khôi phục biển quảng cáo thất bại!')
+                dispatch(recoverBannerFailed())
+            }
+        } catch (error) {
+            toast.error('Khôi phục biển quảng cáo thất bại!')
+            dispatch(recoverBannerFailed())
+            console.log(error)
+        }
+    }
+}
+
+export const recoverBannerSuccess = () => ({
+    type: actionTypes.RECOVER_BANNER_SUCCESS
+})
+export const recoverBannerFailed = () => ({
+    type: actionTypes.RECOVER_BANNER_FAILED
 })
