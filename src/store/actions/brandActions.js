@@ -1,5 +1,12 @@
 import actionTypes from './actionTypes';
-import { getAllBrandsService, createNewBrandService, deleteBrandService, editBrandService } from "../../services/brandService";
+import {
+    getAllBrandsService,
+    getAllBrandsDeletedService,
+    createNewBrandService,
+    editBrandService,
+    deleteBrandService,
+    recoverBrandService,
+} from "../../services/brandService";
 import { toast } from 'react-toastify';
 
 
@@ -35,6 +42,36 @@ export const fetchBrandSuccess = (brandsData) => ({
 
 export const fetchBrandFailed = () => ({
     type: actionTypes.FETCH_BRAND_FAILED
+})
+
+export const fetchBrandDeletedStart = () => {
+
+    return async (dispatch, getState) => {
+        try {
+            dispatch({
+                type: actionTypes.FETCH_BRAND_DELETED_START
+            })
+
+            let res = await getAllBrandsDeletedService('ALL')
+            if (res && res.errCode === 0) {
+                dispatch(fetchBrandDeletedSuccess(res.brands))
+            } else {
+                dispatch(fetchBrandDeletedFailed())
+            }
+        } catch (error) {
+            dispatch(fetchBrandDeletedFailed())
+            console.log(error)
+        }
+    }
+}
+
+export const fetchBrandDeletedSuccess = (brandsData) => ({
+    type: actionTypes.FETCH_BRAND_DELETED_SUCCESS,
+    data: brandsData
+})
+
+export const fetchBrandDeletedFailed = () => ({
+    type: actionTypes.FETCH_BRAND_DELETED_FAILED
 })
 
 export const createNewBrand = (data) => {
@@ -112,4 +149,30 @@ export const deleteBrandSuccess = () => ({
 })
 export const deleteBrandFailed = () => ({
     type: actionTypes.DELETE_BRAND_FAILED
+})
+
+export const recoverBrand = (brandId) => {
+    return async (dispatch, getState) => {
+        try {
+            let res = await recoverBrandService(brandId)
+            if (res && res.errCode === 0) {
+                dispatch(recoverBrandSuccess())
+                toast('Khôi phục nhãn hàng thành công')
+            } else {
+                toast.error('Khôi phục nhãn hàng thất bại!')
+                dispatch(recoverBrandFailed())
+            }
+        } catch (error) {
+            toast.error('Khôi phục nhãn hàng thất bại!')
+            dispatch(recoverBrandFailed())
+            console.log(error)
+        }
+    }
+}
+
+export const recoverBrandSuccess = () => ({
+    type: actionTypes.RECOVER_BRAND_SUCCESS
+})
+export const recoverBrandFailed = () => ({
+    type: actionTypes.RECOVER_BRAND_FAILED
 })
