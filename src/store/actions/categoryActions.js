@@ -1,5 +1,12 @@
 import actionTypes from './actionTypes';
-import { getAllCategorysService, createNewCategoryService, deleteCategoryService, editCategoryService } from "../../services/categoryService";
+import {
+    getAllCategorysService,
+    getAllCategorysDeletedService,
+    createNewCategoryService,
+    editCategoryService,
+    deleteCategoryService,
+    recoverCategoryService,
+} from "../../services/categoryService";
 import { toast } from 'react-toastify';
 
 
@@ -35,6 +42,36 @@ export const fetchCategorySuccess = (typesData) => ({
 
 export const fetchCategoryFailed = () => ({
     type: actionTypes.FETCH_CATEGORY_FAILED
+})
+
+export const fetchCategoryDeletedStart = () => {
+    return async (dispatch, getState) => {
+        try {
+            dispatch({
+                type: actionTypes.FETCH_CATEGORY_DELETED_START
+            })
+
+            let res = await getAllCategorysDeletedService('ALL')
+            if (res && res.errCode === 0) {
+                dispatch(fetchCategoryDeletedSuccess(res.categorys))
+            } else {
+                dispatch(fetchCategoryDeletedFailed())
+            }
+        } catch (error) {
+            dispatch(fetchCategoryDeletedFailed())
+            console.log(error)
+            toast.error('Lấy danh mục thất bại!')
+        }
+    }
+}
+
+export const fetchCategoryDeletedSuccess = (typesData) => ({
+    type: actionTypes.FETCH_CATEGORY_DELETED_SUCCESS,
+    data: typesData
+})
+
+export const fetchCategoryDeletedFailed = () => ({
+    type: actionTypes.FETCH_CATEGORY_DELETED_FAILED
 })
 
 
@@ -113,4 +150,30 @@ export const deleteCategorySuccess = () => ({
 })
 export const deleteCategoryFailed = () => ({
     type: actionTypes.DELETE_CATEGORY_FAILED
+})
+
+export const recoverCategory = (categoryId) => {
+    return async (dispatch, getState) => {
+        try {
+            let res = await recoverCategoryService(categoryId)
+            if (res && res.errCode === 0) {
+                dispatch(recoverCategorySuccess())
+                toast('Xóa danh mục thành công')
+            } else {
+                toast.error('Xóa danh mục thất bại!')
+                dispatch(recoverCategoryFailed())
+            }
+        } catch (error) {
+            toast.error('Xóa danh mục thất bại!')
+            dispatch(recoverCategoryFailed())
+            console.log(error)
+        }
+    }
+}
+
+export const recoverCategorySuccess = () => ({
+    type: actionTypes.RECOVER_CATEGORY_SUCCESS
+})
+export const recoverCategoryFailed = () => ({
+    type: actionTypes.RECOVER_CATEGORY_FAILED
 })

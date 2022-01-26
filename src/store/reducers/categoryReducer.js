@@ -2,10 +2,12 @@ import actionTypes from '../actions/actionTypes';
 
 const initialState = {
     isLoadingCategory: false,
-    categorys: []
+    categorys: [],
+    categorysDeleted: []
 }
 
 const categoryReducer = (state = initialState, action) => {
+    let copyState
     switch (action.type) {
         case actionTypes.FETCH_CATEGORY_START:
             // let copyState = { ...state }
@@ -14,7 +16,7 @@ const categoryReducer = (state = initialState, action) => {
                 ...state,
             }
         case actionTypes.FETCH_CATEGORY_SUCCESS:
-            let copyState = { ...state }
+            copyState = { ...state }
             copyState.categorys = action.data
             return {
                 ...copyState,
@@ -24,6 +26,26 @@ const categoryReducer = (state = initialState, action) => {
             state.isLoadingType = false
             console.log('fetch failed', action)
             state.categorys = []
+            return {
+                ...state,
+            }
+        case actionTypes.FETCH_CATEGORY_DELETED_START:
+            // let copyState = { ...state }
+            state.isLoadingCategory = true
+            return {
+                ...state,
+            }
+        case actionTypes.FETCH_CATEGORY_DELETED_SUCCESS:
+            copyState = { ...state }
+            copyState.categorysDeleted = action.data
+            return {
+                ...copyState,
+            }
+        case actionTypes.FETCH_CATEGORY_DELETED_FAILED:
+            // let state = { ...state }
+            state.isLoadingType = false
+            console.log('fetch failed', action)
+            state.categorysDeleted = []
             return {
                 ...state,
             }
