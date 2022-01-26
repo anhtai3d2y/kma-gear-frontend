@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import *  as actions from "../../../store/actions";
 import { createNewUserService } from "../../../services/userService";
+import { Redirect } from 'react-router-dom';
+import { Helmet } from 'react-helmet'
 
 
 import { withRouter } from 'react-router';
@@ -169,9 +171,14 @@ class RegisterForm extends Component {
     }
 
     render() {
-
+        const { isCustomerLoggedIn } = this.props;
+        let linkToRedirect = isCustomerLoggedIn ? '/account' : '/register';
         return (
             <div className="register-form mt-4" ref={this.scrollTop}>
+                <Helmet>
+                    <title>Đăng ký</title>
+                </Helmet>
+                <Redirect to={linkToRedirect} />
                 <div className="container">
                     <div className="register-form-container">
                         <div className="register-content row">
@@ -259,7 +266,7 @@ class RegisterForm extends Component {
 
 const mapStateToProps = state => {
     return {
-
+        isCustomerLoggedIn: state.customer.isCustomerLoggedIn,
     };
 };
 
