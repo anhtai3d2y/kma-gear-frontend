@@ -1,3 +1,4 @@
+import { toInteger } from 'lodash';
 import actionTypes from '../actions/actionTypes';
 
 const initialState = {
@@ -38,7 +39,6 @@ const producttypeReducer = (state = initialState, action) => {
         case actionTypes.FETCH_PRODUCTTYPE_DELETED_SUCCESS:
             copyState = { ...state }
             copyState.typesDeleted = action.data
-
             return {
                 ...copyState,
             }

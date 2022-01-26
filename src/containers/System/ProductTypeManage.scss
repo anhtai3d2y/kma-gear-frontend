@@ -9,5 +9,13 @@
                 }
             }
         }
+        .btn-go-recyclebin {
+            font-size: 20px;
+            cursor: pointer;
+            color: #339af0;
+            &:hover {
+                opacity: 0.8;
+            }
+        }
     }
 }

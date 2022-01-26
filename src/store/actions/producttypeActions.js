@@ -154,3 +154,29 @@ export const deleteProducttypeSuccess = () => ({
 export const deleteProducttypeFailed = () => ({
     type: actionTypes.DELETE_PRODUCTTYPE_FAILED
 })
+
+export const recoverProducttype = (producttypeId) => {
+    return async (dispatch, getState) => {
+        try {
+            let res = await recoverProducttypeService(producttypeId)
+            if (res && res.errCode === 0) {
+                dispatch(recoverProducttypeSuccess())
+                toast('Khôi phục loại sản phẩm thành công')
+            } else {
+                toast.error('Khôi phục loại sản phẩm thất bại!')
+                dispatch(recoverProducttypeFailed())
+            }
+        } catch (error) {
+            toast.error('Khôi phục loại sản phẩm thất bại!')
+            dispatch(recoverProducttypeFailed())
+            console.log(error)
+        }
+    }
+}
+
+export const recoverProducttypeSuccess = () => ({
+    type: actionTypes.RECOVER_PRODUCTTYPE_SUCCESS
+})
+export const recoverProducttypeFailed = () => ({
+    type: actionTypes.RECOVER_PRODUCTTYPE_FAILED
+})
