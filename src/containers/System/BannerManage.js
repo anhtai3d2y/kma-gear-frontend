@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { CRUDActions } from "../../utils";
 import './BannerManage.scss';
 import TableManageBanner from "./TableManageBanner";
+import TableRecycleBinBanner from "./TableRecycleBinBanner";
 
 import { ToastContainer, toast } from 'react-toastify';
 
@@ -25,7 +26,9 @@ class BannerManage extends Component {
 
             action: CRUDActions.CREATE,
 
-            isShowForm: false
+            isShowForm: false,
+            isOpenRecycleBin: false
+
         }
         this.scrollTop = React.createRef()
     }
@@ -154,9 +157,13 @@ class BannerManage extends Component {
         })
     }
 
+    handleOpenRecycleBin = () => {
+        this.setState({
+            isOpenRecycleBin: !this.state.isOpenRecycleBin
+        })
+    }
+
     render() {
-
-
         let { link, image, type } = this.state
         return (
             <div className="banner-manage-container" >
@@ -221,10 +228,17 @@ class BannerManage extends Component {
                             <div></div>
                         )}
                     </div>
-                    <TableManageBanner
-                        handleEditBannerFromParent={this.handleEditBannerFromParent}
-                        action={this.state.action}
-                    />
+                    <div className="mb-4 ml-4 btn-go-recyclebin"
+                        onClick={() => { this.handleOpenRecycleBin() }}>{this.state.isOpenRecycleBin ? (<div><i i className="fas fa-caret-left"></i> Quay lại</div>) : (<div><i className="fas fa-trash"></i> Thùng rác</div>)}
+                    </div>
+                    {this.state.isOpenRecycleBin ?
+                        (<TableRecycleBinBanner
+                            action={this.state.action}
+                        />) :
+                        (<TableManageBanner
+                            handleEditBannerFromParent={this.handleEditBannerFromParent}
+                            action={this.state.action}
+                        />)}
                 </div>
             </div>
         )

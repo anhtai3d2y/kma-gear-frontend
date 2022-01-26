@@ -55,7 +55,7 @@ export const fetchBillDeletedStart = () => {
 
             let res = await getAllBillsDeletedService('ALL')
             if (res && res.errCode === 0) {
-                dispatch(fetchBillDeletedSuccess(res.bills.reverse()))
+                dispatch(fetchBillDeletedSuccess(res.bills))
             } else {
                 dispatch(fetchBillDeletedFailed())
             }

@@ -55,7 +55,7 @@ export const fetchProducttypeDeletedStart = () => {
 
             let res = await getAllProducttypesDeletedService('ALL')
             if (res && res.errCode === 0) {
-                dispatch(fetchProducttypeDeletedSuccess(res.producttypes.reverse()))
+                dispatch(fetchProducttypeDeletedSuccess(res.producttypes))
             } else {
                 dispatch(fetchProducttypeDeletedFailed())
             }

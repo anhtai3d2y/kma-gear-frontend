@@ -43,7 +43,7 @@ export const fetchAllProductsDeletedStart = () => {
         try {
             let res = await getAllProductsDeletedService('ALL')
             if (res && res.errCode === 0) {
-                dispatch(fetchAllProductsDeletedSuccess(res.products.reverse()))
+                dispatch(fetchAllProductsDeletedSuccess(res.products))
             } else {
                 toast.error('Lấy sản phẩm thất bại!')
                 dispatch(fetchAllProductsDeletedFailed())

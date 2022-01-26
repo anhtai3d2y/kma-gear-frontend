@@ -54,7 +54,7 @@ export const fetchBrandDeletedStart = () => {
 
             let res = await getAllBrandsDeletedService('ALL')
             if (res && res.errCode === 0) {
-                dispatch(fetchBrandDeletedSuccess(res.brands.reverse()))
+                dispatch(fetchBrandDeletedSuccess(res.brands))
             } else {
                 dispatch(fetchBrandDeletedFailed())
             }

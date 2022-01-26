@@ -160,8 +160,6 @@ class BrandManage extends Component {
     }
 
     render() {
-
-
         let { name, image } = this.state
         return (
             <div className="brand-manage-container" >

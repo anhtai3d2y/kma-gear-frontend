@@ -1,49 +1,42 @@
 import React, { Component } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
-import './TableManageBanner.scss';
+import './TableManageProduct.scss';
 import { ToastContainer, toast } from 'react-toastify';
 import *  as actions from "../../store/actions";
 
 
-class TableManageBanner extends Component {
+class TableRecycleBinBanner extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            banners: [],
         }
     }
 
     componentDidMount() {
-        this.props.fetchBannersRedux()
+        this.props.fetchBannerDeletedRedux()
     }
 
     componentDidUpdate(prevState, prevProps) {
-        // if (prevProps.bannersRedux !== this.props.bannersRedux) {
-        //     this.setState({
-        //         banners: this.props.bannersRedux
-        //     })
-        // }
+
     }
 
-    handleEditBanner = (banner) => {
-        this.props.handleEditBannerFromParent(banner)
-    }
-
-    handleDeleteBanner = async (banner) => {
-        await this.props.deleteBannerRedux(banner.id)
-        await this.props.fetchBannersRedux()
+    handleRecoverBanner = async (banner) => {
+        await this.props.recoverBanner(banner.id)
+        await this.props.fetchBannerDeletedRedux()
     }
 
     render() {
-        let arrBanners = this.props.bannersRedux
+        let arrBanners = this.props.bannersDeleted
+        console.log(arrBanners)
         return (
-            < div className="banner-container" >
+            < div className="product-container" >
                 <table className="table table-hover table table-bordered table-striped mb-0">
                     <thead className="">
                         <tr>
                             <th scope="col">ID</th>
+                            <th scope="col">Thời gian xóa</th>
                             <th scope="col">Link</th>
                             <th scope="col">Hình ảnh</th>
                             <th scope="col">Loại</th>
@@ -56,6 +49,7 @@ class TableManageBanner extends Component {
                                 return (
                                     <tr >
                                         <th scope="row">{banner.id}</th>
+                                        <td>{banner.updatedAt}</td>
                                         <td>{banner.link}</td>
                                         <td>
                                             <div className="banner-image">
@@ -64,12 +58,9 @@ class TableManageBanner extends Component {
                                         </td>
                                         <td>{banner.type && banner.type ? 'Biển nhỏ' : 'Biển lớn'}</td>
                                         <td>
-                                            <button className="btn-edit"
-                                                onClick={() => this.handleEditBanner(banner)}
-                                            ><i className="fas fa-pencil-alt"></i></button>
-                                            <button className="btn-delete"
-                                                onClick={() => this.handleDeleteBanner(banner)}
-                                            ><i className="fas fa-trash"></i></button>
+                                            <div className="btn-restore"
+                                                onClick={() => this.handleRecoverBanner(banner)}
+                                            ><i className="fab fa-trash"></i>Khôi phục</div>
                                         </td>
                                     </tr>
                                 )
@@ -86,15 +77,15 @@ class TableManageBanner extends Component {
 
 const mapStateToProps = state => {
     return {
-        bannersRedux: state.banner.banners
+        bannersDeleted: state.banner.bannersDeleted,
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
-        fetchBannersRedux: () => dispatch(actions.fetchBannerStart()),
-        deleteBannerRedux: (id) => dispatch(actions.deleteBanner(id)),
+        fetchBannerDeletedRedux: () => dispatch(actions.fetchBannerDeletedStart()),
+        recoverBanner: (id) => dispatch(actions.recoverBanner(id)),
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(TableManageBanner);
+export default connect(mapStateToProps, mapDispatchToProps)(TableRecycleBinBanner);
