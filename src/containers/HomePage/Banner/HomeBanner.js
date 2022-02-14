@@ -7,10 +7,9 @@ class HomeBanner extends Component {
 
         return (
             <div className="banner">
-                <div className="container">
-                    <a href="https://www.tncstore.vn/khuyen-mai-tncstore.html" class="banner-home-top">
-                        <img src="https://www.tncstore.vn/image/catalog/banner/2021/Th%C3%A1ng%204/TOP%20BANNER.jpg" alt="" />
-
+                <div className="">
+                    <a href="https://www.tncstore.vn/khuyen-mai-tet-2022" class="banner-home-top">
+                        <img src="https://www.tncstore.vn/image/catalog/banner/2022/Thang1/Banner_top_web_tet_2022.jpg" alt="" />
                     </a>
 
                 </div>

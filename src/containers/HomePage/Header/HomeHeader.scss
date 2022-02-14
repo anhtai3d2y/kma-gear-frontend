@@ -72,6 +72,62 @@
                     overflow: auto;
                 }
             }
+            .autocomplete-suggestions {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100% !important;
+                z-index: 9;
+                background: #fff;
+                border: 1px solid #ddd;
+                .suggestion-inner {
+                    padding: 24px;
+                    flex-grow: 1;
+                    justify-content: space-between;
+                    max-height: 320px;
+                    overflow: auto;
+                    display: flex;
+                    flex-wrap: wrap;
+                    position: relative;
+                }
+                .sugget-product {
+                    width: calc(50% - 10px);
+                    display: flex;
+                    justify-content: space-between;
+                    margin-bottom: 20px;
+                    text-decoration: none;
+                    .thumb {
+                        width: 75px;
+                        img {
+                            width: 100%;
+                        }
+                    }
+                    .info {
+                        width: calc(100% - 83px);
+                        display: block;
+                        .name {
+                            font-weight: 600;
+                            font-size: 14px;
+                            line-height: 21px;
+                            color: #000;
+                            margin-bottom: 5px;
+                        }
+                        .price {
+                            font-weight: 600;
+                            font-size: 14px;
+                            line-height: 21px;
+                            color: #f9495f;
+                        }
+                    }
+                    &:hover {
+                        .info {
+                            .name {
+                                color: #005ec4;
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
     .header-login {

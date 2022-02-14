@@ -6,8 +6,7 @@ import { LANGUAGES } from "../../../utils";
 import { changeLanguageApp } from "../../../store/actions";
 import *  as actions from "../../../store/actions";
 import { withRouter } from 'react-router';
-
-
+import { debounce } from 'lodash';
 
 class HomeHeader extends Component {
 
@@ -15,6 +14,7 @@ class HomeHeader extends Component {
         super(props);
         this.state = {
             // mainBanners: []
+            searchString: ''
         }
         this.scrollTop = React.createRef()
     }
@@ -22,7 +22,6 @@ class HomeHeader extends Component {
     async componentDidMount() {
         this.props.fetchCategorysRedux()
         this.props.fetchProducttypesRedux()
-        this.props.fetchSearchProductsRedux('acer nitro 5')
         // this.handleScroll()
     }
 
@@ -43,6 +42,24 @@ class HomeHeader extends Component {
         this.props.changeLanguageAppRedux(language)
     }
 
+    handleChangeSearchBox = (value) => {
+        this.setState({
+            searchString: value
+        })
+        this.handleSearchProducts(value)
+    }
+
+    handleSearchProducts = debounce((value) => {
+        this.props.fetchSearchProductsRedux(value)
+        console.log('product search: ', this.props.productsSearch)
+    }, 100)
+
+    handleViewDetailProduct = (e, product) => {
+        e.preventDefault()
+        this.props.fetchSearchProductsRedux(' ')
+        this.props.history.push(`/product/${product.id}`)
+    }
+
     handleGoHomePage = () => {
         this.props.history.push(`/home`)
     }
@@ -59,6 +76,11 @@ class HomeHeader extends Component {
         this.props.history.push(`/list-product/${typeProduct.id}`)
     }
 
+    numberWithCommas = (x) => {
+        let result = Math.round(x)
+        return result.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ".");
+    }
+
     render() {
 
         let arrCategorys = this.props.categorysRedux
@@ -71,7 +93,8 @@ class HomeHeader extends Component {
         const { cartInfo, cartdetails } = this.props;
 
         let products = this.props.productsSearch
-        console.log(products)
+        let sizeSearchProduct = 10
+        products = products.slice(0, sizeSearchProduct)
 
         let totalProductsCart = cartdetails.reduce((total, item) => {
             return total + item.amount
@@ -96,17 +119,36 @@ class HomeHeader extends Component {
                             <input type="hidden" name="route" value="product/search" />
                             <div className="search-box">
                                 <div className="search-box-keyword">
-                                    <input type="text" name="search" autocomplete="off" placeholder="Nhập sản phẩm cần tìm ..." />
+                                    <input type="text" name="search" autocomplete="off" placeholder="Nhập sản phẩm cần tìm ..."
+                                        value={this.state.searchString}
+                                        onChange={(e) => this.handleChangeSearchBox(e.target.value)}
+                                        onClick={(e) => this.handleSearchProducts(e.target.value)}
+                                        onBlur={() => this.handleSearchProducts('')}
+                                    />
                                 </div>
                                 <div className="search-box-select">
-                                    {/* <input type="hidden" name="category_id" value="0" /> */}
-                                    {/* <div className="search-box-select-title">
-                                        <FormattedMessage id="homeheader.allcategory" />
-                                    </div> */}
-                                    {/* <div className="search-box-select-content">
-                                    </div> */}
                                     <img src="https://www.tncstore.vn/catalog/view/theme/default/image/search-icon.svg" alt="" className="search-box-icon" />
                                 </div>
+                                {products && (products.length > 0) ? (
+                                    <div className="autocomplete-suggestions">
+                                        <div className="suggestion-inner">
+                                            {products.map((product, index) => {
+                                                return (
+                                                    <a href="" className="sugget-product" onClick={(e) => this.handleViewDetailProduct(e, product)}>
+                                                        <div className="thumb">
+                                                            <img src={product.image} alt={product.name} />
+                                                        </div>
+                                                        <div className="info">
+                                                            <div className="name">{product.name}</div>
+                                                            <div className="price">{this.numberWithCommas(product.price * (1 - (product.discount / 100)))} đ</div>
+                                                        </div>
+                                                    </a>
+                                                )
+                                            })}
+                                        </div>
+                                    </div>
+                                ) : (<></>)}
+
                             </div>
                         </form>
 

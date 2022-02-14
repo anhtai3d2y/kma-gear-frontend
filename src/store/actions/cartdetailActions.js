@@ -75,14 +75,11 @@ export const editCartdetail = (data) => {
         try {
             let res = await editCartdetailService(data)
             if (res && res.errCode === 0) {
-                toast('Cập nhật sản phẩm trong giỏ hàng thành công!')
                 dispatch(editCartdetailSuccess())
             } else {
-                toast.error('Cập nhật sản phẩm trong giỏ hàng thất bại!')
                 dispatch(editCartdetailFailed())
             }
         } catch (error) {
-            toast.error('Cập nhật sản phẩm trong giỏ hàng thất bại!')
             dispatch(editCartdetailFailed())
             console.log(error)
         }

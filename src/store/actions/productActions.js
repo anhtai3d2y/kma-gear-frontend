@@ -46,11 +46,9 @@ export const fetchSearchProductsStart = (key) => {
             if (res && res.errCode === 0) {
                 dispatch(fetchSearchProductsSuccess(res.products.reverse()))
             } else {
-                toast.error('Lấy sản phẩm thất bại!')
                 dispatch(fetchSearchProductsFailed())
             }
         } catch (error) {
-            toast.error('Lấy sản phẩm thất bại!')
             dispatch(fetchSearchProductsFailed())
             console.log(error)
         }

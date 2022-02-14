@@ -35,7 +35,6 @@ const productReducer = (state = initialState, action) => {
         case actionTypes.FETCH_SEARCH_PRODUCTS_FAILED:
             // let state = { ...state }
             state.isLoadingProducts = false
-            console.log('fetch failed', action)
             state.productsSearch = []
             return {
                 ...state,
