@@ -12,6 +12,10 @@ const getTopProductsHomeService = (limit) => {
     return axios.get(`/api/get-top-products-home?limit=${limit}`)
 }
 
+const getSearchProducts = (key) => {
+    return axios.get(`/api/search-products?key=${key}`)
+}
+
 const createNewProductService = (data) => {
     return axios.post('/api/create-new-product', data)
 }
@@ -44,10 +48,11 @@ const recoverProductService = (productId) => {
 export {
     getAllProductsService,
     getAllProductsDeletedService,
+    getTopProductsHomeService,
+    getSearchProducts,
     createNewProductService,
     updateAmountProductService,
     deleteProductService,
     recoverProductService,
     editProductService,
-    getTopProductsHomeService
 }

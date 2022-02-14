@@ -22,6 +22,7 @@ class HomeHeader extends Component {
     async componentDidMount() {
         this.props.fetchCategorysRedux()
         this.props.fetchProducttypesRedux()
+        this.props.fetchSearchProductsRedux('acer nitro 5')
         // this.handleScroll()
     }
 
@@ -68,6 +69,9 @@ class HomeHeader extends Component {
         let customerInfo = this.props.customerInfo
 
         const { cartInfo, cartdetails } = this.props;
+
+        let products = this.props.productsSearch
+        console.log(products)
 
         let totalProductsCart = cartdetails.reduce((total, item) => {
             return total + item.amount
@@ -200,6 +204,7 @@ class HomeHeader extends Component {
 const mapStateToProps = state => {
     return {
         language: state.app.language,
+        productsSearch: state.product.productsSearch,
         categorysRedux: state.category.categorys,
         producttypesRedux: state.producttype.types,
         isCustomerLoggedIn: state.customer.isCustomerLoggedIn,
@@ -218,7 +223,7 @@ const mapDispatchToProps = dispatch => {
         customerLoginFail: () => dispatch(actions.customerLoginFail()),
         fetchCartStart: (userId) => dispatch(actions.fetchCartStart(userId)),
         fetchCartdetailStart: (cartId) => dispatch(actions.fetchCartdetailStart(cartId)),
-
+        fetchSearchProductsRedux: (key) => dispatch(actions.fetchSearchProductsStart(key)),
     };
 };
 
