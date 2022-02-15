@@ -5,7 +5,7 @@ import { CRUDActions } from "../../utils";
 import './CategoryManage.scss';
 import TableManageCategory from "./TableManageCategory";
 import TableRecycleBinCategory from "./TableRecycleBinCategory";
-
+import { debounce } from 'lodash';
 
 import { ToastContainer, toast } from 'react-toastify';
 
@@ -27,7 +27,9 @@ class CategoryManage extends Component {
             action: CRUDActions.CREATE,
 
             isShowForm: false,
-            isOpenRecycleBin: false
+            isOpenRecycleBin: false,
+            searchInfo: '',
+
 
         }
         this.scrollTop = React.createRef()
@@ -160,6 +162,21 @@ class CategoryManage extends Component {
         })
     }
 
+    handleChangeSearchBox = (value) => {
+        this.setState({
+            searchInfo: value
+        })
+        if (value !== "") {
+            this.handleSearchCategorys(value)
+        } else {
+            this.props.fetchCategorysRedux()
+        }
+    }
+
+    handleSearchCategorys = debounce((value) => {
+        this.props.fetchSearchCategoryRedux(value)
+    }, 100)
+
     render() {
         let { name, image } = this.state
         return (
@@ -219,6 +236,10 @@ class CategoryManage extends Component {
                     <div className="mb-4 ml-4 btn-go-recyclebin"
                         onClick={() => { this.handleOpenRecycleBin() }}>{this.state.isOpenRecycleBin ? (<div><i i className="fas fa-caret-left"></i> Quay lại</div>) : (<div><i className="fas fa-trash"></i> Thùng rác</div>)}
                     </div>
+                    <input type="text" className="mb-4 ml-4 col-6" name="search" autocomplete="off" placeholder="Nhập sản phẩm cần tìm ..."
+                        value={this.state.searchInfo}
+                        onChange={(e) => this.handleChangeSearchBox(e.target.value)}
+                    />
                     {this.state.isOpenRecycleBin ?
                         (<TableRecycleBinCategory
                             action={this.state.action}
@@ -245,6 +266,7 @@ const mapDispatchToProps = dispatch => {
         fetchCategorysRedux: () => dispatch(actions.fetchCategoryStart()),
         createNewCategory: (data) => dispatch(actions.createNewCategory(data)),
         editCategory: (data) => dispatch(actions.editCategory(data)),
+        fetchSearchCategoryRedux: (key) => dispatch(actions.fetchSearchCategoryStart(key)),
     };
 };
 

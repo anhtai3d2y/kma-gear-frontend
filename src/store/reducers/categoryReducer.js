@@ -29,6 +29,26 @@ const categoryReducer = (state = initialState, action) => {
             return {
                 ...state,
             }
+        case actionTypes.FETCH_SEARCH_CATEGORY_START:
+            // let copyState = { ...state }
+            state.isLoadingCategory = true
+            return {
+                ...state,
+            }
+        case actionTypes.FETCH_SEARCH_CATEGORY_SUCCESS:
+            copyState = { ...state }
+            copyState.categorys = action.data
+            return {
+                ...copyState,
+            }
+        case actionTypes.FETCH_SEARCH_CATEGORY_FAILED:
+            // let state = { ...state }
+            state.isLoadingType = false
+            console.log('fetch failed', action)
+            state.categorys = []
+            return {
+                ...state,
+            }
         case actionTypes.FETCH_CATEGORY_DELETED_START:
             // let copyState = { ...state }
             state.isLoadingCategory = true

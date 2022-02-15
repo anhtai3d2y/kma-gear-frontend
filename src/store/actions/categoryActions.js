@@ -1,6 +1,7 @@
 import actionTypes from './actionTypes';
 import {
     getAllCategorysService,
+    getSearchCategorysService,
     getAllCategorysDeletedService,
     createNewCategoryService,
     editCategoryService,
@@ -42,6 +43,36 @@ export const fetchCategorySuccess = (typesData) => ({
 
 export const fetchCategoryFailed = () => ({
     type: actionTypes.FETCH_CATEGORY_FAILED
+})
+
+export const fetchSearchCategoryStart = (key) => {
+    return async (dispatch, getState) => {
+        try {
+            dispatch({
+                type: actionTypes.FETCH_SEARCH_CATEGORY_START
+            })
+
+            let res = await getSearchCategorysService(key)
+            if (res && res.errCode === 0) {
+                dispatch(fetchSearchCategorySuccess(res.categorys))
+            } else {
+                dispatch(fetchSearchCategoryFailed())
+            }
+        } catch (error) {
+            dispatch(fetchSearchCategoryFailed())
+            console.log(error)
+            toast.error('Lấy danh mục thất bại!')
+        }
+    }
+}
+
+export const fetchSearchCategorySuccess = (typesData) => ({
+    type: actionTypes.FETCH_SEARCH_CATEGORY_SUCCESS,
+    data: typesData
+})
+
+export const fetchSearchCategoryFailed = () => ({
+    type: actionTypes.FETCH_SEARCH_CATEGORY_FAILED
 })
 
 export const fetchCategoryDeletedStart = () => {
