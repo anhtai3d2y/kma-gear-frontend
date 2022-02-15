@@ -32,6 +32,26 @@ const bannerReducer = (state = initialState, action) => {
             return {
                 ...state,
             }
+        case actionTypes.FETCH_SEARCH_BANNER_START:
+            // let copyState = { ...state }
+            state.isLoadingBanner = true
+            return {
+                ...state,
+            }
+        case actionTypes.FETCH_SEARCH_BANNER_SUCCESS:
+            copyState = { ...state }
+            copyState.banners = action.data
+            return {
+                ...copyState,
+            }
+        case actionTypes.FETCH_SEARCH_BANNER_FAILED:
+            // let state = { ...state }
+            state.isLoadingType = false
+            console.log('fetch failed', action)
+            state.banners = []
+            return {
+                ...state,
+            }
 
         case actionTypes.FETCH_BANNER_DELETED_START:
             // let copyState = { ...state }

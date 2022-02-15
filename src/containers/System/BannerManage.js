@@ -5,6 +5,7 @@ import { CRUDActions } from "../../utils";
 import './BannerManage.scss';
 import TableManageBanner from "./TableManageBanner";
 import TableRecycleBinBanner from "./TableRecycleBinBanner";
+import { debounce } from 'lodash';
 
 import { ToastContainer, toast } from 'react-toastify';
 
@@ -27,7 +28,9 @@ class BannerManage extends Component {
             action: CRUDActions.CREATE,
 
             isShowForm: false,
-            isOpenRecycleBin: false
+            isOpenRecycleBin: false,
+            searchInfo: '',
+
 
         }
         this.scrollTop = React.createRef()
@@ -163,8 +166,25 @@ class BannerManage extends Component {
         })
     }
 
+    handleChangeSearchBox = (value) => {
+        this.setState({
+            searchInfo: value
+        })
+        if (value !== "") {
+            this.handleSearchBanners(value)
+        } else {
+            this.props.fetchBannersRedux()
+        }
+    }
+
+    handleSearchBanners = debounce((value) => {
+        this.props.fetchSearchBannerRedux(value)
+    }, 100)
+
+
     render() {
         let { link, image, type } = this.state
+        console.log(this.props.bannersRedux)
         return (
             <div className="banner-manage-container" >
                 <div className="title">
@@ -231,6 +251,10 @@ class BannerManage extends Component {
                     <div className="mb-4 ml-4 btn-go-recyclebin"
                         onClick={() => { this.handleOpenRecycleBin() }}>{this.state.isOpenRecycleBin ? (<div><i i className="fas fa-caret-left"></i> Quay lại</div>) : (<div><i className="fas fa-trash"></i> Thùng rác</div>)}
                     </div>
+                    <input type="text" className="mb-4 ml-4 col-6" name="search" autocomplete="off" placeholder="Nhập thông tin cần tìm ..."
+                        value={this.state.searchInfo}
+                        onChange={(e) => this.handleChangeSearchBox(e.target.value)}
+                    />
                     {this.state.isOpenRecycleBin ?
                         (<TableRecycleBinBanner
                             action={this.state.action}
@@ -255,6 +279,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         fetchBannersRedux: () => dispatch(actions.fetchBannerStart()),
+        fetchSearchBannerRedux: (key) => dispatch(actions.fetchSearchBannerStart(key)),
         createNewBanner: (data) => dispatch(actions.createNewBanner(data)),
         editBanner: (data) => dispatch(actions.editBanner(data)),
     };

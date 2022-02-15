@@ -400,7 +400,7 @@ class ProductManage extends Component {
                     <div className="mb-4 ml-4 btn-go-recyclebin col-6"
                         onClick={() => { this.handleOpenRecycleBin() }}>{this.state.isOpenRecycleBin ? (<div><i i className="fas fa-caret-left"></i> Quay lại</div>) : (<div><i className="fas fa-trash"></i> Thùng rác</div>)}
                     </div>
-                    <input type="text" className="mb-4 ml-4 col-6" name="search" autocomplete="off" placeholder="Nhập sản phẩm cần tìm ..."
+                    <input type="text" className="mb-4 ml-4 col-6" name="search" autocomplete="off" placeholder="Nhập thông tin sản phẩm cần tìm ..."
                         value={this.state.searchInfo}
                         onChange={(e) => this.handleChangeSearchBox(e.target.value)}
                     />

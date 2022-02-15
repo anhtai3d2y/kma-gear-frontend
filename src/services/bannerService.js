@@ -4,6 +4,10 @@ const getAllBannersService = (inputId) => {
     return axios.get(`/api/get-all-banners?id=${inputId}`)
 }
 
+const getSearchBannersService = (key) => {
+    return axios.get(`/api/search-banners?key=${key}`)
+}
+
 const getAllBannersDeletedService = (inputId) => {
     return axios.get(`/api/get-all-banners-deleted?id=${inputId}`)
 }
@@ -43,6 +47,7 @@ const recoverBannerService = (bannerId) => {
 
 export {
     getAllBannersService,
+    getSearchBannersService,
     getAllBannersDeletedService,
     getAllMainBannersService,
     getAllSubBannersService,

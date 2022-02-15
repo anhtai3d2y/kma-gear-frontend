@@ -1,6 +1,7 @@
 import actionTypes from './actionTypes';
 import {
     getAllBannersService,
+    getSearchBannersService,
     getAllBannersDeletedService,
     getAllMainBannersService,
     getAllSubBannersService,
@@ -44,6 +45,36 @@ export const fetchBannerSuccess = (bannersData) => ({
 
 export const fetchBannerFailed = () => ({
     type: actionTypes.FETCH_BANNER_FAILED
+})
+
+export const fetchSearchBannerStart = (key) => {
+
+    return async (dispatch, getState) => {
+        try {
+            dispatch({
+                type: actionTypes.FETCH_SEARCH_BANNER_START
+            })
+
+            let res = await getSearchBannersService(key)
+            if (res && res.errCode === 0) {
+                dispatch(fetchSearchBannerSuccess(res.banners))
+            } else {
+                dispatch(fetchSearchBannerFailed())
+            }
+        } catch (error) {
+            dispatch(fetchSearchBannerFailed())
+            console.log(error)
+        }
+    }
+}
+
+export const fetchSearchBannerSuccess = (bannersData) => ({
+    type: actionTypes.FETCH_SEARCH_BANNER_SUCCESS,
+    data: bannersData
+})
+
+export const fetchSearchBannerFailed = () => ({
+    type: actionTypes.FETCH_SEARCH_BANNER_FAILED
 })
 
 export const fetchBannerDeletedStart = () => {
