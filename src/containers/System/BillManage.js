@@ -5,6 +5,7 @@ import { CRUDActions } from "../../utils";
 import './BillManage.scss';
 import TableManageBill from "./TableManageBill";
 import TableRecycleBinBill from "./TableRecycleBinBill";
+import { debounce } from 'lodash';
 
 
 import { ToastContainer, toast } from 'react-toastify';
@@ -34,7 +35,9 @@ class BillManage extends Component {
             action: CRUDActions.CREATE,
 
             isShowForm: false,
-            isOpenRecycleBin: false
+            isOpenRecycleBin: false,
+            searchInfo: '',
+
 
         }
         this.scrollTop = React.createRef()
@@ -179,6 +182,21 @@ class BillManage extends Component {
         })
     }
 
+    handleChangeSearchBox = (value) => {
+        this.setState({
+            searchInfo: value
+        })
+        if (value !== "") {
+            this.handleSearchBills(value)
+        } else {
+            this.props.fetchBillsRedux()
+        }
+    }
+
+    handleSearchBills = debounce((value) => {
+        this.props.fetchSearchBillRedux(value)
+    }, 100)
+
     render() {
 
         // console.log('fetch state: ', this.state)
@@ -276,6 +294,10 @@ class BillManage extends Component {
                     <div className="mb-4 ml-4 btn-go-recyclebin"
                         onClick={() => { this.handleOpenRecycleBin() }}>{this.state.isOpenRecycleBin ? (<div><i i className="fas fa-caret-left"></i> Quay lại</div>) : (<div><i className="fas fa-trash"></i> Thùng rác</div>)}
                     </div>
+                    <input type="text" className="mb-4 ml-4 col-6" name="search" autocomplete="off" placeholder="Nhập sản phẩm cần tìm ..."
+                        value={this.state.searchInfo}
+                        onChange={(e) => this.handleChangeSearchBox(e.target.value)}
+                    />
                     {this.state.isOpenRecycleBin ?
                         (<TableRecycleBinBill
                             action={this.state.action}
@@ -302,6 +324,7 @@ const mapDispatchToProps = dispatch => {
     return {
         fetchStatesRedux: () => dispatch(actions.fetchStateStart()),
         fetchBillsRedux: () => dispatch(actions.fetchBillStart()),
+        fetchSearchBillRedux: (key) => dispatch(actions.fetchSearchBillStart(key)),
         createNewBill: (data) => dispatch(actions.createNewBill(data)),
         editBillRedux: (data) => dispatch(actions.editBill(data)),
 

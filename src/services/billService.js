@@ -5,6 +5,11 @@ const getAllBillsService = (inputId) => {
     return axios.get(`/api/get-all-bills?id=${inputId}`)
 }
 
+const getSearchBillsService = (key) => {
+
+    return axios.get(`/api/search-bills?key=${key}`)
+}
+
 const getAllBillsDeletedService = (inputId) => {
 
     return axios.get(`/api/get-all-bills-deleted?id=${inputId}`)
@@ -36,6 +41,7 @@ const recoverBillService = (billId) => {
 
 export {
     getAllBillsService,
+    getSearchBillsService,
     getAllBillsDeletedService,
     createNewBillService,
     editBillService,

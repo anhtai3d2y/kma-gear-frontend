@@ -30,6 +30,26 @@ const billReducer = (state = initialState, action) => {
             return {
                 ...state,
             }
+        case actionTypes.FETCH_SEARCH_BILL_START:
+            // let copyState = { ...state }
+            state.isLoadingBill = true
+            return {
+                ...state,
+            }
+        case actionTypes.FETCH_SEARCH_BILL_SUCCESS:
+            copyState = { ...state }
+            copyState.bills = action.data
+            return {
+                ...copyState,
+            }
+        case actionTypes.FETCH_SEARCH_BILL_FAILED:
+            // let state = { ...state }
+            state.isLoadingType = false
+            console.log('fetch failed', action)
+            state.bills = []
+            return {
+                ...state,
+            }
         case actionTypes.FETCH_BILL_DELETED_START:
             // let copyState = { ...state }
             state.isLoadingBill = true

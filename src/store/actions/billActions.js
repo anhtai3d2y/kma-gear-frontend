@@ -1,6 +1,7 @@
 import actionTypes from './actionTypes';
 import {
     getAllBillsService,
+    getSearchBillsService,
     getAllBillsDeletedService,
     createNewBillService,
     editBillService,
@@ -43,6 +44,37 @@ export const fetchBillSuccess = (typesData) => ({
 
 export const fetchBillFailed = () => ({
     type: actionTypes.FETCH_BILL_FAILED
+})
+
+export const fetchSearchBillStart = (key) => {
+
+    return async (dispatch, getState) => {
+        try {
+            dispatch({
+                type: actionTypes.FETCH_SEARCH_BILL_START
+            })
+
+            let res = await getSearchBillsService(key)
+            if (res && res.errCode === 0) {
+                dispatch(fetchSearchBillSuccess(res.bills.reverse()))
+            } else {
+                dispatch(fetchSearchBillFailed())
+            }
+        } catch (error) {
+            dispatch(fetchSearchBillFailed())
+            console.log(error)
+            toast.error('Lấy đơn hàng thất bại!')
+        }
+    }
+}
+
+export const fetchSearchBillSuccess = (typesData) => ({
+    type: actionTypes.FETCH_SEARCH_BILL_SUCCESS,
+    data: typesData
+})
+
+export const fetchSearchBillFailed = () => ({
+    type: actionTypes.FETCH_SEARCH_BILL_FAILED
 })
 
 export const fetchBillDeletedStart = () => {
