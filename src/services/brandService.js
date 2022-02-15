@@ -4,6 +4,10 @@ const getAllBrandsService = (inputId) => {
     return axios.get(`/api/get-all-brands?id=${inputId}`)
 }
 
+const getSearchBrandsService = (key) => {
+    return axios.get(`/api/search-brands?key=${key}`)
+}
+
 const getAllBrandsDeletedService = (inputId) => {
     return axios.get(`/api/get-all-brands-deleted?id=${inputId}`)
 }
@@ -35,6 +39,7 @@ const recoverBrandService = (brandId) => {
 
 export {
     getAllBrandsService,
+    getSearchBrandsService,
     getAllBrandsDeletedService,
     createNewBrandService,
     editBrandService,

@@ -5,6 +5,7 @@ import { CRUDActions } from "../../utils";
 import './BrandManage.scss';
 import TableManageBrand from "./TableManageBrand";
 import TableRecycleBinBrand from "./TableRecycleBinBrand";
+import { debounce } from 'lodash';
 
 import { ToastContainer, toast } from 'react-toastify';
 
@@ -26,7 +27,8 @@ class BrandManage extends Component {
             action: CRUDActions.CREATE,
 
             isShowForm: false,
-            isOpenRecycleBin: false
+            isOpenRecycleBin: false,
+            searchInfo: '',
 
         }
         this.scrollTop = React.createRef()
@@ -159,6 +161,21 @@ class BrandManage extends Component {
         })
     }
 
+    handleChangeSearchBox = (value) => {
+        this.setState({
+            searchInfo: value
+        })
+        if (value !== "") {
+            this.handleSearchBrands(value)
+        } else {
+            this.props.fetchBrandsRedux()
+        }
+    }
+
+    handleSearchBrands = debounce((value) => {
+        this.props.fetchSearchBrandRedux(value)
+    }, 100)
+
     render() {
         let { name, image } = this.state
         return (
@@ -218,6 +235,10 @@ class BrandManage extends Component {
                     <div className="mb-4 ml-4 btn-go-recyclebin"
                         onClick={() => { this.handleOpenRecycleBin() }}>{this.state.isOpenRecycleBin ? (<div><i i className="fas fa-caret-left"></i> Quay lại</div>) : (<div><i className="fas fa-trash"></i> Thùng rác</div>)}
                     </div>
+                    <input type="text" className="mb-4 ml-4 col-6" name="search" autocomplete="off" placeholder="Nhập thông tin cần tìm ..."
+                        value={this.state.searchInfo}
+                        onChange={(e) => this.handleChangeSearchBox(e.target.value)}
+                    />
                     {this.state.isOpenRecycleBin ?
                         (<TableRecycleBinBrand
                             action={this.state.action}
@@ -241,6 +262,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         fetchBrandsRedux: () => dispatch(actions.fetchBrandStart()),
+        fetchSearchBrandRedux: (key) => dispatch(actions.fetchSearchBrandStart(key)),
         createNewBrand: (data) => dispatch(actions.createNewBrand(data)),
         editBrand: (data) => dispatch(actions.editBrand(data)),
     };

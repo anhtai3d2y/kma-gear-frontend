@@ -1,6 +1,7 @@
 import actionTypes from './actionTypes';
 import {
     getAllBrandsService,
+    getSearchBrandsService,
     getAllBrandsDeletedService,
     createNewBrandService,
     editBrandService,
@@ -42,6 +43,36 @@ export const fetchBrandSuccess = (brandsData) => ({
 
 export const fetchBrandFailed = () => ({
     type: actionTypes.FETCH_BRAND_FAILED
+})
+
+export const fetchSearchBrandStart = (key) => {
+
+    return async (dispatch, getState) => {
+        try {
+            dispatch({
+                type: actionTypes.FETCH_SEARCH_BRAND_START
+            })
+
+            let res = await getSearchBrandsService(key)
+            if (res && res.errCode === 0) {
+                dispatch(fetchSearchBrandSuccess(res.brands))
+            } else {
+                dispatch(fetchSearchBrandFailed())
+            }
+        } catch (error) {
+            dispatch(fetchSearchBrandFailed())
+            console.log(error)
+        }
+    }
+}
+
+export const fetchSearchBrandSuccess = (brandsData) => ({
+    type: actionTypes.FETCH_SEARCH_BRAND_SUCCESS,
+    data: brandsData
+})
+
+export const fetchSearchBrandFailed = () => ({
+    type: actionTypes.FETCH_SEARCH_BRAND_FAILED
 })
 
 export const fetchBrandDeletedStart = () => {
