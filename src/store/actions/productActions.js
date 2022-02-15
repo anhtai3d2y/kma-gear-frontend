@@ -63,6 +63,24 @@ export const fetchSearchProductsFailed = () => ({
     type: actionTypes.FETCH_SEARCH_PRODUCTS_FAILED
 })
 
+export const fetchSearchProductsShowStart = () => {
+    return async (dispatch, getState) => {
+        try {
+            dispatch(fetchSearchProductsShowSuccess())
+        } catch (error) {
+            dispatch(fetchSearchProductsFailed())
+            console.log(error)
+        }
+    }
+}
+
+export const fetchSearchProductsShowSuccess = () => ({
+    type: actionTypes.FETCH_SEARCH_PRODUCTS_SHOW_SUCCESS,
+})
+export const fetchSearchProductsShowFailed = () => ({
+    type: actionTypes.FETCH_SEARCH_PRODUCTS_SHOW_FAILED
+})
+
 export const fetchAllProductsDeletedStart = () => {
     return async (dispatch, getState) => {
         try {

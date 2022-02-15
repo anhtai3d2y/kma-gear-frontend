@@ -51,7 +51,6 @@ class HomeHeader extends Component {
 
     handleSearchProducts = debounce((value) => {
         this.props.fetchSearchProductsRedux(value)
-        console.log('product search: ', this.props.productsSearch)
     }, 100)
 
     handleViewDetailProduct = (e, product) => {
