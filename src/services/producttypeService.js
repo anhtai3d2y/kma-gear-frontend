@@ -5,6 +5,11 @@ const getAllProducttypesService = (inputId) => {
     return axios.get(`/api/get-all-producttypes?id=${inputId}`)
 }
 
+const getSearchProducttypesService = (key) => {
+
+    return axios.get(`/api/search-producttypes?key=${key}`)
+}
+
 const getAllProducttypesDeletedService = (inputId) => {
 
     return axios.get(`/api/get-all-producttypes-deleted?id=${inputId}`)
@@ -37,6 +42,7 @@ const recoverProducttypeService = (producttypeId) => {
 
 export {
     getAllProducttypesService,
+    getSearchProducttypesService,
     getAllProducttypesDeletedService,
     createNewProducttypeService,
     editProducttypeService,

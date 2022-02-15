@@ -30,6 +30,26 @@ const producttypeReducer = (state = initialState, action) => {
             return {
                 ...state,
             }
+        case actionTypes.FETCH_SEARCH_PRODUCTTYPE_START:
+            // let copyState = { ...state }
+            state.isLoadingType = true
+            return {
+                ...state,
+            }
+        case actionTypes.FETCH_SEARCH_PRODUCTTYPE_SUCCESS:
+            copyState = { ...state }
+            copyState.types = action.data
+
+            return {
+                ...copyState,
+            }
+        case actionTypes.FETCH_SEARCH_PRODUCTTYPE_FAILED:
+            // let state = { ...state }
+            state.isLoadingType = false
+            state.types = []
+            return {
+                ...state,
+            }
         case actionTypes.FETCH_PRODUCTTYPE_DELETED_START:
             // let copyState = { ...state }
             state.isLoadingType = true

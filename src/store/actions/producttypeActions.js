@@ -1,6 +1,7 @@
 import actionTypes from './actionTypes';
 import {
     getAllProducttypesService,
+    getSearchProducttypesService,
     getAllProducttypesDeletedService,
     createNewProducttypeService,
     editProducttypeService,
@@ -43,6 +44,36 @@ export const fetchProducttypeSuccess = (typesData) => ({
 
 export const fetchProducttypeFailed = () => ({
     type: actionTypes.FETCH_PRODUCTTYPE_FAILED
+})
+
+export const fetchSearchProducttypeStart = (key) => {
+
+    return async (dispatch, getState) => {
+        try {
+            dispatch({
+                type: actionTypes.FETCH_SEARCH_PRODUCTTYPE_START
+            })
+            let res = await getSearchProducttypesService(key)
+            if (res && res.errCode === 0) {
+                dispatch(fetchSearchProducttypeSuccess(res.producttypes))
+            } else {
+                dispatch(fetchSearchProducttypeFailed())
+            }
+        } catch (error) {
+            dispatch(fetchSearchProducttypeFailed())
+            console.log(error)
+            toast.error('Lấy loại sản phẩm thất bại!')
+        }
+    }
+}
+
+export const fetchSearchProducttypeSuccess = (typesData) => ({
+    type: actionTypes.FETCH_SEARCH_PRODUCTTYPE_SUCCESS,
+    data: typesData
+})
+
+export const fetchSearchProducttypeFailed = () => ({
+    type: actionTypes.FETCH_SEARCH_PRODUCTTYPE_FAILED
 })
 
 export const fetchProducttypeDeletedStart = () => {

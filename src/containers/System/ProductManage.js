@@ -7,10 +7,6 @@ import TableManageProduct from "./TableManageProduct";
 import TableRecycleBinProduct from "./TableRecycleBinProduct";
 import { debounce } from 'lodash';
 
-
-// import { getAllProducttypesService } from "../../services/producttypeService";
-// import { getAllBrandsService } from "../../services/producttypeService";
-
 import { ToastContainer, toast } from 'react-toastify';
 
 import *  as actions from "../../store/actions";

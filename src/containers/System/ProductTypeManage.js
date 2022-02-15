@@ -5,6 +5,7 @@ import { CRUDActions } from "../../utils";
 import './ProductTypeManage.scss';
 import TableManageProductType from "./TableManageProductType";
 import TableRecycleBinProductType from "./TableRecycleBinProductType";
+import { debounce } from 'lodash';
 
 import { ToastContainer, toast } from 'react-toastify';
 
@@ -24,7 +25,9 @@ class ProductTypeManage extends Component {
             action: CRUDActions.CREATE,
 
             isShowForm: false,
-            isOpenRecycleBin: false
+            isOpenRecycleBin: false,
+            searchInfo: '',
+
 
         }
         this.scrollTop = React.createRef()
@@ -91,7 +94,7 @@ class ProductTypeManage extends Component {
                 })
             }
 
-            await this.props.fetchfetchProducttypeRedux()
+            await this.props.fetchProducttypeRedux()
         }
     }
 
@@ -142,6 +145,21 @@ class ProductTypeManage extends Component {
             isOpenRecycleBin: !this.state.isOpenRecycleBin
         })
     }
+
+    handleChangeSearchBox = (value) => {
+        this.setState({
+            searchInfo: value
+        })
+        if (value !== "") {
+            this.handleSearchProducttypes(value)
+        } else {
+            this.props.fetchProducttypeRedux()
+        }
+    }
+
+    handleSearchProducttypes = debounce((value) => {
+        this.props.fetchSearchProducttypeRedux(value)
+    }, 100)
 
     render() {
 
@@ -199,9 +217,13 @@ class ProductTypeManage extends Component {
                             <div></div>
                         )}
                     </div>
-                    <div className="mb-4 ml-4 btn-go-recyclebin"
+                    <div className="mb-4 ml-4 btn-go-recyclebin col-6"
                         onClick={() => { this.handleOpenRecycleBin() }}>{this.state.isOpenRecycleBin ? (<div><i i className="fas fa-caret-left"></i> Quay lại</div>) : (<div><i className="fas fa-trash"></i> Thùng rác</div>)}
                     </div>
+                    <input type="text" className="mb-4 ml-4 col-6" name="search" autocomplete="off" placeholder="Nhập thông tin cần tìm ..."
+                        value={this.state.searchInfo}
+                        onChange={(e) => this.handleChangeSearchBox(e.target.value)}
+                    />
                     {this.state.isOpenRecycleBin ?
                         (<TableRecycleBinProductType
                             action={this.state.action}
@@ -226,10 +248,11 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        fetchfetchProducttypeRedux: () => dispatch(actions.fetchProducttypeStart()),
+        fetchProducttypeRedux: () => dispatch(actions.fetchProducttypeStart()),
         fetchCategorysRedux: () => dispatch(actions.fetchCategoryStart()),
         createNewProducttype: (data) => dispatch(actions.createNewProducttype(data)),
         editProducttypeRedux: (data) => dispatch(actions.editProducttype(data)),
+        fetchSearchProducttypeRedux: (key) => dispatch(actions.fetchSearchProducttypeStart(key)),
     };
 };
 
