@@ -2,7 +2,9 @@ import actionTypes from './actionTypes';
 import { toast } from 'react-toastify';
 import {
     createNewUserService,
+    getAllUsers,
     getAllUsersDeletedService,
+    getSearchUsers,
     recoverUserService,
 } from "../../services/userService";
 
@@ -34,6 +36,64 @@ export const fetchUserDeletedSuccess = (typesData) => ({
 
 export const fetchUserDeletedFailed = () => ({
     type: actionTypes.FETCH_USER_DELETED_FAILED
+})
+
+export const fetchAllUsersStart = () => {
+    return async (dispatch, getState) => {
+        try {
+            dispatch({
+                type: actionTypes.FETCH_ALL_USER_START
+            })
+            let res = await getAllUsers('ALL')
+            if (res && res.errCode === 0) {
+                dispatch(fetchAllUsersSuccess(res.users))
+            } else {
+                dispatch(fetchAllUsersFailed())
+            }
+        } catch (error) {
+            dispatch(fetchUserDeletedFailed())
+            console.log(error)
+            toast.error('Lấy danh sách người dùng thất bại!')
+        }
+    }
+}
+
+export const fetchAllUsersSuccess = (typesData) => ({
+    type: actionTypes.FETCH_ALL_USER_SUCCESS,
+    data: typesData
+})
+
+export const fetchAllUsersFailed = () => ({
+    type: actionTypes.FETCH_ALL_USER_FAILED
+})
+
+export const fetchSearchUserStart = (key) => {
+    return async (dispatch, getState) => {
+        try {
+            dispatch({
+                type: actionTypes.FETCH_SEARCH_USER_START
+            })
+            let res = await getSearchUsers(key)
+            if (res && res.errCode === 0) {
+                dispatch(fetchSearchUserSuccess(res.users))
+            } else {
+                dispatch(fetchSearchUserFailed())
+            }
+        } catch (error) {
+            dispatch(fetchSearchUserFailed())
+            console.log(error)
+            toast.error('Lấy danh sách người dùng thất bại!')
+        }
+    }
+}
+
+export const fetchSearchUserSuccess = (typesData) => ({
+    type: actionTypes.FETCH_SEARCH_USER_SUCCESS,
+    data: typesData
+})
+
+export const fetchSearchUserFailed = () => ({
+    type: actionTypes.FETCH_SEARCH_USER_FAILED
 })
 
 export const recoverUser = (userId) => {

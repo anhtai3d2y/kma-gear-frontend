@@ -12,6 +12,10 @@ const getAllUsers = (inputId) => {
     return axios.get(`/api/get-all-users?id=${inputId}`)
 }
 
+const getSearchUsers = (key) => {
+    return axios.get(`/api/search-users?key=${key}`)
+}
+
 const getAllUsersDeletedService = (inputId) => {
     return axios.get(`/api/get-all-users-deleted?id=${inputId}`)
 }
@@ -45,6 +49,7 @@ export {
     handleLogin,
     handleCustomerLogin,
     getAllUsers,
+    getSearchUsers,
     getAllUsersDeletedService,
     createNewUserService,
     editUserService,

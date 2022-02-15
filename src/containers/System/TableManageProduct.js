@@ -25,7 +25,6 @@ class TableManageProduct extends Component {
                 products: this.props.products
             })
             this.scrollTop = React.createRef()
-
         }
     }
 

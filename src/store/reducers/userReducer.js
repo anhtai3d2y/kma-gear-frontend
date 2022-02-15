@@ -5,6 +5,7 @@ const initialState = {
     userInfo: null,
     isCustomerLoggedIn: false,
     customerInfo: null,
+    users: [],
     usersDeleted: [],
 }
 
@@ -28,6 +29,48 @@ const appReducer = (state = initialState, action) => {
             state.isLoadingType = false
             console.log('fetch failed', action)
             state.usersDeleted = []
+            return {
+                ...state,
+            }
+
+        case actionTypes.FETCH_ALL_USER_START:
+            // let copyState = { ...state }
+            state.isLoadingUser = true
+            return {
+                ...state,
+            }
+        case actionTypes.FETCH_ALL_USER_SUCCESS:
+            copyState = { ...state }
+            copyState.users = action.data
+            return {
+                ...copyState,
+            }
+        case actionTypes.FETCH_ALL_USER_FAILED:
+            // let state = { ...state }
+            state.isLoadingType = false
+            console.log('fetch failed', action)
+            state.users = []
+            return {
+                ...state,
+            }
+
+        case actionTypes.FETCH_SEARCH_USER_START:
+            // let copyState = { ...state }
+            state.isLoadingUser = true
+            return {
+                ...state,
+            }
+        case actionTypes.FETCH_SEARCH_USER_SUCCESS:
+            copyState = { ...state }
+            copyState.users = action.data
+            return {
+                ...copyState,
+            }
+        case actionTypes.FETCH_SEARCH_USER_FAILED:
+            // let state = { ...state }
+            state.isLoadingType = false
+            console.log('fetch failed', action)
+            state.users = []
             return {
                 ...state,
             }

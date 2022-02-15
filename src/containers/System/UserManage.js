@@ -6,9 +6,11 @@ import { getAllUsers, createNewUserService, deleteUserService, editUserService }
 import ModalUser from './ModalUser';
 import ModalEditUser from './ModalEditUser';
 import TableRecycleBinUser from "./TableRecycleBinUser";
+import *  as actions from "../../store/actions";
 
 import { emitter } from "../../utils/emitter";
 import { ToastContainer, toast } from 'react-toastify';
+import { debounce } from 'lodash';
 
 class UserManage extends Component {
 
@@ -19,24 +21,22 @@ class UserManage extends Component {
             isOpenModalUser: false,
             isOpenModalEditUser: false,
             userEdit: {},
-            isOpenRecycleBin: false
+            isOpenRecycleBin: false,
+
+            searchInfo: '',
+
 
         }
     }
 
     async componentDidMount() {
-        await this.getAllUsersFromReact()
+        await this.props.fetchAllUsersRedux()
+        this.setState({
+            arrUsers: this.props.users
+        })
     }
 
-    getAllUsersFromReact = async () => {
-        let response = await getAllUsers('ALL')
-        if (response && response.errCode === 0) {
-            this.setState({
-                arrUsers: response.users
-            }, () => {
-
-            })
-        }
+    componentDidUpdate(prevState, prevProps) {
     }
 
     handleAddNewUser = () => {
@@ -64,7 +64,7 @@ class UserManage extends Component {
                 toast.error('Email đã tồn tại, hãy thử một email khác!')
                 // alert(response.errMessage)
             } else {
-                await this.getAllUsersFromReact()
+                await this.props.fetchAllUsersRedux()
                 this.setState({
                     isOpenModalUser: false
                 })
@@ -82,7 +82,7 @@ class UserManage extends Component {
         try {
             let response = await deleteUserService(user.id)
             if (response && response.errCode === 0) {
-                await this.getAllUsersFromReact()
+                await this.props.fetchAllUsersRedux()
                 toast(`Xóa thành công ${user.fullName}`)
             } else {
                 alert(response.errMessage)
@@ -104,7 +104,7 @@ class UserManage extends Component {
         try {
             let response = await editUserService(user)
             if (response && response.errCode === 0) {
-                await this.getAllUsersFromReact()
+                await this.props.fetchAllUsersRedux()
                 this.setState({
                     isOpenModalEditUser: false
                 })
@@ -120,12 +120,27 @@ class UserManage extends Component {
         this.setState({
             isOpenRecycleBin: !this.state.isOpenRecycleBin
         })
-        this.getAllUsersFromReact()
+        this.props.fetchAllUsersRedux()
     }
+
+    handleChangeSearchBox = (value) => {
+        this.setState({
+            searchInfo: value
+        })
+        if (value !== "") {
+            this.handleSearchUsers(value)
+        } else {
+            this.props.fetchAllUsersRedux()
+        }
+    }
+
+    handleSearchUsers = debounce((value) => {
+        this.props.fetchSearchUserRedux(value)
+    }, 100)
 
 
     render() {
-        let arrUsers = this.state.arrUsers
+        let arrUsers = this.props.users
         return (
             < div className="user-container" >
                 <ModalUser
@@ -148,9 +163,13 @@ class UserManage extends Component {
                         onClick={(e) => { this.handleAddNewUser() }}
                     ><i className="fas fa-plus"></i>Add a new user</button>
                 </div>
-                <div className="mb-4 ml-4 btn-go-recyclebin"
+                <div className="mb-4 ml-4 col-6 btn-go-recyclebin"
                     onClick={() => { this.handleOpenRecycleBin() }}>{this.state.isOpenRecycleBin ? (<div><i i className="fas fa-caret-left"></i> Quay lại</div>) : (<div><i className="fas fa-trash"></i> Thùng rác</div>)}
                 </div>
+                <input type="text" className="mb-4 ml-4 col-6" name="search" autocomplete="off" placeholder="Nhập thông tin người dùng cần tìm ..."
+                    value={this.state.searchInfo}
+                    onChange={(e) => this.handleChangeSearchBox(e.target.value)}
+                />
                 {this.state.isOpenRecycleBin ?
                     (<TableRecycleBinUser
                         action={this.state.action}
@@ -195,11 +214,14 @@ class UserManage extends Component {
 
 const mapStateToProps = state => {
     return {
+        users: state.user.users,
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
+        fetchAllUsersRedux: () => dispatch(actions.fetchAllUsersStart()),
+        fetchSearchUserRedux: (key) => dispatch(actions.fetchSearchUserStart(key)),
     };
 };
 
