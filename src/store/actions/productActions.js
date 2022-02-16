@@ -2,6 +2,7 @@ import actionTypes from './actionTypes';
 import {
     createNewProductService,
     getAllProductsDeletedService,
+    getProductsByTypeService,
     getAllProductsService,
     getTopProductsHomeService,
     getSearchProducts,
@@ -37,6 +38,32 @@ export const fetchAllProductsSuccess = (data) => ({
 })
 export const fetchAllProductsFailed = () => ({
     type: actionTypes.FETCH_ALL_PRODUCTS_FAILED
+})
+
+export const fetchProductsByTypeStart = (id) => {
+    return async (dispatch, getState) => {
+        try {
+            let res = await getProductsByTypeService(id)
+            if (res && res.errCode === 0) {
+                dispatch(fetchProductsByTypeSuccess(res.products.reverse()))
+            } else {
+                toast.error('Lấy sản phẩm thất bại!')
+                dispatch(fetchProductsByTypeFailed())
+            }
+        } catch (error) {
+            toast.error('Lấy sản phẩm thất bại!')
+            dispatch(fetchProductsByTypeFailed())
+            console.log(error)
+        }
+    }
+}
+
+export const fetchProductsByTypeSuccess = (data) => ({
+    type: actionTypes.FETCH_PRODUCTS_BY_TYPE_SUCCESS,
+    products: data
+})
+export const fetchProductsByTypeFailed = () => ({
+    type: actionTypes.FETCH_PRODUCTS_BY_TYPE_FAILED
 })
 
 export const fetchSearchProductsStart = (key) => {
@@ -237,10 +264,10 @@ export const editProductFailed = () => ({
     type: actionTypes.EDIT_PRODUCT_FAILED
 })
 
-export const deleteProduct = (productId) => {
+export const deleteProduct = (ProductId) => {
     return async (dispatch, getState) => {
         try {
-            let res = await deleteProductService(productId)
+            let res = await deleteProductService(ProductId)
             if (res && res.errCode === 0) {
                 dispatch(deleteProductSuccess())
                 toast('Xóa sản phẩm thành công')
@@ -263,10 +290,10 @@ export const deleteProductFailed = () => ({
     type: actionTypes.DELETE_PRODUCT_FAILED
 })
 
-export const recoverProduct = (productId) => {
+export const recoverProduct = (ProductId) => {
     return async (dispatch, getState) => {
         try {
-            let res = await recoverProductService(productId)
+            let res = await recoverProductService(ProductId)
             if (res && res.errCode === 0) {
                 dispatch(recoverProductSuccess())
                 toast('Khôi phục sản phẩm thành công')

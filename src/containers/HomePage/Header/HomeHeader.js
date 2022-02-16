@@ -55,7 +55,7 @@ class HomeHeader extends Component {
 
     handleViewDetailProduct = (e, product) => {
         e.preventDefault()
-        this.props.fetchSearchProductsRedux(' ')
+        this.props.fetchSearchProductsRedux('')
         this.props.history.push(`/product/${product.id}`)
     }
 
@@ -72,7 +72,16 @@ class HomeHeader extends Component {
     }
 
     handleViewListProduct = (typeProduct) => {
+        this.props.fetchProductsByTypeRedux(typeProduct.id)
         this.props.history.push(`/list-product/${typeProduct.id}`)
+    }
+
+    handleGoCategoryPage = () => {
+        this.setState({
+            searchString: ''
+        })
+        this.props.fetchSearchProductsShowRedux()
+        this.props.history.push(`/search/list-product`)
     }
 
     numberWithCommas = (x) => {
@@ -114,42 +123,44 @@ class HomeHeader extends Component {
                             </div>
                         </div>
 
-                        <form id="form-search" action="" method="">
-                            <input type="hidden" name="route" value="product/search" />
-                            <div className="search-box">
-                                <div className="search-box-keyword">
-                                    <input type="text" name="search" autocomplete="off" placeholder="Nhập sản phẩm cần tìm ..."
-                                        value={this.state.searchString}
-                                        onChange={(e) => this.handleChangeSearchBox(e.target.value)}
-                                        onClick={(e) => this.handleSearchProducts(e.target.value)}
-                                        onBlur={() => this.handleSearchProducts('')}
-                                    />
-                                </div>
-                                <div className="search-box-select">
-                                    <img src="https://www.tncstore.vn/catalog/view/theme/default/image/search-icon.svg" alt="" className="search-box-icon" />
-                                </div>
-                                {products && (products.length > 0) ? (
-                                    <div className="autocomplete-suggestions">
-                                        <div className="suggestion-inner">
-                                            {products.map((product, index) => {
-                                                return (
-                                                    <a href="" className="sugget-product" onClick={(e) => this.handleViewDetailProduct(e, product)}>
-                                                        <div className="thumb">
-                                                            <img src={product.image} alt={product.name} />
-                                                        </div>
-                                                        <div className="info">
-                                                            <div className="name">{product.name}</div>
-                                                            <div className="price">{this.numberWithCommas(product.price * (1 - (product.discount / 100)))} đ</div>
-                                                        </div>
-                                                    </a>
-                                                )
-                                            })}
-                                        </div>
-                                    </div>
-                                ) : (<></>)}
-
+                        <input type="hidden" name="route" value="product/search" />
+                        <div className="search-box">
+                            <div className="search-box-keyword">
+                                <input type="text" name="search" autocomplete="off" placeholder="Nhập sản phẩm cần tìm ..."
+                                    value={this.state.searchString}
+                                    onChange={(e) => this.handleChangeSearchBox(e.target.value)}
+                                    onClick={(e) => this.handleSearchProducts(e.target.value)}
+                                    onBlur={() => this.handleSearchProducts('')}
+                                />
                             </div>
-                        </form>
+                            <div className="search-box-select">
+                                <img src="https://www.tncstore.vn/catalog/view/theme/default/image/search-icon.svg" alt=""
+                                    style={{ cursor: "pointer" }}
+                                    className="search-box-icon"
+                                    onClick={() => this.handleGoCategoryPage()}
+                                />
+                            </div>
+                            {products && (products.length > 0) ? (
+                                <div className="autocomplete-suggestions">
+                                    <div className="suggestion-inner">
+                                        {products.map((product, index) => {
+                                            return (
+                                                <a href="" className="sugget-product" onClick={(e) => this.handleViewDetailProduct(e, product)}>
+                                                    <div className="thumb">
+                                                        <img src={product.image} alt={product.name} />
+                                                    </div>
+                                                    <div className="info">
+                                                        <div className="name">{product.name}</div>
+                                                        <div className="price">{this.numberWithCommas(product.price * (1 - (product.discount / 100)))} đ</div>
+                                                    </div>
+                                                </a>
+                                            )
+                                        })}
+                                    </div>
+                                </div>
+                            ) : (<></>)}
+
+                        </div>
 
                         <div className="header-login" onClick={() => { this.handleGoLoginPage() }}>
                             <i class="far fa-user header-login-icon"></i>
@@ -190,7 +201,7 @@ class HomeHeader extends Component {
                                                                 </h4>
                                                                 {
                                                                     arrProducttypes.map((type, index) => {
-                                                                        return (type.categoryId === category.id) ? (
+                                                                        return (type.CategoryId === category.id) ? (
                                                                             <li className="mega-menu-sub-item">
                                                                                 <div className="mega-menu-sub-link"
                                                                                     onClick={() => this.handleViewListProduct(type)}
@@ -260,11 +271,14 @@ const mapDispatchToProps = dispatch => {
         changeLanguageAppRedux: (language) => dispatch(changeLanguageApp(language)),
         fetchCategorysRedux: () => dispatch(actions.fetchCategoryStart()),
         fetchProducttypesRedux: () => dispatch(actions.fetchProducttypeStart()),
+        fetchSearchProductsShowRedux: () => dispatch(actions.fetchSearchProductsShowStart()),
         customerLoginSuccess: (customerInfo) => dispatch(actions.customerLoginSuccess(customerInfo)),
         customerLoginFail: () => dispatch(actions.customerLoginFail()),
-        fetchCartStart: (userId) => dispatch(actions.fetchCartStart(userId)),
-        fetchCartdetailStart: (cartId) => dispatch(actions.fetchCartdetailStart(cartId)),
+        fetchCartStart: (UserId) => dispatch(actions.fetchCartStart(UserId)),
+        fetchCartdetailStart: (CartId) => dispatch(actions.fetchCartdetailStart(CartId)),
         fetchSearchProductsRedux: (key) => dispatch(actions.fetchSearchProductsStart(key)),
+        fetchProductsByTypeRedux: (id) => dispatch(actions.fetchProductsByTypeStart(id)),
+
     };
 };
 

@@ -8,10 +8,10 @@ const createNewCartService = (data) => {
     return axios.post('/api/create-new-cart', data)
 }
 
-const deleteCartService = (cartId) => {
+const deleteCartService = (CartId) => {
     return axios.delete('/api/delete-cart', {
         data: {
-            id: cartId
+            id: CartId
         }
     })
 }

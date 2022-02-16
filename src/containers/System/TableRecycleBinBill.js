@@ -74,7 +74,7 @@ class TableRecycleBinBill extends Component {
                                         <td>{bill.address}</td>
                                         <td>{bill.note}</td>
                                         <td>{bill.State.content}</td>
-                                        <td>{bill.paymentTypeId && bill.paymentTypeId === 1 ? 'Thanh toán khi nhận' : 'Thanh toán trực tuyến'}</td>
+                                        <td>{bill.PaymenttypeId && bill.PaymenttypeId === 1 ? 'Thanh toán khi nhận' : 'Thanh toán trực tuyến'}</td>
                                         <td>
                                             <thead>
                                                 <tr style={{ textAlign: "center" }}>

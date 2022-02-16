@@ -156,10 +156,10 @@ export const editBrandFailed = () => ({
     type: actionTypes.EDIT_BRAND_FAILED
 })
 
-export const deleteBrand = (brandId) => {
+export const deleteBrand = (BrandId) => {
     return async (dispatch, getState) => {
         try {
-            let res = await deleteBrandService(brandId)
+            let res = await deleteBrandService(BrandId)
             if (res && res.errCode === 0) {
                 dispatch(deleteBrandSuccess())
                 toast('Xóa nhãn hàng thành công')
@@ -182,10 +182,10 @@ export const deleteBrandFailed = () => ({
     type: actionTypes.DELETE_BRAND_FAILED
 })
 
-export const recoverBrand = (brandId) => {
+export const recoverBrand = (BrandId) => {
     return async (dispatch, getState) => {
         try {
-            let res = await recoverBrandService(brandId)
+            let res = await recoverBrandService(BrandId)
             if (res && res.errCode === 0) {
                 dispatch(recoverBrandSuccess())
                 toast('Khôi phục nhãn hàng thành công')

@@ -86,7 +86,7 @@ class DetailCheckout extends Component {
             let price = Math.round(cd.price * (1 - cd.discount / 100) / currencyVNDToUSD * 100) / 100
             let newDetail = {
                 name: cd.Product.name,
-                sku: cd.productId.toString(),
+                sku: cd.ProductId.toString(),
                 price: price,
                 currency: "USD",
                 quantity: cd.amount
@@ -115,14 +115,14 @@ class DetailCheckout extends Component {
 
     createNewBill = async (payId, totalPrice) => {
         let newBill = {
-            userId: this.props.customerInfo.id,
+            UserId: this.props.customerInfo.id,
             fullName: this.state.fullName,
             email: this.state.email,
             phoneNumber: this.state.phoneNumber,
             address: this.state.address,
             note: this.state.note,
             stateId: 1,
-            paymentTypeId: 1,
+            PaymenttypeId: 1,
             payId: payId,
             totalPrice: totalPrice
         }
@@ -134,7 +134,7 @@ class DetailCheckout extends Component {
             let cd = cartdetails[i]
             let newDetail = {
                 billId: this.props.bill.id,
-                productId: cd.productId,
+                ProductId: cd.ProductId,
                 price: cd.Product.price,
                 discount: cd.Product.discount,
                 amount: cd.amount,
@@ -142,8 +142,8 @@ class DetailCheckout extends Component {
             let newProduct = {
                 id: cd.Product.id,
                 name: cd.Product.name,
-                brandId: cd.Product.brandId,
-                typeId: cd.Product.typeId,
+                BrandId: cd.Product.BrandId,
+                TypeId: cd.Product.TypeId,
                 amount: cd.Product.amount - cd.amount,
                 price: cd.Product.price,
                 discount: cd.Product.discount,
@@ -157,6 +157,7 @@ class DetailCheckout extends Component {
             arrDetails.push(newDetail)
             arrProducts.push(newProduct)
         }
+        console.log(arrDetails)
         await this.props.bulkCreateInvoicedetail(arrDetails)
         await this.props.updateAmountProduct(arrProducts)
         await this.props.clearCartdetail(this.props.cartInfo.id)
@@ -308,8 +309,8 @@ const mapDispatchToProps = dispatch => {
         createNewBill: (data) => dispatch(actions.createNewBill(data)),
         bulkCreateInvoicedetail: (data) => dispatch(actions.bulkCreateInvoicedetail(data)),
         updateAmountProduct: (data) => dispatch(actions.updateAmountProduct(data)),
-        clearCartdetail: (cartId) => dispatch(actions.clearCartdetail(cartId)),
-        fetchCartdetailStart: (cartId) => dispatch(actions.fetchCartdetailStart(cartId)),
+        clearCartdetail: (CartId) => dispatch(actions.clearCartdetail(CartId)),
+        fetchCartdetailStart: (CartId) => dispatch(actions.fetchCartdetailStart(CartId)),
     };
 };
 

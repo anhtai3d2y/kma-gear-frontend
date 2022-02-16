@@ -157,10 +157,10 @@ export const editCategoryFailed = () => ({
     type: actionTypes.EDIT_CATEGORY_FAILED
 })
 
-export const deleteCategory = (categoryId) => {
+export const deleteCategory = (CategoryId) => {
     return async (dispatch, getState) => {
         try {
-            let res = await deleteCategoryService(categoryId)
+            let res = await deleteCategoryService(CategoryId)
             if (res && res.errCode === 0) {
                 dispatch(deleteCategorySuccess())
                 toast('Xóa danh mục thành công')
@@ -183,10 +183,10 @@ export const deleteCategoryFailed = () => ({
     type: actionTypes.DELETE_CATEGORY_FAILED
 })
 
-export const recoverCategory = (categoryId) => {
+export const recoverCategory = (CategoryId) => {
     return async (dispatch, getState) => {
         try {
-            let res = await recoverCategoryService(categoryId)
+            let res = await recoverCategoryService(CategoryId)
             if (res && res.errCode === 0) {
                 dispatch(recoverCategorySuccess())
                 toast('Khôi phục danh mục thành công')

@@ -20,7 +20,7 @@ class ProductTypeManage extends Component {
 
             id: '',
             typeName: '',
-            categoryId: 0,
+            CategoryId: 0,
 
             action: CRUDActions.CREATE,
 
@@ -45,7 +45,7 @@ class ProductTypeManage extends Component {
             let arrCategorys = this.props.categorysRedux
             this.setState({
                 categoryArr: arrCategorys,
-                categoryId: arrCategorys && arrCategorys.length > 0 ? arrCategorys[0].id : ''
+                CategoryId: arrCategorys && arrCategorys.length > 0 ? arrCategorys[0].id : ''
             })
         }
 
@@ -54,7 +54,7 @@ class ProductTypeManage extends Component {
 
             this.setState({
                 typeName: '',
-                categoryId: arrCategorys && arrCategorys.length > 0 ? arrCategorys[0].id : '',
+                CategoryId: arrCategorys && arrCategorys.length > 0 ? arrCategorys[0].id : '',
 
                 action: CRUDActions.CREATE,
 
@@ -80,7 +80,7 @@ class ProductTypeManage extends Component {
                 //create producttype
                 let newProducttype = {
                     typeName: this.state.typeName,
-                    categoryId: this.state.categoryId
+                    CategoryId: this.state.CategoryId
                 }
                 await this.props.createNewProducttype(newProducttype)
                 toast(`Thêm loại sản phẩm ${newProducttype.typeName} thành công`)
@@ -90,7 +90,7 @@ class ProductTypeManage extends Component {
                 await this.props.editProducttypeRedux({
                     id: this.state.id,
                     typeName: this.state.typeName,
-                    categoryId: this.state.categoryId
+                    CategoryId: this.state.CategoryId
                 })
             }
 
@@ -132,7 +132,7 @@ class ProductTypeManage extends Component {
 
             id: producttype.id,
             typeName: producttype.typeName,
-            categoryId: producttype.categoryId,
+            CategoryId: producttype.CategoryId,
 
             action: CRUDActions.EDIT,
 
@@ -163,7 +163,7 @@ class ProductTypeManage extends Component {
 
     render() {
 
-        let { typeName, categoryId } = this.state
+        let { typeName, CategoryId } = this.state
         let categorys = this.state.categoryArr
 
         return (
@@ -194,8 +194,8 @@ class ProductTypeManage extends Component {
                                     <div className="col-12">
                                         <label className="mt-1">Danh mục</label>
                                         <select id="" class="form-control"
-                                            onChange={(event) => { this.onChangeInput(event, 'categoryId') }}
-                                            value={categoryId}
+                                            onChange={(event) => { this.onChangeInput(event, 'CategoryId') }}
+                                            value={CategoryId}
                                         >
                                             {categorys && categorys.length > 0 &&
                                                 categorys.map((category, index) => {

@@ -4,6 +4,10 @@ const getAllProductsService = (inputId) => {
     return axios.get(`/api/get-all-products?id=${inputId}`)
 }
 
+const getProductsByTypeService = (inputId) => {
+    return axios.get(`/api/get-products-by-type?id=${inputId}`)
+}
+
 const getAllProductsDeletedService = (inputId) => {
     return axios.get(`/api/get-all-products-deleted?id=${inputId}`)
 }
@@ -28,18 +32,18 @@ const editProductService = (data) => {
     return axios.put('/api/edit-product', data)
 }
 
-const deleteProductService = (productId) => {
+const deleteProductService = (ProductId) => {
     return axios.delete('/api/delete-product', {
         data: {
-            id: productId
+            id: ProductId
         }
     })
 }
 
-const recoverProductService = (productId) => {
+const recoverProductService = (ProductId) => {
     return axios.delete('/api/recover-product', {
         data: {
-            id: productId
+            id: ProductId
         }
     })
 }
@@ -47,6 +51,7 @@ const recoverProductService = (productId) => {
 
 export {
     getAllProductsService,
+    getProductsByTypeService,
     getAllProductsDeletedService,
     getTopProductsHomeService,
     getSearchProducts,

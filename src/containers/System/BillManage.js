@@ -21,14 +21,14 @@ class BillManage extends Component {
             bills: [],
 
             id: '',
-            userId: null,
+            UserId: null,
             fullName: '',
             email: '',
             phoneNumber: '',
             address: '',
             note: '',
             stateId: 0,
-            paymentTypeId: 1,
+            PaymenttypeId: 1,
             createdAt: '',
             updatedAt: '',
 
@@ -64,14 +64,14 @@ class BillManage extends Component {
             this.setState({
 
                 id: '',
-                userId: null,
+                UserId: null,
                 fullName: '',
                 email: '',
                 phoneNumber: '',
                 address: '',
                 note: '',
                 stateId: arrStates && arrStates.length > 0 ? arrStates[0].id : '',
-                paymentTypeId: 1,
+                PaymenttypeId: 1,
                 createdAt: '',
                 updatedAt: '',
 
@@ -98,14 +98,14 @@ class BillManage extends Component {
             if (action === CRUDActions.CREATE) {
                 //create bill
                 let newBill = {
-                    userId: this.state.userId,
+                    UserId: this.state.UserId,
                     fullName: this.state.fullName,
                     email: this.state.email,
                     phoneNumber: this.state.phoneNumber,
                     address: this.state.address,
                     note: this.state.note,
                     stateId: this.state.stateId,
-                    paymentTypeId: this.state.paymentTypeId,
+                    PaymenttypeId: this.state.PaymenttypeId,
                 }
                 await this.props.createNewBill(newBill)
                 toast(`Thêm hóa đơn thành công`)
@@ -114,14 +114,14 @@ class BillManage extends Component {
                 //edit bill
                 await this.props.editBillRedux({
                     id: this.state.id,
-                    userId: this.state.userId,
+                    UserId: this.state.UserId,
                     fullName: this.state.fullName,
                     email: this.state.email,
                     phoneNumber: this.state.phoneNumber,
                     address: this.state.address,
                     note: this.state.note,
                     stateId: this.state.stateId,
-                    paymentTypeId: this.state.paymentTypeId,
+                    PaymenttypeId: this.state.PaymenttypeId,
                 })
             }
             await this.props.fetchBillsRedux()
@@ -130,7 +130,7 @@ class BillManage extends Component {
 
     checkValidateInput = () => {
         let isValid = true
-        let arrCheck = ['fullName', 'email', 'phoneNumber', 'address', 'note', 'stateId', 'paymentTypeId']
+        let arrCheck = ['fullName', 'email', 'phoneNumber', 'address', 'note', 'stateId', 'PaymenttypeId']
         let arrMessage = ['Người nhận', 'Email', 'Số điện thoại', 'Địa chỉ', 'Ghi chú', 'Trạng thái', 'Phương thức thanh toán']
         for (let i = 0; i < arrCheck.length; i++) {
             if (!this.state[arrCheck[i]]) {
@@ -161,14 +161,14 @@ class BillManage extends Component {
     handleEditBillFromParent = (bill) => {
         this.setState({
             id: bill.id,
-            userId: bill.userId,
+            UserId: bill.UserId,
             fullName: bill.fullName,
             email: bill.email,
             phoneNumber: bill.phoneNumber,
             address: bill.address,
             note: bill.note,
             stateId: bill.stateId,
-            paymentTypeId: bill.paymentTypeId,
+            PaymenttypeId: bill.PaymenttypeId,
 
             action: CRUDActions.EDIT,
 
@@ -201,7 +201,7 @@ class BillManage extends Component {
 
         // console.log('fetch state: ', this.state)
         let arrStates = this.state.states
-        let { fullName, email, phoneNumber, address, note, stateId, paymentTypeId } = this.state
+        let { fullName, email, phoneNumber, address, note, stateId, PaymenttypeId } = this.state
         return (
             <div className="bill-manage-container" >
                 <div className="title">
@@ -273,8 +273,8 @@ class BillManage extends Component {
                                     <div className="col-6">
                                         <label className="mt-1">Phương thức thanh toán</label>
                                         <select id="" class="form-control"
-                                            onChange={(event) => { this.onChangeInput(event, 'paymentTypeId') }}
-                                            value={paymentTypeId}
+                                            onChange={(event) => { this.onChangeInput(event, 'PaymenttypeId') }}
+                                            value={PaymenttypeId}
                                         >
                                             <option key='1' value='1'>Thanh toán khi nhận</option>
                                             <option key='2' value='2'>Thanh toán trực tuyến</option>

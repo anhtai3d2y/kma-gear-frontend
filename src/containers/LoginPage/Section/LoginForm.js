@@ -166,7 +166,7 @@ const mapDispatchToProps = dispatch => {
         customerLoginSuccess: (customerInfo) => dispatch(actions.customerLoginSuccess(customerInfo)),
         customerLoginFail: () => dispatch(actions.customerLoginFail()),
         processCustomerLogout: () => dispatch(actions.processCustomerLogout()),
-        fetchCartStart: (userId) => dispatch(actions.fetchCartStart(userId)),
+        fetchCartStart: (UserId) => dispatch(actions.fetchCartStart(UserId)),
 
     };
 };

@@ -23,18 +23,18 @@ const editCategoryService = (inputData) => {
     return axios.put('/api/edit-category', inputData)
 }
 
-const deleteCategoryService = (categoryId) => {
+const deleteCategoryService = (CategoryId) => {
     return axios.delete('/api/delete-category', {
         data: {
-            id: categoryId
+            id: CategoryId
         }
     })
 }
 
-const recoverCategoryService = (categoryId) => {
+const recoverCategoryService = (CategoryId) => {
     return axios.delete('/api/recover-category', {
         data: {
-            id: categoryId
+            id: CategoryId
         }
     })
 }

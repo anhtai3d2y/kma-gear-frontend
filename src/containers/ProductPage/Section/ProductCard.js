@@ -37,8 +37,8 @@ class ProductCard extends Component {
             amount = product.amount
             if (amountAddToCart <= amount) {
                 let newCartdetail = {
-                    cartId: this.props.cartInfo.id,
-                    productId: product.id,
+                    CartId: this.props.cartInfo.id,
+                    ProductId: product.id,
                     price: product.price,
                     amount: 1,
                     discount: product.discount,
@@ -56,7 +56,7 @@ class ProductCard extends Component {
             cartdetail: {}
         }
         for (let i = 0; i < cartdetails.length; i++) {
-            if (product.id === cartdetails[i].productId) {
+            if (product.id === cartdetails[i].ProductId) {
                 existed = {
                     isExisted: true,
                     cartdetail: cartdetails[i]
@@ -121,7 +121,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         changeLanguageAppRedux: (language) => dispatch(changeLanguageApp(language)),
-        fetchCartdetailStart: (cartId) => dispatch(actions.fetchCartdetailStart(cartId)),
+        fetchCartdetailStart: (CartId) => dispatch(actions.fetchCartdetailStart(CartId)),
         createNewCartdetail: (data) => dispatch(actions.createNewCartdetail(data)),
         editCartdetail: (data) => dispatch(actions.editCartdetail(data)),
     };

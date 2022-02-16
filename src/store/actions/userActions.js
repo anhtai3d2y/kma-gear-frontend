@@ -96,10 +96,10 @@ export const fetchSearchUserFailed = () => ({
     type: actionTypes.FETCH_SEARCH_USER_FAILED
 })
 
-export const recoverUser = (userId) => {
+export const recoverUser = (UserId) => {
     return async (dispatch, getState) => {
         try {
-            let res = await recoverUserService(userId)
+            let res = await recoverUserService(UserId)
             if (res && res.errCode === 0) {
                 dispatch(recoverUserSuccess())
                 toast('Khôi phục người dùng thành công')

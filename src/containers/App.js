@@ -15,6 +15,7 @@ import HomePage from './HomePage/HomePage.js';
 import System from '../routes/System';
 import ProductPage from './ProductPage/ProductPage.js';
 import ListProductPage from './ProductPage/ListProductPage.js';
+import ListSearchProductPage from './ProductPage/ListSearchProductPage.js';
 import CartPage from './CartPage/CartPage.js';
 import CheckoutPage from './CartPage/CheckoutPage.js';
 import LoginPage from './LoginPage/LoginPage.js';
@@ -59,6 +60,7 @@ class App extends Component {
                                     <Route path={path.SYSTEM} component={userIsAuthenticated(System)} />
                                     <Route path={path.PRODUCT} component={(ProductPage)} />
                                     <Route path={path.LIST_PRODUCT} component={(ListProductPage)} />
+                                    <Route path={path.LIST_PRODUCT_SEARCH} component={(ListSearchProductPage)} />
                                     <Route path={path.CART} component={(CartPage)} />
                                     <Route path={path.CHECKOUT} component={(CheckoutPage)} />
                                     <Route path={path.LOGIN} component={(LoginPage)} />

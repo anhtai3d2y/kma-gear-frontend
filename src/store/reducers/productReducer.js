@@ -33,9 +33,20 @@ const productReducer = (state = initialState, action) => {
                 ...copyState,
             }
         case actionTypes.FETCH_SEARCH_PRODUCTS_FAILED:
-            // let state = { ...state }
             state.isLoadingProducts = false
             state.productsSearch = []
+            return {
+                ...state,
+            }
+        case actionTypes.FETCH_PRODUCTS_BY_TYPE_SUCCESS:
+            copyState = { ...state }
+            copyState.products = action.products
+            return {
+                ...copyState,
+            }
+        case actionTypes.FETCH_PRODUCTS_BY_TYPE_FAILED:
+            state.isLoadingProducts = false
+            state.products = []
             return {
                 ...state,
             }

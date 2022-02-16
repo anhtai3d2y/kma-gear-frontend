@@ -20,18 +20,18 @@ const editBrandService = (inputData) => {
     return axios.put('/api/edit-brand', inputData)
 }
 
-const deleteBrandService = (brandId) => {
+const deleteBrandService = (BrandId) => {
     return axios.delete('/api/delete-brand', {
         data: {
-            id: brandId
+            id: BrandId
         }
     })
 }
 
-const recoverBrandService = (brandId) => {
+const recoverBrandService = (BrandId) => {
     return axios.delete('/api/recover-brand', {
         data: {
-            id: brandId
+            id: BrandId
         }
     })
 }

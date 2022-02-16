@@ -2,24 +2,21 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import HomeBanner from '../HomePage/Banner/HomeBanner.js'
 import HomeHeader from '../HomePage/Header/HomeHeader.js'
-import DetailCheckout from './Section/DetailCheckout.js'
+import CategoryProductList from './Section/CategoryProductList.js'
+import OutstandingProduct from "../HomePage/Section/OutstandingProduct.js"
 import Footer from '../HomePage/Footer/Footer.js'
 
-import { Helmet } from 'react-helmet'
 
 
-class CheckoutPage extends Component {
+class ListSearchProductPage extends Component {
 
     render() {
-        let ProductId = this.props.match.params.id
         return (
             <div>
-                <Helmet>
-                    <title>Thanh toán</title>
-                </Helmet>
                 <HomeBanner />
                 <HomeHeader />
-                <DetailCheckout />
+                <CategoryProductList />
+                <OutstandingProduct />
                 <Footer />
             </div>
         );
@@ -37,4 +34,4 @@ const mapDispatchToProps = dispatch => {
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(CheckoutPage);
+export default connect(mapStateToProps, mapDispatchToProps)(ListSearchProductPage);

@@ -15,7 +15,7 @@ class DetailProduct extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            productId: '',
+            ProductId: '',
             amountAddToCart: 1
         }
         this.scrollTop = React.createRef()
@@ -23,19 +23,19 @@ class DetailProduct extends Component {
 
     componentDidMount() {
         // this.handleScroll()
-        this.props.fetchProductsById(this.props.productId)
+        this.props.fetchProductsById(this.props.ProductId)
         this.setState({
-            productId: this.props.productId
+            ProductId: this.props.ProductId
         })
     }
 
     componentDidUpdate(prevProps, prevState) {
         // this.handleScroll()
-        if (prevState.productId !== this.props.productId) {
+        if (prevState.ProductId !== this.props.ProductId) {
             this.setState({
-                productId: this.props.productId
+                ProductId: this.props.ProductId
             })
-            this.props.fetchProductsById(this.state.productId)
+            this.props.fetchProductsById(this.state.ProductId)
         }
     }
 
@@ -130,8 +130,8 @@ class DetailProduct extends Component {
             amount = product.amount
             if (amountAddToCart <= amount) {
                 let newCartdetail = {
-                    cartId: this.props.cartInfo.id,
-                    productId: product.id,
+                    CartId: this.props.cartInfo.id,
+                    ProductId: product.id,
                     price: product.price,
                     amount: this.state.amountAddToCart,
                     discount: product.discount,
@@ -152,7 +152,7 @@ class DetailProduct extends Component {
             cartdetail: {}
         }
         for (let i = 0; i < cartdetails.length; i++) {
-            if (product.id === cartdetails[i].productId) {
+            if (product.id === cartdetails[i].ProductId) {
                 existed = {
                     isExisted: true,
                     cartdetail: cartdetails[i]
@@ -297,7 +297,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         fetchProductsById: (id) => dispatch(actions.fetchProductsByIdStart(id)),
-        fetchCartdetailStart: (cartId) => dispatch(actions.fetchCartdetailStart(cartId)),
+        fetchCartdetailStart: (CartId) => dispatch(actions.fetchCartdetailStart(CartId)),
         createNewCartdetail: (data) => dispatch(actions.createNewCartdetail(data)),
         editCartdetail: (data) => dispatch(actions.editCartdetail(data)),
     };

@@ -12,7 +12,7 @@ import { Helmet } from 'react-helmet'
 class CartPage extends Component {
 
     render() {
-        let productId = this.props.match.params.id
+        let ProductId = this.props.match.params.id
         return (
             <div>
                 <Helmet>

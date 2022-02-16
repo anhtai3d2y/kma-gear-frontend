@@ -17,10 +17,10 @@ const deleteCartdetailService = (cartdetailId) => {
     })
 }
 
-const clearCartdetailService = (cartId) => {
+const clearCartdetailService = (CartId) => {
     return axios.delete('/api/clear-cartdetail', {
         data: {
-            id: cartId
+            id: CartId
         }
     })
 }

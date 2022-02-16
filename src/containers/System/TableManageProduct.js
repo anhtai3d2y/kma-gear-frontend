@@ -87,14 +87,14 @@ class TableManageProduct extends Component {
                                         <td>
                                             {
                                                 types.map((type, index) => {
-                                                    return (type.id === product.typeId) ? (type.typeName) : (<div></div>)
+                                                    return (type.id === product.TypeId) ? (type.typeName) : (<div></div>)
                                                 })
                                             }
                                         </td>
                                         <td>
                                             {
                                                 brands.map((brand, index) => {
-                                                    return (brand.id === product.brandId) ? (brand.name) : (<div></div>)
+                                                    return (brand.id === product.BrandId) ? (brand.name) : (<div></div>)
                                                 })
                                             }
                                         </td>

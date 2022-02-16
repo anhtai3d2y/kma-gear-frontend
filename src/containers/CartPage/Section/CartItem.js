@@ -68,7 +68,7 @@ class CartItem extends Component {
                 id: product.id,
                 amount: this.state.amountProduct - 1
             })
-            await this.props.fetchCartdetailStart(product.cartId)
+            await this.props.fetchCartdetailStart(product.CartId)
 
         }
     }
@@ -84,14 +84,14 @@ class CartItem extends Component {
                 id: product.id,
                 amount: this.state.amountProduct + 1
             })
-            await this.props.fetchCartdetailStart(product.cartId)
+            await this.props.fetchCartdetailStart(product.CartId)
 
         }
     }
 
     handleRemoveProduct = async (product) => {
         await this.props.deleteCartdetail(product.id)
-        await this.props.fetchCartdetailStart(product.cartId)
+        await this.props.fetchCartdetailStart(product.CartId)
     }
     numberWithCommas = (x) => {
         let result = Math.round(x)
@@ -169,7 +169,7 @@ const mapDispatchToProps = dispatch => {
     return {
         editCartdetail: (data) => dispatch(actions.editCartdetail(data)),
         deleteCartdetail: (id) => dispatch(actions.deleteCartdetail(id)),
-        fetchCartdetailStart: (cartId) => dispatch(actions.fetchCartdetailStart(cartId)),
+        fetchCartdetailStart: (CartId) => dispatch(actions.fetchCartdetailStart(CartId)),
     };
 };
 

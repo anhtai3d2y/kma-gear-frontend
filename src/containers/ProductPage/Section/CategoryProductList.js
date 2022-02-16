@@ -11,12 +11,16 @@ class CategoryProductList extends Component {
 
     constructor(props) {
         super(props)
+        this.state = {
+            // mainBanners: []
+            amountShowProduct: 12,
+        }
         this.scrollTop = React.createRef()
     }
 
     componentDidMount() {
         // this.handleScroll()
-        this.props.fetchAllProductsRedux()
+        // this.props.fetchAllProductsRedux()
     }
 
     componentDidUpdate() {
@@ -32,6 +36,15 @@ class CategoryProductList extends Component {
         }
     }
 
+    handleSeeMore = (e) => {
+        e.preventDefault()
+        if (this.props.productsRedux.length > this.state.amountShowProduct) {
+            this.setState({
+                amountShowProduct: this.state.amountShowProduct + 12
+            })
+        }
+    }
+
     render() {
         let arrProducts = this.props.productsRedux
         return (
@@ -39,15 +52,15 @@ class CategoryProductList extends Component {
                 <div className="container">
                     <div className="list-header">
                         <div className="list-header-top">
-                            <div class="category-name">Gaming Laptop <span>(134 sản phẩm)</span></div>
-                            <div class="category-sort">
+                            <div className="category-name">Danh sách sản phẩm <span>({arrProducts.length} sản phẩm)</span></div>
+                            <div className="category-sort">
                                 Sắp xếp theo:
-                                <select id="input-sort" onchange="location = this.value;" class="form-control">
+                                <select id="input-sort" className="form-control">
                                     <option value="https://www.tncstore.vn/gaming-laptop.html?sort=p.date_added&amp;order=DESC">Mới nhất</option>
-                                    <option value="https://www.tncstore.vn/gaming-laptop.html?sort=p.price&amp;order=ASC">Giá (Thấp - cao)</option>
-                                    <option value="https://www.tncstore.vn/gaming-laptop.html?sort=p.price&amp;order=DESC">Giá (Cao - thấp)</option>
-                                    <option value="https://www.tncstore.vn/gaming-laptop.html?sort=pd.name&amp;order=ASC">Tên (A - Z)</option>
-                                    <option value="https://www.tncstore.vn/gaming-laptop.html?sort=pd.name&amp;order=DESC">Tên (Z - A)</option>
+                                    <option value="">Giá (Thấp - cao)</option>
+                                    <option value="">Giá (Cao - thấp)</option>
+                                    <option value="">Tên (A - Z)</option>
+                                    <option value="">Tên (Z - A)</option>
                                 </select>
                             </div>
                         </div>
@@ -55,12 +68,18 @@ class CategoryProductList extends Component {
                     <div className="product-list mt-4">
                         {arrProducts && arrProducts.length > 0 &&
                             arrProducts.map((product, index) => {
-                                return (
+                                return (index < this.state.amountShowProduct) ? (
                                     <ProductCard product={product} />
-                                )
+                                ) : (<></>)
                             })
                         }
                     </div>
+                    {arrProducts && arrProducts.length > 0 &&
+                        arrProducts.length > this.state.amountShowProduct ?
+                        (<div className="block-readmore"><a href=""
+                            onClick={(e) => this.handleSeeMore(e)}
+                        >XEM THÊM</a></div>) : (<></>)
+                    }
                 </div>
             </div>
         );

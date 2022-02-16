@@ -13,7 +13,7 @@ import { toast } from 'react-toastify';
 //     type: actionTypes.FETCH_CARTDETAIL_START
 // })
 
-export const fetchCartdetailStart = (cartId) => {
+export const fetchCartdetailStart = (CartId) => {
 
     return async (dispatch, getState) => {
         try {
@@ -21,7 +21,7 @@ export const fetchCartdetailStart = (cartId) => {
                 type: actionTypes.FETCH_CARTDETAIL_START
             })
 
-            let res = await getAllCartdetailsService(cartId.toString())
+            let res = await getAllCartdetailsService(CartId.toString())
             if (res && res.errCode === 0) {
                 dispatch(fetchCartdetailSuccess(res.cartdetails))
             } else {
@@ -120,10 +120,10 @@ export const deleteCartdetailFailed = () => ({
     type: actionTypes.DELETE_CARTDETAIL_FAILED
 })
 
-export const clearCartdetail = (cartId) => {
+export const clearCartdetail = (CartId) => {
     return async (dispatch, getState) => {
         try {
-            let res = await clearCartdetailService(cartId)
+            let res = await clearCartdetailService(CartId)
             if (res && res.errCode === 0) {
                 dispatch(clearCartdetailSuccess())
             } else {

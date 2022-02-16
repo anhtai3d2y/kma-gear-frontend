@@ -28,18 +28,18 @@ const editUserService = (inputData) => {
     return axios.put('/api/edit-user', inputData)
 }
 
-const deleteUserService = (userId) => {
+const deleteUserService = (UserId) => {
     return axios.delete('/api/delete-user', {
         data: {
-            id: userId
+            id: UserId
         }
     })
 }
 
-const recoverUserService = (userId) => {
+const recoverUserService = (UserId) => {
     return axios.delete('/api/recover-user', {
         data: {
-            id: userId
+            id: UserId
         }
     })
 }

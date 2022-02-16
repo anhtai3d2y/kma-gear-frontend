@@ -9,13 +9,13 @@ import Footer from '../HomePage/Footer/Footer.js'
 class ProductPage extends Component {
 
     render() {
-        let productId = this.props.match.params.id
+        let ProductId = this.props.match.params.id
         return (
             <div>
                 <HomeBanner />
                 <HomeHeader />
                 <DetailProduct
-                    productId={productId}
+                    ProductId={ProductId}
                 />
                 <OutstandingProduct />
                 <Footer />

@@ -71,6 +71,7 @@ class DetailCart extends Component {
 
     render() {
         const { cartdetails } = this.props;
+        console.log(cartdetails)
         let totalProductsCart = cartdetails.reduce((total, item) => {
             return total + item.amount
         }, 0)
@@ -159,8 +160,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         // payWithPaypal: () => dispatch(actions.payWithPaypalStart()),
-        clearCartdetail: (cartId) => dispatch(actions.clearCartdetail(cartId)),
-        fetchCartdetailStart: (cartId) => dispatch(actions.fetchCartdetailStart(cartId)),
+        clearCartdetail: (CartId) => dispatch(actions.clearCartdetail(CartId)),
+        fetchCartdetailStart: (CartId) => dispatch(actions.fetchCartdetailStart(CartId)),
 
     };
 };
