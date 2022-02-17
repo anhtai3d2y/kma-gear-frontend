@@ -47,13 +47,13 @@ class ProductManage extends Component {
             searchInfo: '',
 
         }
-        this.scrollTop = React.createRef()
+        // this.scrollTop = React.createRef()
     }
 
     async componentDidMount() {
         this.props.getProducttypeStart()
         this.props.getBrandStart()
-        this.handleScroll()
+        // this.handleScroll()
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
