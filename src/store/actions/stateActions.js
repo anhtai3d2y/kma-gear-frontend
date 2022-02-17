@@ -88,10 +88,10 @@ export const editStateFailed = () => ({
     type: actionTypes.EDIT_STATE_FAILED
 })
 
-export const deleteState = (stateId) => {
+export const deleteState = (StateId) => {
     return async (dispatch, getState) => {
         try {
-            let res = await deleteStateService(stateId)
+            let res = await deleteStateService(StateId)
             if (res && res.errCode === 0) {
                 dispatch(deleteStateSuccess())
                 toast('Xóa nhãn hàng thành công')

@@ -27,7 +27,7 @@ class BillManage extends Component {
             phoneNumber: '',
             address: '',
             note: '',
-            stateId: 0,
+            StateId: 0,
             PaymenttypeId: 1,
             createdAt: '',
             updatedAt: '',
@@ -55,7 +55,7 @@ class BillManage extends Component {
             let arrStates = this.props.statesRedux
             this.setState({
                 states: arrStates,
-                stateId: arrStates && arrStates.length > 0 ? arrStates[0].id : '',
+                StateId: arrStates && arrStates.length > 0 ? arrStates[0].id : '',
             })
         }
         if (prevProps.billsRedux !== this.props.billsRedux) {
@@ -70,7 +70,7 @@ class BillManage extends Component {
                 phoneNumber: '',
                 address: '',
                 note: '',
-                stateId: arrStates && arrStates.length > 0 ? arrStates[0].id : '',
+                StateId: arrStates && arrStates.length > 0 ? arrStates[0].id : '',
                 PaymenttypeId: 1,
                 createdAt: '',
                 updatedAt: '',
@@ -104,7 +104,7 @@ class BillManage extends Component {
                     phoneNumber: this.state.phoneNumber,
                     address: this.state.address,
                     note: this.state.note,
-                    stateId: this.state.stateId,
+                    StateId: this.state.StateId,
                     PaymenttypeId: this.state.PaymenttypeId,
                 }
                 await this.props.createNewBill(newBill)
@@ -120,7 +120,7 @@ class BillManage extends Component {
                     phoneNumber: this.state.phoneNumber,
                     address: this.state.address,
                     note: this.state.note,
-                    stateId: this.state.stateId,
+                    StateId: this.state.StateId,
                     PaymenttypeId: this.state.PaymenttypeId,
                 })
             }
@@ -130,7 +130,7 @@ class BillManage extends Component {
 
     checkValidateInput = () => {
         let isValid = true
-        let arrCheck = ['fullName', 'email', 'phoneNumber', 'address', 'note', 'stateId', 'PaymenttypeId']
+        let arrCheck = ['fullName', 'email', 'phoneNumber', 'address', 'note', 'StateId', 'PaymenttypeId']
         let arrMessage = ['Người nhận', 'Email', 'Số điện thoại', 'Địa chỉ', 'Ghi chú', 'Trạng thái', 'Phương thức thanh toán']
         for (let i = 0; i < arrCheck.length; i++) {
             if (!this.state[arrCheck[i]]) {
@@ -167,7 +167,7 @@ class BillManage extends Component {
             phoneNumber: bill.phoneNumber,
             address: bill.address,
             note: bill.note,
-            stateId: bill.stateId,
+            StateId: bill.StateId,
             PaymenttypeId: bill.PaymenttypeId,
 
             action: CRUDActions.EDIT,
@@ -201,7 +201,7 @@ class BillManage extends Component {
 
         // console.log('fetch state: ', this.state)
         let arrStates = this.state.states
-        let { fullName, email, phoneNumber, address, note, stateId, PaymenttypeId } = this.state
+        let { fullName, email, phoneNumber, address, note, StateId, PaymenttypeId } = this.state
         return (
             <div className="bill-manage-container" >
                 <div className="title">
@@ -258,8 +258,8 @@ class BillManage extends Component {
                                     <div className="col-6">
                                         <label className="mt-1">Trạng thái</label>
                                         <select id="" class="form-control"
-                                            onChange={(event) => { this.onChangeInput(event, 'stateId') }}
-                                            value={stateId}
+                                            onChange={(event) => { this.onChangeInput(event, 'StateId') }}
+                                            value={StateId}
                                         >
                                             {arrStates && arrStates.length > 0 &&
                                                 arrStates.map((state, index) => {

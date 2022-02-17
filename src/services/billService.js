@@ -23,18 +23,18 @@ const editBillService = (inputData) => {
     return axios.put('/api/edit-bill', inputData)
 }
 
-const deleteBillService = (billId) => {
+const deleteBillService = (BillId) => {
     return axios.delete('/api/delete-bill', {
         data: {
-            id: billId
+            id: BillId
         }
     })
 }
 
-const recoverBillService = (billId) => {
+const recoverBillService = (BillId) => {
     return axios.delete('/api/recover-bill', {
         data: {
-            id: billId
+            id: BillId
         }
     })
 }

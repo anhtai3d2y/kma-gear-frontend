@@ -45,7 +45,6 @@ class ProductCard extends Component {
                 }
                 await this.props.createNewCartdetail(newCartdetail)
                 await this.props.fetchCartdetailStart(this.props.cartInfo.id)
-                toast.success(`Sản phẩm đã được thêm vào giỏ hàng.`)
             }
         }
     }

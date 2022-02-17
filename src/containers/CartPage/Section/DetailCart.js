@@ -71,7 +71,6 @@ class DetailCart extends Component {
 
     render() {
         const { cartdetails } = this.props;
-        console.log(cartdetails)
         let totalProductsCart = cartdetails.reduce((total, item) => {
             return total + item.amount
         }, 0)

@@ -8,10 +8,10 @@ const createNewStateService = (data) => {
     return axios.post('/api/create-new-state', data)
 }
 
-const deleteStateService = (stateId) => {
+const deleteStateService = (StateId) => {
     return axios.delete('/api/delete-state', {
         data: {
-            id: stateId
+            id: StateId
         }
     })
 }

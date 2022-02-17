@@ -121,7 +121,7 @@ class DetailCheckout extends Component {
             phoneNumber: this.state.phoneNumber,
             address: this.state.address,
             note: this.state.note,
-            stateId: 1,
+            StateId: 1,
             PaymenttypeId: 1,
             payId: payId,
             totalPrice: totalPrice
@@ -133,11 +133,12 @@ class DetailCheckout extends Component {
         for (let i = 0; i < cartdetails.length; i++) {
             let cd = cartdetails[i]
             let newDetail = {
-                billId: this.props.bill.id,
+                BillId: this.props.bill.id,
                 ProductId: cd.ProductId,
                 price: cd.Product.price,
                 discount: cd.Product.discount,
                 amount: cd.amount,
+
             }
             let newProduct = {
                 id: cd.Product.id,
@@ -157,7 +158,6 @@ class DetailCheckout extends Component {
             arrDetails.push(newDetail)
             arrProducts.push(newProduct)
         }
-        console.log(arrDetails)
         await this.props.bulkCreateInvoicedetail(arrDetails)
         await this.props.updateAmountProduct(arrProducts)
         await this.props.clearCartdetail(this.props.cartInfo.id)
@@ -255,12 +255,12 @@ class DetailCheckout extends Component {
                                     />
                                     <label for="">Thanh toán qua Paypal</label>
                                 </div>
-                                <div className="input-group">
+                                {/* <div className="input-group">
                                     <input type="radio" value={3} className="input-radio" name="payMethod" checked={this.state.paymentType === 3}
                                         onClick={(event) => { this.handleChangePaymentType(event) }}
                                     />
                                     <label for="">Thanh toán qua ngân hàng</label>
-                                </div>
+                                </div> */}
                             </div>
 
                         </div>

@@ -161,10 +161,10 @@ export const editBillFailed = () => ({
     type: actionTypes.EDIT_BILL_FAILED
 })
 
-export const deleteBill = (billId) => {
+export const deleteBill = (BillId) => {
     return async (dispatch, getState) => {
         try {
-            let res = await deleteBillService(billId)
+            let res = await deleteBillService(BillId)
             if (res && res.errCode === 0) {
                 dispatch(deleteBillSuccess())
                 toast('Xóa đơn hàng thành công')
@@ -187,10 +187,10 @@ export const deleteBillFailed = () => ({
     type: actionTypes.DELETE_BILL_FAILED
 })
 
-export const recoverBill = (billId) => {
+export const recoverBill = (BillId) => {
     return async (dispatch, getState) => {
         try {
-            let res = await recoverBillService(billId)
+            let res = await recoverBillService(BillId)
             if (res && res.errCode === 0) {
                 dispatch(recoverBillSuccess())
                 toast('Khôi phục đơn hàng thành công')

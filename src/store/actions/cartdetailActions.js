@@ -20,7 +20,6 @@ export const fetchCartdetailStart = (CartId) => {
             dispatch({
                 type: actionTypes.FETCH_CARTDETAIL_START
             })
-
             let res = await getAllCartdetailsService(CartId.toString())
             if (res && res.errCode === 0) {
                 dispatch(fetchCartdetailSuccess(res.cartdetails))
@@ -96,7 +95,6 @@ export const editCartdetailFailed = () => ({
 export const deleteCartdetail = (cartdetailId) => {
     return async (dispatch, getState) => {
         try {
-            console.log(cartdetailId)
             let res = await deleteCartdetailService(cartdetailId)
             if (res && res.errCode === 0) {
                 dispatch(deleteCartdetailSuccess())

@@ -88,9 +88,9 @@ class TableRecycleBinBill extends Component {
                                             <tbody>
                                                 {
                                                     arrInvoicedetails.map((invoicedetail, index) => {
-                                                        if (invoicedetail.billId === bill.id)
+                                                        if (invoicedetail.BillId === bill.id)
                                                             sumPrice += invoicedetail.price * invoicedetail.amount * (1 - invoicedetail.discount / 100)
-                                                        return (invoicedetail.billId === bill.id) ? (
+                                                        return (invoicedetail.BillId === bill.id) ? (
                                                             <tr>
                                                                 <td>
                                                                     {invoicedetail.Product.name}
