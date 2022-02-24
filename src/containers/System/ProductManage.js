@@ -47,7 +47,7 @@ class ProductManage extends Component {
             searchInfo: '',
 
         }
-        // this.scrollTop = React.createRef()
+        this.scrollTop = React.createRef()
     }
 
     async componentDidMount() {
@@ -57,6 +57,7 @@ class ProductManage extends Component {
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
+        // this.handleScroll()
         if (prevProps.typesRedux !== this.props.typesRedux) {
             let arrTypes = this.props.typesRedux
             this.setState({
@@ -94,6 +95,7 @@ class ProductManage extends Component {
                 isShowForm: false
             })
         }
+
     }
 
     handleScroll = () => {

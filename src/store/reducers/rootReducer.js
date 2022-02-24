@@ -13,6 +13,7 @@ import cartdetailReducer from "./cartdetailReducer";
 import stateReducer from "./stateReducer";
 import invoicedetailReducer from "./invoicedetailReducer";
 import categoryReducer from "./categoryReducer";
+import currencyReducer from "./currencyReducer";
 import paypalReducer from "./paypalReducer";
 
 
@@ -64,5 +65,6 @@ export default (history) => combineReducers({
     cartdetail: cartdetailReducer,
     state: stateReducer,
     invoicedetail: invoicedetailReducer,
+    currency: currencyReducer,
     paypal: paypalReducer,
 })

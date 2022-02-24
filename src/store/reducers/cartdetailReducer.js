@@ -27,6 +27,11 @@ const cartdetailReducer = (state = initialState, action) => {
             return {
                 ...state,
             }
+        case actionTypes.PROCESS_CLEAR_CART_LOGOUT:
+            return {
+                ...state,
+                cartdetails: []
+            }
         default:
             return state;
     }

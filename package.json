@@ -1,5 +1,5 @@
 {
-  "name": "react-app-hoi-dan-it",
+  "name": "kma-gear-frontend",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -43,8 +43,9 @@
     "typescript": "^4.3.2"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "start": "react-scripts --max_old_space_size=4096 start",
+    "build": "react-scripts --max_old_space_size=4096 build",
+    "deploy add": "--max_old_space_size=4096",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },

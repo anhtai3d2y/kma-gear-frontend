@@ -28,6 +28,10 @@ const editUserService = (inputData) => {
     return axios.put('/api/edit-user', inputData)
 }
 
+const editUserPasswordService = (inputData) => {
+    return axios.put('/api/change-user-password', inputData)
+}
+
 const deleteUserService = (UserId) => {
     return axios.delete('/api/delete-user', {
         data: {
@@ -53,6 +57,7 @@ export {
     getAllUsersDeletedService,
     createNewUserService,
     editUserService,
+    editUserPasswordService,
     deleteUserService,
     recoverUserService,
 }

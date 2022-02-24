@@ -3,6 +3,9 @@ import { connect } from 'react-redux';
 import *  as actions from "../../../store/actions";
 import InfoItem from "./InfoItem.js";
 import { withRouter } from 'react-router';
+import { Redirect } from 'react-router-dom';
+import { Helmet } from 'react-helmet'
+import { ToastContainer, toast } from 'react-toastify';
 
 
 import './DetailCheckout.scss'
@@ -13,13 +16,12 @@ class DetailCheckout extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            fullName: this.props.cartInfo.fullName,
-            email: this.props.cartInfo.email,
-            phoneNumber: this.props.cartInfo.phoneNumber,
-            address: this.props.cartInfo.address,
-            note: this.props.cartInfo.note,
+            fullName: this.props.customerInfo ? this.props.customerInfo.fullName : '',
+            email: this.props.customerInfo ? this.props.customerInfo.email : '',
+            phoneNumber: this.props.customerInfo ? this.props.customerInfo.phoneNumber : '',
+            address: this.props.customerInfo ? this.props.customerInfo.address : '',
+            note: '',
             paymentType: 1,
-
             paypalLink: ''
         }
         this.scrollTop = React.createRef()
@@ -31,15 +33,6 @@ class DetailCheckout extends Component {
 
     componentDidUpdate(prevProps, prevState) {
         // this.handleScroll()
-        if (prevProps.cartInfo !== this.props.cartInfo) {
-            this.setState({
-                fullName: this.props.cartInfo.fullName,
-                email: this.props.cartInfo.email,
-                phoneNumber: this.props.cartInfo.phoneNumber,
-                address: this.props.cartInfo.address,
-                note: this.props.cartInfo.note,
-            })
-        }
     }
 
     handleScroll = () => {
@@ -71,36 +64,45 @@ class DetailCheckout extends Component {
     }
 
     paymentOnDelivery = () => {
-        this.createNewBill('', '')
+        let isValid = this.checkValidateInput()
+        if (isValid) {
+            this.createNewBill('', '')
+        }
     }
 
     paymentByPaypal = async () => {
-        let currencyVNDToUSD = await fetch('http://data.fixer.io/api/latest?access_key=f72e203d0060492aef14ae6921ab81f7&format=1')
-            .then(response => response.json())
-            .then(data => this.handleCaculateCurrency(data));
-        let arrDetails = []
-        let totalPrice = 0
-        let { cartdetails } = this.props
-        for (let i = 0; i < cartdetails.length; i++) {
-            let cd = cartdetails[i]
-            let price = Math.round(cd.price * (1 - cd.discount / 100) / currencyVNDToUSD * 100) / 100
-            let newDetail = {
-                name: cd.Product.name,
-                sku: cd.ProductId.toString(),
-                price: price,
-                currency: "USD",
-                quantity: cd.amount
+        // this.props.fetchCurrencyStart()
+        // let currencyVNDToUSD = await fetch('http://data.fixer.io/api/latest?access_key=f72e203d0060492aef14ae6921ab81f7&format=1')
+        //     .then(response => response.json())
+        //     .then(data => this.handleCaculateCurrency(data));
+        let isValid = this.checkValidateInput()
+        if (isValid) {
+            let currencyVNDToUSD = 23000
+            console.log('VND to USD', currencyVNDToUSD)
+            let arrDetails = []
+            let totalPrice = 0
+            let { cartdetails } = this.props
+            for (let i = 0; i < cartdetails.length; i++) {
+                let cd = cartdetails[i]
+                let price = Math.round(cd.price * (1 - cd.discount / 100) / currencyVNDToUSD * 100) / 100
+                let newDetail = {
+                    name: cd.Product.name,
+                    sku: cd.ProductId.toString(),
+                    price: price,
+                    currency: "USD",
+                    quantity: cd.amount
+                }
+                arrDetails.push(newDetail)
+                totalPrice = totalPrice + parseFloat((price * cd.amount).toFixed(2))
             }
-            arrDetails.push(newDetail)
-            totalPrice = totalPrice + parseFloat((price * cd.amount).toFixed(2))
+            totalPrice = parseFloat(totalPrice.toFixed(2))
+            await this.props.payWithPaypal({
+                arrDetails,
+                totalPrice: totalPrice.toString(),
+            })
+            this.createNewBill(this.props.paypalInfo.paymentId, totalPrice.toString())
+            window.open(this.props.paypalInfo.paypalLink)
         }
-        totalPrice = parseFloat(totalPrice.toFixed(2))
-        await this.props.payWithPaypal({
-            arrDetails,
-            totalPrice: totalPrice.toString(),
-        })
-        this.createNewBill(this.props.paypalInfo.paymentId, totalPrice.toString())
-        window.open(this.props.paypalInfo.paypalLink)
     }
 
     handleCaculateCurrency = (data) => {
@@ -174,6 +176,20 @@ class DetailCheckout extends Component {
         })
     }
 
+    checkValidateInput = () => {
+        let isValid = true
+        let arrCheck = ['fullName', 'email', 'phoneNumber', 'address']
+        let arrMessage = ['tên người nhận', 'email', 'số điện thoại', 'địa chỉ']
+        for (let i = 0; i < arrCheck.length; i++) {
+            if (!this.state[arrCheck[i]]) {
+                isValid = false
+                toast.error(`Bạn đang để trống ${arrMessage[i]}`)
+                return isValid
+            }
+        }
+        return isValid
+    }
+
     handleChangePaymentType = (event) => {
         this.setState({
             paymentType: Number(event.target.value)
@@ -186,7 +202,8 @@ class DetailCheckout extends Component {
     }
 
     render() {
-        const { cartdetails } = this.props;
+        const { cartdetails, customerInfo } = this.props;
+        let linkToRedirect = customerInfo && cartdetails && cartdetails.length > 0 ? '/checkout' : '/cart';
         let totalProductsCart = cartdetails.reduce((total, item) => {
             return total + item.amount
         }, 0)
@@ -195,6 +212,10 @@ class DetailCheckout extends Component {
         }, 0)
         return (
             <div className="detail-cart mt-4" ref={this.scrollTop}>
+                <Helmet>
+                    <title>Thanh toán</title>
+                </Helmet>
+                <Redirect to={linkToRedirect} />
                 <div className="container">
                     <div className="cart">
                         <div className="cart-products inline">
@@ -299,7 +320,9 @@ const mapStateToProps = state => {
         cartInfo: state.cart.carts,
         cartdetails: state.cartdetail.cartdetails,
         customerInfo: state.customer.customerInfo,
-        bill: state.bill.bill
+        bill: state.bill.bill,
+        currencyVNDToUSD: state.currency.currencyVNDToUSD,
+
     };
 };
 
@@ -311,6 +334,7 @@ const mapDispatchToProps = dispatch => {
         updateAmountProduct: (data) => dispatch(actions.updateAmountProduct(data)),
         clearCartdetail: (CartId) => dispatch(actions.clearCartdetail(CartId)),
         fetchCartdetailStart: (CartId) => dispatch(actions.fetchCartdetailStart(CartId)),
+        fetchCurrencyStart: () => dispatch(actions.fetchCurrencyStart()),
     };
 };
 

@@ -19,33 +19,37 @@ class ProductCard extends Component {
     }
 
     handleAddToCard = async (product, cartdetails) => {
-        let { isExisted, cartdetail } = this.checkExistedProduct(product, cartdetails)
-        let amountAddToCart = 1
-        let amount
-        if (isExisted) {
-            amount = product.amount - cartdetail.amount
-            if (amountAddToCart <= amount) {
-                await this.props.editCartdetail({
-                    id: cartdetail.id,
-                    amount: 1 + cartdetail.amount,
-                })
-            } else {
-                toast(`Bạn đã thêm hết số lượng của sản phẩm.`)
-            }
-            await this.props.fetchCartdetailStart(this.props.cartInfo.id)
-        } else {
-            amount = product.amount
-            if (amountAddToCart <= amount) {
-                let newCartdetail = {
-                    CartId: this.props.cartInfo.id,
-                    ProductId: product.id,
-                    price: product.price,
-                    amount: 1,
-                    discount: product.discount,
+        if (this.props.isCustomerLoggedIn) {
+            let { isExisted, cartdetail } = this.checkExistedProduct(product, cartdetails)
+            let amountAddToCart = 1
+            let amount
+            if (isExisted) {
+                amount = product.amount - cartdetail.amount
+                if (amountAddToCart <= amount) {
+                    await this.props.editCartdetail({
+                        id: cartdetail.id,
+                        amount: 1 + cartdetail.amount,
+                    })
+                } else {
+                    toast(`Bạn đã thêm hết số lượng của sản phẩm.`)
                 }
-                await this.props.createNewCartdetail(newCartdetail)
                 await this.props.fetchCartdetailStart(this.props.cartInfo.id)
+            } else {
+                amount = product.amount
+                if (amountAddToCart <= amount) {
+                    let newCartdetail = {
+                        CartId: this.props.cartInfo.id,
+                        ProductId: product.id,
+                        price: product.price,
+                        amount: 1,
+                        discount: product.discount,
+                    }
+                    await this.props.createNewCartdetail(newCartdetail)
+                    await this.props.fetchCartdetailStart(this.props.cartInfo.id)
+                }
             }
+        } else {
+            this.props.history.push(`/login`)
         }
     }
 
@@ -112,7 +116,9 @@ const mapStateToProps = state => {
         isLoggedIn: state.user.isLoggedIn,
         language: state.app.language,
         cartdetails: state.cartdetail.cartdetails,
-        cartInfo: state.cart.carts
+        cartInfo: state.cart.carts,
+        isCustomerLoggedIn: state.customer.isCustomerLoggedIn,
+
 
     };
 };

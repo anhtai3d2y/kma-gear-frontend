@@ -50,6 +50,7 @@ export const createNewCartdetail = (data) => {
             let res = await createNewCartdetailService(data)
             if (res && res.errCode === 0) {
                 dispatch(saveCartdetailSuccess())
+                toast('Sản phẩm đã được thêm vào giỏ hàng!')
             } else {
                 toast.error('Thêm sản phẩm trong giỏ hàng thất bại!')
                 dispatch(saveCartdetailFailed())
@@ -75,6 +76,7 @@ export const editCartdetail = (data) => {
             let res = await editCartdetailService(data)
             if (res && res.errCode === 0) {
                 dispatch(editCartdetailSuccess())
+                toast('Sản phẩm đã được thêm vào giỏ hàng!')
             } else {
                 dispatch(editCartdetailFailed())
             }
@@ -98,7 +100,6 @@ export const deleteCartdetail = (cartdetailId) => {
             let res = await deleteCartdetailService(cartdetailId)
             if (res && res.errCode === 0) {
                 dispatch(deleteCartdetailSuccess())
-                toast('Xóa sản phẩm trong giỏ hàng thành công')
             } else {
                 toast.error('Xóa sản phẩm trong giỏ hàng thất bại!')
                 dispatch(deleteCartdetailFailed())
@@ -141,4 +142,8 @@ export const clearCartdetailSuccess = () => ({
 })
 export const clearCartdetailFailed = () => ({
     type: actionTypes.CLEAR_CARTDETAIL_FAILED
+})
+
+export const processClearCartLogout = () => ({
+    type: actionTypes.PROCESS_CLEAR_CART_LOGOUT
 })

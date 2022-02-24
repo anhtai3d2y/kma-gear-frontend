@@ -6,6 +6,8 @@ import {
     getAllUsersDeletedService,
     getSearchUsers,
     recoverUserService,
+    editUserService,
+    editUserPasswordService,
 } from "../../services/userService";
 
 export const fetchUserDeletedStart = () => {
@@ -65,6 +67,33 @@ export const fetchAllUsersSuccess = (typesData) => ({
 
 export const fetchAllUsersFailed = () => ({
     type: actionTypes.FETCH_ALL_USER_FAILED
+})
+
+export const fetchUserStart = (id) => {
+    return async (dispatch, getState) => {
+        try {
+            let res = await getAllUsers(id)
+            console.log('res: ', res)
+            if (res && res.errCode === 0) {
+                dispatch(fetchUserSuccess(res.users))
+            } else {
+                dispatch(fetchUserFailed())
+            }
+        } catch (error) {
+            dispatch(fetchUserFailed())
+            console.log(error)
+            toast.error('Lấy thông tin người dùng thất bại!')
+        }
+    }
+}
+
+export const fetchUserSuccess = (typesData) => ({
+    type: actionTypes.FETCH_USER_SUCCESS,
+    data: typesData
+})
+
+export const fetchUserFailed = () => ({
+    type: actionTypes.FETCH_USER_FAILED
 })
 
 export const fetchSearchUserStart = (key) => {
@@ -176,4 +205,61 @@ export const saveUserSuccess = () => ({
 })
 export const saveUserFailed = () => ({
     type: actionTypes.ADD_USER_FAIL
+})
+
+export const editUser = (data) => {
+    return async (dispatch, getState) => {
+        try {
+            let res = await editUserService(data)
+            if (res && res.errCode === 0) {
+                // toast('Cập nhật sản phẩm thành công!')
+                dispatch(editUserSuccess())
+            } else {
+                toast.error('Cập nhật sản phẩm thất bại!')
+                dispatch(editUserFailed())
+            }
+        } catch (error) {
+            toast.error('Cập nhật sản phẩm thất bại!')
+            dispatch(editUserFailed())
+            console.log(error)
+        }
+    }
+}
+
+export const editUserSuccess = () => ({
+    type: actionTypes.EDIT_USER_SUCCESS
+})
+export const editUserFailed = () => ({
+    type: actionTypes.EDIT_USER_FAILED
+})
+
+export const editUserPassword = (data) => {
+    return async (dispatch, getState) => {
+        try {
+            let res = await editUserPasswordService(data)
+            if (res && res.errCode === 0) {
+                toast('Đổi mật khẩu thành công!')
+                toast('Vui lòng đăng nhập lại!')
+                dispatch(processCustomerLogout())
+                dispatch(editUserPasswordSuccess())
+            } else if (res && res.errCode === 1) {
+                toast.error('Mật khẩu cũ không chính xác!')
+                dispatch(editUserPasswordFailed())
+            } else {
+                toast.error('Đổi mật khẩu thất bại!')
+                dispatch(editUserPasswordFailed())
+            }
+        } catch (error) {
+            toast.error('Đổi mật khẩu thất bại!')
+            dispatch(editUserPasswordFailed())
+            console.log(error)
+        }
+    }
+}
+
+export const editUserPasswordSuccess = () => ({
+    type: actionTypes.EDIT_USER_PASSWORD_SUCCESS
+})
+export const editUserPasswordFailed = () => ({
+    type: actionTypes.EDIT_USER_PASSWORD_FAILED
 })

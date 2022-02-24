@@ -40,7 +40,7 @@ class BrandManage extends Component {
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        this.handleScroll()
+        // this.handleScroll()
 
         if (prevProps.brandsRedux !== this.props.brandsRedux) {
             this.setState({

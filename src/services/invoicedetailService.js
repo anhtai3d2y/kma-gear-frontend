@@ -5,6 +5,11 @@ const getAllInvoicedetailsService = (inputId) => {
     return axios.get(`/api/get-all-invoicedetails?id=${inputId}`)
 }
 
+const getAllInvoicedetailsByBillService = (inputId) => {
+
+    return axios.get(`/api/get-all-invoicedetails-by-bill?id=${inputId}`)
+}
+
 const createNewInvoicedetailService = (data) => {
     return axios.post('/api/create-new-invoicedetail', data)
 }
@@ -27,6 +32,7 @@ const editInvoicedetailService = (inputData) => {
 
 export {
     getAllInvoicedetailsService,
+    getAllInvoicedetailsByBillService,
     createNewInvoicedetailService,
     bulkCreateInvoicedetailService,
     deleteInvoicedetailService,

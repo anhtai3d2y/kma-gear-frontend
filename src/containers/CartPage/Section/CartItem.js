@@ -100,6 +100,7 @@ class CartItem extends Component {
 
     render() {
         let product = this.props.product
+        let isInBill = this.props.isInBill
         return (
             <>
                 <div className="cart-p-img">
@@ -131,25 +132,36 @@ class CartItem extends Component {
                     <div className="cart-p-actions">
                         Số lượng
                         <div className="cart-p-qty">
-                            <span className="qty-decrease"
-                                onClick={() => { this.handleReduceAmount(product) }}
-                            >-</span>
-                            <input type="tel" className="qty-input" value={this.state.amountProduct} />
-                            <span className="qty-increase"
-                                onClick={() => { this.handleIncreaseAmount(product) }}
-                            >+</span>
+                            {isInBill ? (
+                                <span>{product.amount}</span>
+                            ) : (
+                                <>
+                                    <span className="qty-decrease"
+                                        onClick={() => { this.handleReduceAmount(product) }}
+                                    >-</span>
+                                    <input type="tel" className="qty-input" value={this.state.amountProduct} />
+                                    <span className="qty-increase"
+                                        onClick={() => { this.handleIncreaseAmount(product) }}
+                                    >+</span>
+                                </>
+                            )}
                         </div>
-                        <div className="cart-p-remove"
-                            onClick={() => { this.handleRemoveProduct(product) }}
-                        >
-                            <svg width="14" height="16" viewBox="0 0 18 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M1.5 5H3.16667H16.5" stroke="#005EC4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-                                <path d="M5.66602 4.99984V3.33317C5.66602 2.89114 5.84161 2.46722 6.15417 2.15466C6.46673 1.8421 6.89066 1.6665 7.33268 1.6665H10.666C11.108 1.6665 11.532 1.8421 11.8445 2.15466C12.1571 2.46722 12.3327 2.89114 12.3327 3.33317V4.99984M14.8327 4.99984V16.6665C14.8327 17.1085 14.6571 17.5325 14.3445 17.845C14.032 18.1576 13.608 18.3332 13.166 18.3332H4.83268C4.39065 18.3332 3.96673 18.1576 3.65417 17.845C3.34161 17.5325 3.16602 17.1085 3.16602 16.6665V4.99984H14.8327Z" stroke="#005EC4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-                                <path d="M7.33398 9.1665V14.1665" stroke="#005EC4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-                                <path d="M10.666 9.1665V14.1665" stroke="#005EC4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-                            </svg>
-                            XOÁ
-                        </div>
+                        {isInBill ? (
+                            <></>
+                        ) : (
+                            <div className="cart-p-remove"
+                                onClick={() => { this.handleRemoveProduct(product) }}
+                            >
+                                <svg width="14" height="16" viewBox="0 0 18 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M1.5 5H3.16667H16.5" stroke="#005EC4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                                    <path d="M5.66602 4.99984V3.33317C5.66602 2.89114 5.84161 2.46722 6.15417 2.15466C6.46673 1.8421 6.89066 1.6665 7.33268 1.6665H10.666C11.108 1.6665 11.532 1.8421 11.8445 2.15466C12.1571 2.46722 12.3327 2.89114 12.3327 3.33317V4.99984M14.8327 4.99984V16.6665C14.8327 17.1085 14.6571 17.5325 14.3445 17.845C14.032 18.1576 13.608 18.3332 13.166 18.3332H4.83268C4.39065 18.3332 3.96673 18.1576 3.65417 17.845C3.34161 17.5325 3.16602 17.1085 3.16602 16.6665V4.99984H14.8327Z" stroke="#005EC4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                                    <path d="M7.33398 9.1665V14.1665" stroke="#005EC4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                                    <path d="M10.666 9.1665V14.1665" stroke="#005EC4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                                </svg>
+                                XOÁ
+                            </div>
+                        )}
+
                     </div>
                 </div>
             </>

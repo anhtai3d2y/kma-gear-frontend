@@ -46,11 +46,11 @@ class BillManage extends Component {
     async componentDidMount() {
         this.props.fetchBillsRedux()
         this.props.fetchStatesRedux()
-        this.handleScroll()
+        // this.handleScroll()
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        this.handleScroll()
+        // this.handleScroll()
         if (prevProps.statesRedux !== this.props.statesRedux) {
             let arrStates = this.props.statesRedux
             this.setState({
@@ -64,7 +64,7 @@ class BillManage extends Component {
             this.setState({
 
                 id: '',
-                UserId: null,
+                // UserId: null,
                 fullName: '',
                 email: '',
                 phoneNumber: '',

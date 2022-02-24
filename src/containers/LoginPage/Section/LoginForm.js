@@ -137,10 +137,7 @@ class LoginForm extends Component {
                                 >Đăng nhập</button>
                             </div>
                             <div className="col-12">
-                                <span className="forgot-password">Forgot your password?</span>
-                            </div>
-                            <div className="col-12">
-
+                                <span className="forgot-password">Quên mật khẩu?</span>
                             </div>
                         </div>
                     </div>

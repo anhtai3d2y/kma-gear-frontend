@@ -270,7 +270,6 @@ export const deleteProduct = (ProductId) => {
             let res = await deleteProductService(ProductId)
             if (res && res.errCode === 0) {
                 dispatch(deleteProductSuccess())
-                toast('Xóa sản phẩm thành công')
             } else {
                 toast.error('Xóa sản phẩm thất bại!')
                 dispatch(deleteProductFailed())

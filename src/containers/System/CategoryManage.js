@@ -37,11 +37,11 @@ class CategoryManage extends Component {
 
     async componentDidMount() {
         this.props.fetchCategorysRedux()
-        this.handleScroll()
+        // this.handleScroll()
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        this.handleScroll()
+        // this.handleScroll()
 
         if (prevProps.categorysRedux !== this.props.categorysRedux) {
             this.setState({

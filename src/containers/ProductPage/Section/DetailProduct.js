@@ -107,43 +107,50 @@ class DetailProduct extends Component {
     }
 
     handbleGoBuy = (product, cartdetails) => {
-        this.handleAddToCart(product, cartdetails)
-        this.props.history.push(`/cart`)
+        if (this.props.isCustomerLoggedIn) {
+            this.handleAddToCart(product, cartdetails)
+            this.props.history.push(`/cart`)
+        } else {
+            this.props.history.push(`/login`)
+        }
     }
 
     handleAddToCart = async (product, cartdetails) => {
-        let { isExisted, cartdetail } = this.checkExistedProduct(product, cartdetails)
-        let amountAddToCart = this.state.amountAddToCart
-        let amount
-        if (isExisted) {
-            amount = product.amount - cartdetail.amount
-            if (amountAddToCart <= amount) {
-                await this.props.editCartdetail({
-                    id: cartdetail.id,
-                    amount: this.state.amountAddToCart + cartdetail.amount,
-                })
-            } else {
-                toast(`Bạn đã thêm hết số lượng của sản phẩm.`)
-            }
-            await this.props.fetchCartdetailStart(this.props.cartInfo.id)
-        } else {
-            amount = product.amount
-            if (amountAddToCart <= amount) {
-                let newCartdetail = {
-                    CartId: this.props.cartInfo.id,
-                    ProductId: product.id,
-                    price: product.price,
-                    amount: this.state.amountAddToCart,
-                    discount: product.discount,
+        if (this.props.isCustomerLoggedIn) {
+            let { isExisted, cartdetail } = this.checkExistedProduct(product, cartdetails)
+            let amountAddToCart = this.state.amountAddToCart
+            let amount
+            if (isExisted) {
+                amount = product.amount - cartdetail.amount
+                if (amountAddToCart <= amount) {
+                    await this.props.editCartdetail({
+                        id: cartdetail.id,
+                        amount: this.state.amountAddToCart + cartdetail.amount,
+                    })
+                } else {
+                    toast(`Bạn đã thêm hết số lượng của sản phẩm.`)
                 }
-                await this.props.createNewCartdetail(newCartdetail)
                 await this.props.fetchCartdetailStart(this.props.cartInfo.id)
-                toast.success(`Sản phẩm đã được thêm vào giỏ hàng.`)
+            } else {
+                amount = product.amount
+                if (amountAddToCart <= amount) {
+                    let newCartdetail = {
+                        CartId: this.props.cartInfo.id,
+                        ProductId: product.id,
+                        price: product.price,
+                        amount: this.state.amountAddToCart,
+                        discount: product.discount,
+                    }
+                    await this.props.createNewCartdetail(newCartdetail)
+                    await this.props.fetchCartdetailStart(this.props.cartInfo.id)
+                }
             }
+            this.setState({
+                amountAddToCart: 1
+            })
+        } else {
+            this.props.history.push(`/login`)
         }
-        this.setState({
-            amountAddToCart: 1
-        })
     }
 
     checkExistedProduct = (product, cartdetails) => {
@@ -290,7 +297,9 @@ const mapStateToProps = state => {
     return {
         productsByIdRedux: state.product.productsById,
         cartdetails: state.cartdetail.cartdetails,
-        cartInfo: state.cart.carts
+        cartInfo: state.cart.carts,
+        isCustomerLoggedIn: state.customer.isCustomerLoggedIn,
+
     };
 };
 

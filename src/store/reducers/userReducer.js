@@ -87,6 +87,7 @@ const appReducer = (state = initialState, action) => {
                 userInfo: null
             }
         case actionTypes.PROCESS_USER_LOGOUT:
+
             return {
                 ...state,
                 isLoggedIn: false,
@@ -105,6 +106,27 @@ const appReducer = (state = initialState, action) => {
                 customerInfo: null
             }
         case actionTypes.PROCESS_CUSTOMER_LOGOUT:
+            console.log('logout')
+            return {
+                ...state,
+                isCustomerLoggedIn: false,
+                customerInfo: null
+            }
+        case actionTypes.FETCH_USER_SUCCESS:
+            console.log('action info cus: ', action)
+            copyState = { ...state }
+            copyState.isCustomerLoggedIn = true
+            copyState.customerInfo = action.data
+            return {
+                ...copyState,
+            }
+        // return {
+        //     ...state,
+        //     isCustomerLoggedIn: true,
+        //     customerInfo: action.customerInfo
+        // }
+        case actionTypes.FETCH_USER_FAILED:
+            console.log('n chay vao day nay')
             return {
                 ...state,
                 isCustomerLoggedIn: false,

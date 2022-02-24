@@ -1,6 +1,7 @@
 import actionTypes from './actionTypes';
 import {
     getAllInvoicedetailsService,
+    getAllInvoicedetailsByBillService,
     createNewInvoicedetailService,
     bulkCreateInvoicedetailService,
     deleteInvoicedetailService,
@@ -42,6 +43,37 @@ export const fetchInvoicedetailSuccess = (typesData) => ({
 
 export const fetchInvoicedetailFailed = () => ({
     type: actionTypes.FETCH_INVOICEDETAIL_FAILED
+})
+
+export const fetchInvoicedetailByBillStart = (id) => {
+
+    return async (dispatch, getState) => {
+        try {
+            dispatch({
+                type: actionTypes.FETCH_INVOICEDETAIL_BY_BILL_START
+            })
+
+            let res = await getAllInvoicedetailsByBillService(id)
+            if (res && res.errCode === 0) {
+                dispatch(fetchInvoicedetailByBillSuccess(res.invoicedetails.reverse()))
+            } else {
+                dispatch(fetchInvoicedetailByBillFailed())
+            }
+        } catch (error) {
+            dispatch(fetchInvoicedetailByBillFailed())
+            console.log(error)
+            toast.error('Lấy đơn hàng thất bại!')
+        }
+    }
+}
+
+export const fetchInvoicedetailByBillSuccess = (typesData) => ({
+    type: actionTypes.FETCH_INVOICEDETAIL_BY_BILL_SUCCESS,
+    data: typesData
+})
+
+export const fetchInvoicedetailByBillFailed = () => ({
+    type: actionTypes.FETCH_INVOICEDETAIL_BY_BILL_FAILED
 })
 
 
