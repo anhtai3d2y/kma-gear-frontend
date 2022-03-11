@@ -4,6 +4,7 @@ import actionTypes from '../actions/actionTypes';
 const initialState = {
     isLoadingType: false,
     types: [],
+    typeById: [],
     typesDeleted: []
 }
 
@@ -27,6 +28,26 @@ const producttypeReducer = (state = initialState, action) => {
             // let state = { ...state }
             state.isLoadingType = false
             state.types = []
+            return {
+                ...state,
+            }
+        case actionTypes.FETCH_PRODUCTTYPE_BY_ID_START:
+            // let copyState = { ...state }
+            state.isLoadingType = true
+            return {
+                ...state,
+            }
+        case actionTypes.FETCH_PRODUCTTYPE_BY_ID_SUCCESS:
+            copyState = { ...state }
+            copyState.typeById = action.data
+
+            return {
+                ...copyState,
+            }
+        case actionTypes.FETCH_PRODUCTTYPE_BY_ID_FAILED:
+            // let state = { ...state }
+            state.isLoadingType = false
+            state.typeById = []
             return {
                 ...state,
             }

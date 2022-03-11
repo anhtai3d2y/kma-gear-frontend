@@ -50,6 +50,18 @@ const productReducer = (state = initialState, action) => {
             return {
                 ...state,
             }
+        case actionTypes.FETCH_PRODUCTS_BY_BRAND_SUCCESS:
+            copyState = { ...state }
+            copyState.products = action.products
+            return {
+                ...copyState,
+            }
+        case actionTypes.FETCH_PRODUCTS_BY_BRAND_FAILED:
+            state.isLoadingProducts = false
+            state.products = []
+            return {
+                ...state,
+            }
         case actionTypes.FETCH_SEARCH_PRODUCTS_SHOW_SUCCESS:
             copyState = { ...state }
             copyState.products = copyState.productsSearch
@@ -57,6 +69,19 @@ const productReducer = (state = initialState, action) => {
                 ...copyState,
             }
         case actionTypes.FETCH_SEARCH_PRODUCTS_SHOW_FAILED:
+            // let state = { ...state }
+            state.isLoadingProducts = false
+            state.products = []
+            return {
+                ...state,
+            }
+        case actionTypes.FETCH_TOP_NEW_PRODUCTS_SHOW_SUCCESS:
+            copyState = { ...state }
+            copyState.products = copyState.topProducts
+            return {
+                ...copyState,
+            }
+        case actionTypes.FETCH_TOP_NEW_PRODUCTS_SHOW_FAILED:
             // let state = { ...state }
             state.isLoadingProducts = false
             state.products = []

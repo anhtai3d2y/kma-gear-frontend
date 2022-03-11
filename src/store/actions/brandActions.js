@@ -45,6 +45,36 @@ export const fetchBrandFailed = () => ({
     type: actionTypes.FETCH_BRAND_FAILED
 })
 
+export const fetchBrandByIdStart = (id) => {
+
+    return async (dispatch, getState) => {
+        try {
+            dispatch({
+                type: actionTypes.FETCH_BRAND_BY_ID_START
+            })
+
+            let res = await getAllBrandsService(id)
+            if (res && res.errCode === 0) {
+                dispatch(fetchBrandByIdSuccess(res.brands))
+            } else {
+                dispatch(fetchBrandByIdFailed())
+            }
+        } catch (error) {
+            dispatch(fetchBrandByIdFailed())
+            console.log(error)
+        }
+    }
+}
+
+export const fetchBrandByIdSuccess = (brandsData) => ({
+    type: actionTypes.FETCH_BRAND_BY_ID_SUCCESS,
+    data: brandsData
+})
+
+export const fetchBrandByIdFailed = () => ({
+    type: actionTypes.FETCH_BRAND_BY_ID_FAILED
+})
+
 export const fetchSearchBrandStart = (key) => {
 
     return async (dispatch, getState) => {

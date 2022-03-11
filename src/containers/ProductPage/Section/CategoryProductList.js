@@ -1,7 +1,16 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Helmet } from 'react-helmet'
+
 import *  as actions from "../../../store/actions";
 import ProductCard from '../../ProductPage/Section/ProductCard.js'
+import {
+    sortByDateDESC,
+    sortByPriceASC,
+    sortByPriceDESC,
+    sortByNameASC,
+    sortByNameDESC,
+} from '../../../utils/SortUtils.js';
 
 
 import './CategoryProductList.scss'
@@ -14,6 +23,7 @@ class CategoryProductList extends Component {
         this.state = {
             // mainBanners: []
             amountShowProduct: 12,
+            sortBy: 1,
         }
         this.scrollTop = React.createRef()
     }
@@ -45,22 +55,60 @@ class CategoryProductList extends Component {
         }
     }
 
+    handleChangeSortType = (e) => {
+        this.setState({
+            sortBy: Number(e.target.value)
+        })
+    }
+
+    sort = (arrProducts) => {
+        switch (this.state.sortBy) {
+            case 1:
+                arrProducts.sort(sortByDateDESC)
+                break;
+            case 2:
+                arrProducts.sort(sortByPriceASC)
+                break;
+            case 3:
+                arrProducts.sort(sortByPriceDESC)
+                break;
+            case 4:
+                arrProducts.sort(sortByNameASC)
+                break;
+            case 5:
+                arrProducts.sort(sortByNameDESC)
+                break;
+
+            default:
+                break;
+        }
+        return arrProducts
+    }
+
     render() {
         let arrProducts = this.props.productsRedux
+        arrProducts = this.sort(arrProducts)
+        let title = this.props.title ? (this.props.title) : "Danh sách sản phẩm"
+
         return (
             <div className="category-product-list mt-4" ref={this.scrollTop}>
+                <Helmet>
+                    <title>{title}</title>
+                </Helmet>
                 <div className="container">
                     <div className="list-header">
                         <div className="list-header-top">
-                            <div className="category-name">Danh sách sản phẩm <span>({arrProducts.length} sản phẩm)</span></div>
+                            <div className="category-name">{title} <span>({arrProducts.length} sản phẩm)</span></div>
                             <div className="category-sort">
                                 Sắp xếp theo:
-                                <select id="input-sort" className="form-control">
-                                    <option value="https://www.tncstore.vn/gaming-laptop.html?sort=p.date_added&amp;order=DESC">Mới nhất</option>
-                                    <option value="">Giá (Thấp - cao)</option>
-                                    <option value="">Giá (Cao - thấp)</option>
-                                    <option value="">Tên (A - Z)</option>
-                                    <option value="">Tên (Z - A)</option>
+                                <select id="input-sort" className="form-control"
+                                    onChange={(e) => this.handleChangeSortType(e)}
+                                >
+                                    <option value="1">Mới nhất</option>
+                                    <option value="2">Giá (Thấp - cao)</option>
+                                    <option value="3">Giá (Cao - thấp)</option>
+                                    <option value="4">Tên (A - Z)</option>
+                                    <option value="5">Tên (Z - A)</option>
                                 </select>
                             </div>
                         </div>

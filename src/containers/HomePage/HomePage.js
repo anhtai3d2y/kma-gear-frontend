@@ -30,7 +30,6 @@ class HomePage extends Component {
                 <HomeSubBannerSlide />
                 <OutstandingProduct />
                 <AllBrands />
-                {/* <CategoryProductList /> */}
                 <Footer />
             </div>
         );

@@ -170,6 +170,11 @@ class DetailProduct extends Component {
         return existed
     }
 
+    handleGoProductPage = (e, id) => {
+        e.preventDefault()
+        this.props.history.push(`/list-product-brand/${id}`)
+    }
+
     render() {
         let product = this.props.productsByIdRedux
         const { cartdetails } = this.props
@@ -181,8 +186,10 @@ class DetailProduct extends Component {
                 <div className="container">
                     <div className="product-detail-top">
                         <div className="product-detail-top-left">
-                            <a href="https://www.tncstore.vn/index.php?route=product/manufacturer/info&amp;manufacturer_id=158"
-                                title={product && product.Brand && product.Brand.name} className="product-brand">
+                            <a href=""
+                                title={product && product.Brand && product.Brand.name} className="product-brand"
+                                onClick={(e) => this.handleGoProductPage(e, product.Brand.id)}
+                            >
                                 <img src={product && product.Brand && product.Brand.image} alt={product && product.Brand && product.Brand.name} />
                             </a>
                             <div className="product-image">

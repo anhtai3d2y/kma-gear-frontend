@@ -3,6 +3,7 @@ import {
     createNewProductService,
     getAllProductsDeletedService,
     getProductsByTypeService,
+    getProductsByBrandService,
     getAllProductsService,
     getTopProductsHomeService,
     getSearchProducts,
@@ -66,6 +67,32 @@ export const fetchProductsByTypeFailed = () => ({
     type: actionTypes.FETCH_PRODUCTS_BY_TYPE_FAILED
 })
 
+export const fetchProductsByBrandStart = (id) => {
+    return async (dispatch, getState) => {
+        try {
+            let res = await getProductsByBrandService(id)
+            if (res && res.errCode === 0) {
+                dispatch(fetchProductsByBrandSuccess(res.products.reverse()))
+            } else {
+                toast.error('Lấy sản phẩm thất bại!')
+                dispatch(fetchProductsByBrandFailed())
+            }
+        } catch (error) {
+            toast.error('Lấy sản phẩm thất bại!')
+            dispatch(fetchProductsByBrandFailed())
+            console.log(error)
+        }
+    }
+}
+
+export const fetchProductsByBrandSuccess = (data) => ({
+    type: actionTypes.FETCH_PRODUCTS_BY_BRAND_SUCCESS,
+    products: data
+})
+export const fetchProductsByBrandFailed = () => ({
+    type: actionTypes.FETCH_PRODUCTS_BY_BRAND_FAILED,
+})
+
 export const fetchSearchProductsStart = (key) => {
     return async (dispatch, getState) => {
         try {
@@ -95,7 +122,7 @@ export const fetchSearchProductsShowStart = () => {
         try {
             dispatch(fetchSearchProductsShowSuccess())
         } catch (error) {
-            dispatch(fetchSearchProductsFailed())
+            dispatch(fetchSearchProductsShowFailed())
             console.log(error)
         }
     }
@@ -106,6 +133,24 @@ export const fetchSearchProductsShowSuccess = () => ({
 })
 export const fetchSearchProductsShowFailed = () => ({
     type: actionTypes.FETCH_SEARCH_PRODUCTS_SHOW_FAILED
+})
+
+export const fetchOutstandingProductsShowStart = () => {
+    return async (dispatch, getState) => {
+        try {
+            dispatch(fetchOutstandingProductsShowSuccess())
+        } catch (error) {
+            dispatch(fetchOutstandingProductsShowFailed())
+            console.log(error)
+        }
+    }
+}
+
+export const fetchOutstandingProductsShowSuccess = () => ({
+    type: actionTypes.FETCH_TOP_NEW_PRODUCTS_SHOW_SUCCESS,
+})
+export const fetchOutstandingProductsShowFailed = () => ({
+    type: actionTypes.FETCH_TOP_NEW_PRODUCTS_SHOW_FAILED
 })
 
 export const fetchAllProductsDeletedStart = () => {
@@ -163,7 +208,7 @@ export const fetchProductsByIdFailed = () => ({
 export const fetchTopProductsHomeStart = () => {
     return async (dispatch, getState) => {
         try {
-            let res = await getTopProductsHomeService(10)
+            let res = await getTopProductsHomeService()
 
             if (res && res.errCode === 0) {
 

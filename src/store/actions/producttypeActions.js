@@ -46,6 +46,37 @@ export const fetchProducttypeFailed = () => ({
     type: actionTypes.FETCH_PRODUCTTYPE_FAILED
 })
 
+export const fetchProducttypeByIdStart = (id) => {
+
+    return async (dispatch, getState) => {
+        try {
+            dispatch({
+                type: actionTypes.FETCH_PRODUCTTYPE_BY_ID_START
+            })
+
+            let res = await getAllProducttypesService(id)
+            if (res && res.errCode === 0) {
+                dispatch(fetchProducttypeByIdSuccess(res.producttypes))
+            } else {
+                dispatch(fetchProducttypeByIdFailed())
+            }
+        } catch (error) {
+            dispatch(fetchProducttypeByIdFailed())
+            console.log(error)
+            toast.error('Lấy loại sản phẩm thất bại!')
+        }
+    }
+}
+
+export const fetchProducttypeByIdSuccess = (typesData) => ({
+    type: actionTypes.FETCH_PRODUCTTYPE_BY_ID_SUCCESS,
+    data: typesData
+})
+
+export const fetchProducttypeByIdFailed = () => ({
+    type: actionTypes.FETCH_PRODUCTTYPE_BY_ID_FAILED
+})
+
 export const fetchSearchProducttypeStart = (key) => {
 
     return async (dispatch, getState) => {

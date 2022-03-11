@@ -16,11 +16,30 @@
             position: relative;
         }
     }
+    .block-readmore {
+        text-align: center;
+        cursor: pointer;
+        a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 207px;
+            height: 44px;
+            left: 617px;
+            top: 2016px;
+            background: #005ec4;
+            color: #fff;
+            font-weight: 700;
+            font-size: 16px;
+            text-decoration: none;
+        }
+    }
 }
 .outstanding-product {
     margin: 50px 0;
     height: 420px;
     background-color: #eef0f7;
+
     .outstanding-product-content {
         // position: relative;
         height: 100%;

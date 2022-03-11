@@ -8,6 +8,7 @@ import { SwiperSlide } from "swiper/react/swiper-slide";
 
 import ProductCard from '../../ProductPage/Section/ProductCard.js'
 import BlockHeaderTitle from './BlockHeaderTitle.js'
+import { withRouter } from 'react-router';
 
 import *  as actions from "../../../store/actions";
 
@@ -42,6 +43,10 @@ class AllBrands extends Component {
         }
     }
 
+    handleGoProductPage = (id) => {
+        this.props.history.push(`/list-product-brand/${id}`)
+    }
+
     render() {
         let arrBrands = this.state.arrBrands
         return (
@@ -64,7 +69,9 @@ class AllBrands extends Component {
                                 arrBrands.map((brand, index) => {
                                     return (
                                         <SwiperSlide>
-                                            <div className="brand-img" >
+                                            <div className="brand-img" style={{ cursor: "pointer" }}
+                                                onClick={() => this.handleGoProductPage(brand.id)}
+                                            >
                                                 <img src={brand.image} />
                                                 <div>{brand.name}</div>
                                             </div>
@@ -75,7 +82,7 @@ class AllBrands extends Component {
                         </Swiper>
                     </div>
                 </div>
-            </div>
+            </div >
 
         );
     }
@@ -97,4 +104,4 @@ const mapDispatchToProps = dispatch => {
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(AllBrands);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(AllBrands));

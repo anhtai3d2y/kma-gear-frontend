@@ -6,6 +6,7 @@ export const path = {
     SYSTEM: '/system',
     PRODUCT: '/product/:id',
     LIST_PRODUCT: '/list-product/:id',
+    LIST_PRODUCT_BRAND: '/list-product-brand/:id',
     LIST_PRODUCT_SEARCH: '/search/list-product',
     CART: '/cart',
     CHECKOUT: '/checkout',

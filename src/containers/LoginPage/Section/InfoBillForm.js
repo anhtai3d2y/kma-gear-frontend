@@ -64,6 +64,17 @@ class InfoBillForm extends Component {
         return result.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ".");
     }
 
+    convertDate = (date) => {
+        let newDate = new Date(date)
+        newDate = newDate.getDate() +
+            "/" + (newDate.getMonth() + 1) +
+            "/" + newDate.getFullYear() +
+            " " + newDate.getHours() +
+            ":" + newDate.getMinutes() +
+            ":" + newDate.getSeconds()
+        return newDate
+    }
+
     render() {
         const { billsByCustomer, invoicedetails } = this.props;
         let arrBills = billsByCustomer
@@ -101,7 +112,7 @@ class InfoBillForm extends Component {
                                         let sumPrice = 0
                                         return (
                                             <tr >
-                                                <td>{bill.createdAt}</td>
+                                                <td>{this.convertDate(bill.createdAt)}</td>
                                                 <td>{bill.fullName}</td>
                                                 <td>{bill.email}</td>
                                                 <td>{bill.phoneNumber}</td>

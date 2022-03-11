@@ -263,6 +263,9 @@ class ProductManage extends Component {
             isShowForm: true
         })
     }
+
+
+
     handleOpenRecycleBin = () => {
         this.setState({
             isOpenRecycleBin: !this.state.isOpenRecycleBin
@@ -272,6 +275,7 @@ class ProductManage extends Component {
     render() {
         let types = this.state.typeProductArr
         let brands = this.state.brandArr
+
         // isLoadingType dùng khi cần hiển thị màn hình loading
         // let isLoadingType = this.props.isLoadingType
 

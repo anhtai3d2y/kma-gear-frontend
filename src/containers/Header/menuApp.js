@@ -12,6 +12,7 @@ export const adminMenu = [
                     { name: 'menu.admin.admin-administrator.bill-manage', link: '/system/bill-manage' },
                     { name: 'menu.admin.admin-administrator.brand-manage', link: '/system/brand-manage' },
                     { name: 'menu.admin.admin-administrator.banner-manage', link: '/system/banner-manage' },
+                    { name: 'menu.admin.admin-administrator.statistic', link: '/system/statistic' },
                 ]
             },
             // { name: 'menu.admin.admin-parameter.header', link: '/admin/admin-parameter' },

@@ -5,6 +5,7 @@ import { changeLanguageApp } from "../../../store/actions";
 
 import { Swiper } from "swiper/react/swiper";
 import { SwiperSlide } from "swiper/react/swiper-slide";
+import { withRouter } from 'react-router';
 
 import ProductCard from '../../ProductPage/Section/ProductCard.js'
 import BlockHeaderTitle from './BlockHeaderTitle.js'
@@ -42,12 +43,18 @@ class OutstandingProduct extends Component {
         this.props.fetchTopProductsHomeRedux()
     }
 
+    handleSeeMore = (e) => {
+        e.preventDefault()
+        this.props.fetchOutstandingProductsShowRedux()
+        this.props.history.push(`/search/list-product`)
+    }
+
 
     render() {
         let arrProducts = this.state.arrProducts
         return (
             <div className="container">
-                <BlockHeaderTitle headerTitle="SẢN PHẨM BÁN CHẠY" />
+                <BlockHeaderTitle headerTitle="SẢN PHẨM MỚI" />
                 <div className="outstanding-product">
                     <div className="outstanding-product-content">
                         <Swiper
@@ -62,7 +69,7 @@ class OutstandingProduct extends Component {
                             className="mySwiper"
                         >
                             {arrProducts && arrProducts.length > 0 &&
-                                arrProducts.map((product, index) => {
+                                arrProducts.slice(0, 9).map((product, index) => {
                                     return (
                                         <SwiperSlide>
                                             <ProductCard product={product} />
@@ -71,8 +78,13 @@ class OutstandingProduct extends Component {
                                 })
                             }
                         </Swiper>
+
                     </div>
+
                 </div>
+                <div className="block-readmore mt-0"><a href=""
+                    onClick={(e) => this.handleSeeMore(e)}
+                >XEM THÊM</a></div>
             </div>
 
         );
@@ -92,7 +104,8 @@ const mapDispatchToProps = dispatch => {
     return {
         changeLanguageAppRedux: (language) => dispatch(changeLanguageApp(language)),
         fetchTopProductsHomeRedux: () => dispatch(actions.fetchTopProductsHomeStart()),
+        fetchOutstandingProductsShowRedux: () => dispatch(actions.fetchOutstandingProductsShowStart()),
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(OutstandingProduct);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(OutstandingProduct));

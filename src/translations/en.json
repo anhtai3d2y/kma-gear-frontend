@@ -18,7 +18,8 @@
                 "category-manage": "Quản lý danh mục",
                 "bill-manage": "Quản lý đơn hàng",
                 "brand-manage": "Quản lý nhãn hàng",
-                "banner-manage": "Quản lý biển quảng cáo"
+                "banner-manage": "Quản lý biển quảng cáo",
+                "statistic": "Thống kê"
             },
             "admin-parameter": {
                 "header": "admin-parameter"

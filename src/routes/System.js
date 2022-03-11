@@ -8,6 +8,7 @@ import CategoryManage from '../containers/System/CategoryManage';
 import BillManage from '../containers/System/BillManage';
 import BrandManage from '../containers/System/BrandManage';
 import BannerManage from '../containers/System/BannerManage';
+import Statistic from '../containers/System/Statistic';
 import Header from '../containers/Header/Header';
 
 class System extends Component {
@@ -27,6 +28,7 @@ class System extends Component {
                             <Route path="/system/bill-manage" component={BillManage} />
                             <Route path="/system/brand-manage" component={BrandManage} />
                             <Route path="/system/banner-manage" component={BannerManage} />
+                            <Route path="/system/statistic" component={Statistic} />
                             <Route component={() => { return (<Redirect to={systemMenuPath} />) }} />
                         </Switch>
                     </div>

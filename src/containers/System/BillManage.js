@@ -130,8 +130,8 @@ class BillManage extends Component {
 
     checkValidateInput = () => {
         let isValid = true
-        let arrCheck = ['fullName', 'email', 'phoneNumber', 'address', 'note', 'StateId', 'PaymenttypeId']
-        let arrMessage = ['Người nhận', 'Email', 'Số điện thoại', 'Địa chỉ', 'Ghi chú', 'Trạng thái', 'Phương thức thanh toán']
+        let arrCheck = ['fullName', 'email', 'phoneNumber', 'address', 'StateId', 'PaymenttypeId']
+        let arrMessage = ['Người nhận', 'Email', 'Số điện thoại', 'Địa chỉ', 'Trạng thái', 'Phương thức thanh toán']
         for (let i = 0; i < arrCheck.length; i++) {
             if (!this.state[arrCheck[i]]) {
                 isValid = false

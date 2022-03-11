@@ -9,23 +9,23 @@ import *  as actions from "../../store/actions";
 
 
 
-class ListProductPage extends Component {
+class ListProductBrandPage extends Component {
 
     componentDidMount() {
-        this.props.fetchProductsByTypeRedux(this.props.match.params.id)
-        this.props.fetchProducttypeByIdRedux(this.props.match.params.id)
+        this.props.fetchProductsByBrandRedux(this.props.match.params.id)
+        this.props.fetchBrandByIdRedux(this.props.match.params.id)
     }
 
     render() {
-        if (Number(this.props.match.params.id) !== this.props.producttypesRedux.id) {
-            this.props.fetchProducttypeByIdRedux(this.props.match.params.id)
+        if (Number(this.props.match.params.id) !== this.props.brandById.id) {
+            this.props.fetchBrandByIdRedux(this.props.match.params.id)
         }
         return (
             <div>
                 <HomeBanner />
                 <HomeHeader />
                 <CategoryProductList
-                    title={this.props.producttypesRedux.typeName}
+                    title={this.props.brandById.name}
                 />
                 <OutstandingProduct />
                 <Footer />
@@ -37,8 +37,7 @@ class ListProductPage extends Component {
 
 const mapStateToProps = state => {
     return {
-        productsRedux: state.product.products,
-        producttypesRedux: state.producttype.typeById
+        brandById: state.brand.brandById,
 
     };
 };
@@ -46,10 +45,10 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         fetchAllProductsRedux: () => dispatch(actions.fetchAllProductsStart()),
-        fetchProductsByTypeRedux: (id) => dispatch(actions.fetchProductsByTypeStart(id)),
-        fetchProducttypeByIdRedux: (id) => dispatch(actions.fetchProducttypeByIdStart(id)),
+        fetchProductsByBrandRedux: (id) => dispatch(actions.fetchProductsByBrandStart(id)),
+        fetchBrandByIdRedux: (id) => dispatch(actions.fetchBrandByIdStart(id)),
 
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ListProductPage);
+export default connect(mapStateToProps, mapDispatchToProps)(ListProductBrandPage);

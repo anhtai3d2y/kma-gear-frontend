@@ -53,7 +53,7 @@ class Footer extends Component {
                             <p>Showroom : 141 Chiến Thắng, Tân Triều, Thanh Trì, Hà Nội / Tel: (093) 206.2682</p>
                             <p>Trung tâm bảo hành : 141 Chiến Thắng, Tân Triều, Thanh Trì, Hà Nội / Tel: (093) 206.2682</p>
                             <p>Trụ sở (Không bán hàng): 141 Chiến Thắng, Tân Triều, Thanh Trì, Hà Nội / Tel: (093) 206.2682</p>
-                            <a href="https://www.dmca.com/Protection/Status.aspx?ID=4fc14405-0653-4489-bece-2453699c60a7&amp;refurl=https://www.tncstore.vn/" title="DMCA.com Protection Status" class="dmca-badge">
+                            <a href="https://www.dmca.com/r/w96pr93" title="DMCA.com Protection Status" class="dmca-badge">
                                 <img src="https://images.dmca.com/Badges/_dmca_premi_badge_2.png?ID=4fc14405-0653-4489-bece-2453699c60a7" alt="DMCA.com Protection Status" />
                             </a>
                         </div>
@@ -61,7 +61,7 @@ class Footer extends Component {
                 </div>
                 <div className="footer-bottom">
                     <div class="container">
-                        <div class="f-bottom-copyright">© 2020 - Bản quyền của Công ty TNHH Tin học &amp; Thương mại KMA Gear</div>
+                        <div class="f-bottom-copyright">© 2022 - Bản quyền của Công ty TNHH Tin học &amp; Thương mại KMA Gear</div>
                         <div class="f-bottom-icon">
                             <a href=""><img src="https://www.tncstore.vn/catalog/view/theme/default/image/tien-mat.png" alt="" /></a>
                             <a href=""><img src="https://www.tncstore.vn/catalog/view/theme/default/image/internet-bank.png" alt="" /></a>
