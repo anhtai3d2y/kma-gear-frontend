@@ -5,8 +5,8 @@ import HomeHeader from './Header/HomeHeader'
 import HomeMainBannerSlide from './Section/HomeMainBannerSlide'
 import HomeSubBannerSlide from './Section/HomeSubBannerSlide'
 import OutstandingProduct from './Section/OutstandingProduct'
+import TopDiscountProduct from './Section/TopDiscountProduct'
 import AllBrands from './Section/AllBrands'
-import CategoryProductList from '../ProductPage/Section/CategoryProductList'
 import Footer from './Footer/Footer'
 
 import { Helmet } from 'react-helmet'
@@ -29,6 +29,7 @@ class HomePage extends Component {
                 <HomeMainBannerSlide />
                 <HomeSubBannerSlide />
                 <OutstandingProduct />
+                <TopDiscountProduct />
                 <AllBrands />
                 <Footer />
             </div>

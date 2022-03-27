@@ -323,7 +323,7 @@ class BannerManage extends Component {
         let renevue = statisticInvoicedetail.map(element => {
             return ({
                 'Ngày': element.date,
-                'Tổng': element.total
+                'Tổng': this.numberWithCommas(element.total) + ' đ'
             })
         })
         let totalRevenue = statisticInvoicedetail.reduce(
@@ -332,7 +332,7 @@ class BannerManage extends Component {
         )
         renevue.push({
             'Ngày': 'Tổng',
-            'Tổng': totalRevenue
+            'Tổng': this.numberWithCommas(totalRevenue) + ' đ'
         })
         const workSheetRenevue = XLSX.utils.json_to_sheet(renevue)
         XLSX.utils.book_append_sheet(workBook, workSheetRenevue, "Doanh thu")
@@ -447,6 +447,7 @@ class BannerManage extends Component {
         // sort data
         invoicedetails.sort(sortByCreateDateASC)
         users.sort(sortByCreateDateASC)
+        bills.sort(sortByCreateDateASC)
 
         //handle data
 
@@ -456,6 +457,7 @@ class BannerManage extends Component {
         let statisticRevenueProduct = this.calculateRevenueProduct(invoicedetails).sort(sortByTotalDESC)
         let statisticBothProduct = this.calculateBothProduct(invoicedetails).sort(sortByTotalDESC)
         let statisticCountBill = this.calculateCountBill(bills)
+        console.log(statisticCountBill)
         let billsStateData = this.calculateBillState(bills)
         let billsPaymentData = this.calculateBillPayment(bills)
         return (

@@ -1,5 +1,7 @@
 import actionTypes from '../actions/actionTypes';
-
+import {
+    sortByDiscountDESC,
+} from '../../utils/SortUtils.js';
 const initialState = {
     isLoadingProducts: false,
     products: [],
@@ -82,6 +84,22 @@ const productReducer = (state = initialState, action) => {
                 ...copyState,
             }
         case actionTypes.FETCH_TOP_NEW_PRODUCTS_SHOW_FAILED:
+            // let state = { ...state }
+            state.isLoadingProducts = false
+            state.products = []
+            return {
+                ...state,
+            }
+        case actionTypes.FETCH_TOP_DISCOUNT_PRODUCTS_SHOW_SUCCESS:
+            copyState = { ...state }
+            let topDiscountProduct = copyState.topProducts
+            topDiscountProduct.sort(sortByDiscountDESC)
+            console.log(topDiscountProduct)
+            copyState.products = topDiscountProduct
+            return {
+                ...copyState,
+            }
+        case actionTypes.FETCH_TOP_DISCOUNT_PRODUCTS_SHOW_FAILED:
             // let state = { ...state }
             state.isLoadingProducts = false
             state.products = []

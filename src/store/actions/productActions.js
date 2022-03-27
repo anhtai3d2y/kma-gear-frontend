@@ -153,6 +153,24 @@ export const fetchOutstandingProductsShowFailed = () => ({
     type: actionTypes.FETCH_TOP_NEW_PRODUCTS_SHOW_FAILED
 })
 
+export const fetchTopDiscountProductsShowStart = () => {
+    return async (dispatch, getState) => {
+        try {
+            dispatch(fetchTopDiscountProductsShowSuccess())
+        } catch (error) {
+            dispatch(fetchTopDiscountProductsShowFailed())
+            console.log(error)
+        }
+    }
+}
+
+export const fetchTopDiscountProductsShowSuccess = () => ({
+    type: actionTypes.FETCH_TOP_DISCOUNT_PRODUCTS_SHOW_SUCCESS,
+})
+export const fetchTopDiscountProductsShowFailed = () => ({
+    type: actionTypes.FETCH_TOP_DISCOUNT_PRODUCTS_SHOW_FAILED
+})
+
 export const fetchAllProductsDeletedStart = () => {
     return async (dispatch, getState) => {
         try {
