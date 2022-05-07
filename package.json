@@ -51,7 +51,7 @@
     "xlsx": "^0.18.3"
   },
   "scripts": {
-    "start": "react-scripts --max_old_space_size=8192 start",
+    "start": "react-scripts start --watch",
     "build": "react-scripts --max_old_space_size=8192 build",
     "deploy add": "--max_old_space_size=4096",
     "test": "react-scripts test",

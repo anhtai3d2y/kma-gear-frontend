@@ -83,7 +83,7 @@ class DetailCart extends Component {
                     <div className="cart">
                         <div className="cart-products inline">
                             <div className="cart-process">
-                                <div className="process active"><span>1. Chọn sản phẩm</span></div>
+                                <div className="process active"><span>1. Chọn sản phẩm ok</span></div>
                                 <div className="process active"><span>2. Xác nhận đơn hàng</span></div>
                                 <div className="process"><span>3. Thanh toán</span></div>
                             </div>
